@@ -1,5 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=12 format=2]
 
+[ext_resource path="res://demo/zones/zone_01.tscn" type="PackedScene" id=1]
+[ext_resource path="res://demo/zones/zone_02.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Demo/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/zone_loader.gd" type="Script" id=5]
 [ext_resource path="res://scripts/zone_trigger.gd" type="Script" id=6]
@@ -8,10 +10,25 @@
 extents = Vector3( 84.4297, 87.5218, 75.4285 )
 
 [sub_resource type="BoxShape" id=2]
-extents = Vector3( 61.9412, 87.5436, 118.299 )
+extents = Vector3( 93.1064, 87.5436, 98.6254 )
+
+[sub_resource type="CylinderShape" id=4]
+radius = 14.4242
+height = 100.0
 
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 82.9315, 87.5436, 87.9149 )
+
+[sub_resource type="SphereMesh" id=5]
+radius = 10.0
+height = 5.0
+radial_segments = 20
+is_hemisphere = true
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_unshaded = true
+flags_no_depth_test = true
+albedo_color = Color( 0.87451, 1, 0, 1 )
 
 [node name="World" type="Spatial"]
 
@@ -30,6 +47,8 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource( 6 )
 
+[node name="Zone01" parent="ZoneLoader/zone_01" instance=ExtResource( 1 )]
+
 [node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/zone_01"]
 shape = SubResource( 1 )
 
@@ -39,8 +58,14 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource( 6 )
 
+[node name="Zone02" parent="ZoneLoader/zone_02" instance=ExtResource( 2 )]
+
 [node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/zone_02"]
 shape = SubResource( 2 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="ZoneLoader/zone_02"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.00438, -7.66248, 102.302 )
+shape = SubResource( 4 )
 
 [node name="zone_03" type="Area" parent="ZoneLoader"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.60408, -299.305 )
@@ -53,3 +78,39 @@ shape = SubResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 collision_mask = 3
+
+[node name="MeshInstance" type="MeshInstance" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 79.7258, 0 )
+layers = 2
+cast_shadow = 0
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="UI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -200.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="UI/ViewportContainer"]
+size = Vector2( 200, 200 )
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Camera" type="Camera" parent="UI/ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 93.3085, -143.492 )
+projection = 1
+size = 500.0
