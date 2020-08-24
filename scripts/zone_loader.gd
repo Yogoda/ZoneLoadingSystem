@@ -7,17 +7,24 @@ signal sig_zone_loading_finished(zone_id)
 # warning-ignore:unused_signal
 signal sig_zone_instanced(zone_id, zone_instance)
 
-var loaded_zones = {} #zones that have been loaded in memory (prevent it from being freed)
+#zone resources that have been loaded (referencing prevent them from being freed)
+var loaded_zones = {}
 var loaded_zones_lock:Mutex = Mutex.new()
 var loading_process:Thread = Thread.new()
 
 #var semaphore:Semaphore = Semaphore.new()
 
+#list of actions to be executed by the background thread, in priority order
 var action_queue = []
 var action_queue_lock:Mutex = Mutex.new()
 
 var request_exit = false
 var exit_lock:Mutex = Mutex.new()
+
+export var zone_path:String
+
+var current_zones = {} #zones the player is in (1-2)
+var current_zone #zone the player is in (arbitrary)
 
 class Queue_Action extends Reference:
 
@@ -35,7 +42,58 @@ class Queue_Action extends Reference:
 
 func _ready():
 	
+	connect("sig_zone_loading_finished", self, "_on_zone_loading_finished")
+	connect("sig_zone_instanced", self, "_on_zone_instance_available")
+
+	#connect all zone triggers
+	for zone_trigger in get_children():
+
+		zone_trigger.connect("sig_zone_entered", self, "_on_zone_entered")
+		zone_trigger.connect("sig_zone_exited", self, "_on_zone_exited")
+
+	#start background loading process
 	loading_process.start(self, "_loading_process", null)
+	
+func get_zone_path(zone_id):
+	return str(zone_path, zone_id, ".tscn")
+		
+func _on_zone_entered(zone_id):
+	
+	print("zone ", zone_id, " entered")
+	
+	current_zone = zone_id
+	current_zones[zone_id] = zone_id
+	
+	#load and instance current zone
+	request_instance(zone_id, true)
+	
+func _on_zone_exited(zone_id):
+	print("zone ", zone_id, " exited")
+	
+func _on_zone_loading_finished(zone_id, resource):
+	pass
+	
+func _on_zone_instance_available(zone_id, instance):
+
+	#if player is still in the zone, attach it
+	if current_zones.has(zone_id):
+		attach_zone(zone_id, instance)
+		
+func is_zone_attached(zone_id):
+
+	for child in get_node(zone_id).get_children():
+		if not child is CollisionShape and not child is CollisionPolygon:
+			return true
+			
+	return false
+		
+func attach_zone(zone_id, instance):
+	
+	print("A")
+	if not is_zone_attached(zone_id):
+		print("B")
+		get_node(zone_id).call_deferred("add_child", instance)
+		print("zone", zone_id, " attached")
 	
 func post_queue_action(action_id, zone_id, zone_path = null, priority = false):
 	
@@ -61,16 +119,16 @@ func post_queue_action(action_id, zone_id, zone_path = null, priority = false):
 	
 #	semaphore.post() #ask loading thread to process if waiting
 	
-func _process_load_action(zone_id, zone_path):
+func _process_load_action(zone_id):
 	
-	print("process load zone ", zone_path)
+	print("process load zone ", zone_id)
 
 	#using deferred so that the signal is processed by the main thread
 	call_deferred("emit_signal", "sig_zone_loading_started", zone_id)
 	
 	var ts = OS.get_ticks_msec()
 	
-	var loader = ResourceLoader.load_interactive(zone_path)
+	var loader = ResourceLoader.load_interactive(get_zone_path(zone_id))
 	var resource
 	
 	while true:
@@ -122,7 +180,7 @@ func _process_unload_action(zone_id):
 		
 	loaded_zones_lock.unlock()
 
-func _process_instance_action(zone_id, zone_path):
+func _process_instance_action(zone_id):
 
 	var zone_instance
 
@@ -154,7 +212,7 @@ func _process_instance_action(zone_id, zone_path):
 	else:
 
 		print("instance: load zone ", zone_id)
-		_process_load_action(zone_id, zone_path)
+		_process_load_action(zone_id)
 
 #	print("A")
 
@@ -211,7 +269,7 @@ func _process_free_instance_action(zone_id):
 	
 	#create a new fresh instance for when player comes back into the zone
 	#we cannot keep the instance because of the error "_body_enter_tree: Condition "!E" is true"
-	_process_instance_action(zone_id, null)
+	_process_instance_action(zone_id)
 	
 func _loading_process(dummy):
 
@@ -242,11 +300,11 @@ func _loading_process(dummy):
 			match action.action_id:
 				
 				Queue_Action.ACTION_LOAD:
-					_process_load_action(action.zone_id, action.zone_path)
+					_process_load_action(action.zone_id)
 				Queue_Action.ACTION_UNLOAD:
 					_process_unload_action(action.zone_id)
 				Queue_Action.ACTION_INSTANCE:
-					_process_instance_action(action.zone_id, action.zone_path)
+					_process_instance_action(action.zone_id)
 				Queue_Action.ACTION_FREE_INSTANCE:
 					_process_free_instance_action(action.zone_id)
 		

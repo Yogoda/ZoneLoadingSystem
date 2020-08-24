@@ -3,6 +3,9 @@ extends Spatial
 onready var zone_loader = $ZoneLoader
 onready var zones = $Zones
 
+var current_zones = {} #zones the player is in (1-2)
+var current_zone #zone the player is in (arbitrary)
+
 func _ready():
 
 	#connect all zone triggers
