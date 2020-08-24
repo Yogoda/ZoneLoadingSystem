@@ -1,0 +1,254 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/terrain_tool/buttongroup.tres" type="ButtonGroup" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends Panel
+
+enum {MODE_ROCKS, MODE_TREES, MODE_BARRELS}
+
+var rand_scale = 0.0
+var set_scale = 40.0
+
+var rand_scale_x = true
+var rand_scale_y = true
+var rand_scale_z = true
+var prop_lock = true
+
+var rand_rot_x = false
+var rand_rot_y = true
+var rand_rot_z = false
+
+onready var edit_scale = $VBoxContainer/HBoxScale/RandScale
+onready var chk_prop_lock = $VBoxContainer/PropLock
+onready var chk_rot_x = $VBoxContainer/HBoxRotation/XRot
+onready var chk_rot_y = $VBoxContainer/HBoxRotation/YRot
+onready var chk_rot_z = $VBoxContainer/HBoxRotation/ZRot
+
+func _ready():
+	pass
+
+func _on_ChkRocks_pressed():
+	
+	edit_scale.value = set_scale
+	chk_prop_lock.pressed = false
+	chk_rot_x.pressed = true
+	chk_rot_y.pressed = true
+	chk_rot_z.pressed = true
+	
+	update_values()
+
+func _on_ChkTrees_pressed():
+	
+	edit_scale.value = set_scale
+	chk_prop_lock.pressed = true
+	chk_rot_x.pressed = false
+	chk_rot_y.pressed = true
+	chk_rot_z.pressed = false
+	
+	update_values()
+
+func _on_ChkBarrels_pressed():
+	
+	edit_scale.value = 0.0
+	chk_prop_lock.pressed = true
+	chk_rot_x.pressed = false
+	chk_rot_y.pressed = true
+	chk_rot_z.pressed = false
+	
+	update_values()
+
+func update_values():
+			
+	rand_scale = edit_scale.value
+	prop_lock = chk_prop_lock.pressed
+	rand_rot_x = chk_rot_x.pressed
+	rand_rot_y = chk_rot_y.pressed
+	rand_rot_z = chk_rot_z.pressed
+	
+#func _on_XScale_toggled(button_pressed):
+#	rand_scale_x = button_pressed
+#
+#func _on_YScale_toggled(button_pressed):
+#	rand_scale_y = button_pressed
+#
+#func _on_ZScale_toggled(button_pressed):
+#	rand_scale_z = button_pressed
+
+func _on_RandScale_value_changed(value):
+	rand_scale = value
+	
+	if value != 0:
+		set_scale = value
+
+func _on_PropLock_toggled(button_pressed):
+	prop_lock = button_pressed
+
+func _on_XRot_toggled(button_pressed):
+	rand_rot_x = button_pressed
+
+func _on_YRot_toggled(button_pressed):
+	rand_rot_y = button_pressed
+
+func _on_ZRot_toggled(button_pressed):
+	rand_rot_z = button_pressed
+"
+
+[node name="TerrainTool" type="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -2.0
+margin_bottom = 62.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_right = 1022.0
+margin_bottom = 39.0
+text = "Terrain Tool Plugin
+"
+
+[node name="RichTextLabel" type="Label" parent="VBoxContainer"]
+margin_top = 43.0
+margin_right = 1022.0
+margin_bottom = 136.0
+rect_min_size = Vector2( 0, 93 )
+text = "CTRL + CLICK: 
+duplicate  selected node
+CTRL + SHIFT + CLICK: 
+move selected node"
+
+[node name="LblMode" type="Label" parent="VBoxContainer"]
+margin_top = 140.0
+margin_right = 1022.0
+margin_bottom = 162.0
+text = "Mode"
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer"]
+margin_top = 166.0
+margin_right = 1022.0
+margin_bottom = 254.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer"]
+margin_left = 6.0
+margin_top = 4.0
+margin_right = 1016.0
+margin_bottom = 84.0
+
+[node name="ChkBarrels" type="CheckBox" parent="VBoxContainer/PanelContainer/VBoxContainer"]
+margin_right = 1010.0
+margin_bottom = 24.0
+pressed = true
+group = ExtResource( 1 )
+text = "Barrels"
+
+[node name="ChkRocks" type="CheckBox" parent="VBoxContainer/PanelContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 1010.0
+margin_bottom = 52.0
+group = ExtResource( 1 )
+text = "Rocks"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ChkTrees" type="CheckBox" parent="VBoxContainer/PanelContainer/VBoxContainer"]
+margin_top = 56.0
+margin_right = 1010.0
+margin_bottom = 80.0
+group = ExtResource( 1 )
+text = "Trees"
+
+[node name="RandScaleLabel" type="Label" parent="VBoxContainer"]
+margin_top = 258.0
+margin_right = 1022.0
+margin_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+text = "Random Scale"
+valign = 1
+
+[node name="HBoxScale" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 284.0
+margin_right = 1022.0
+margin_bottom = 306.0
+
+[node name="Percent2" type="Label" parent="VBoxContainer/HBoxScale"]
+margin_right = 26.0
+margin_bottom = 22.0
+size_flags_vertical = 0
+text = "+/-"
+valign = 1
+
+[node name="RandScale" type="SpinBox" parent="VBoxContainer/HBoxScale"]
+margin_left = 30.0
+margin_right = 106.0
+margin_bottom = 22.0
+hint_tooltip = "In percent of the original scale"
+step = 5.0
+
+[node name="Percent" type="Label" parent="VBoxContainer/HBoxScale"]
+margin_left = 110.0
+margin_right = 130.0
+margin_bottom = 22.0
+size_flags_vertical = 0
+text = "%"
+valign = 1
+
+[node name="PropLock" type="CheckBox" parent="VBoxContainer"]
+margin_top = 310.0
+margin_right = 1022.0
+margin_bottom = 334.0
+pressed = true
+text = "Lock proportions"
+
+[node name="RandRotation" type="Label" parent="VBoxContainer"]
+margin_top = 338.0
+margin_right = 1022.0
+margin_bottom = 360.0
+text = "Randomize Rotation"
+
+[node name="HBoxRotation" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 364.0
+margin_right = 1022.0
+margin_bottom = 388.0
+
+[node name="XRot" type="CheckBox" parent="VBoxContainer/HBoxRotation"]
+margin_right = 36.0
+margin_bottom = 24.0
+text = "X"
+
+[node name="YRot" type="CheckBox" parent="VBoxContainer/HBoxRotation"]
+margin_left = 40.0
+margin_right = 75.0
+margin_bottom = 24.0
+pressed = true
+text = "Y"
+
+[node name="ZRot" type="CheckBox" parent="VBoxContainer/HBoxRotation"]
+margin_left = 79.0
+margin_right = 115.0
+margin_bottom = 24.0
+text = "Z"
+[connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/ChkBarrels" to="." method="_on_ChkBarrels_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/ChkRocks" to="." method="_on_ChkRocks_pressed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainer/VBoxContainer/ChkTrees" to="." method="_on_ChkTrees_pressed"]
+[connection signal="value_changed" from="VBoxContainer/HBoxScale/RandScale" to="." method="_on_RandScale_value_changed"]
+[connection signal="toggled" from="VBoxContainer/PropLock" to="." method="_on_PropLock_toggled"]
+[connection signal="toggled" from="VBoxContainer/HBoxRotation/XRot" to="." method="_on_XRot_toggled"]
+[connection signal="toggled" from="VBoxContainer/HBoxRotation/YRot" to="." method="_on_YRot_toggled"]
+[connection signal="toggled" from="VBoxContainer/HBoxRotation/ZRot" to="." method="_on_ZRot_toggled"]

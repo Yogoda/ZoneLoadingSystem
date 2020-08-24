@@ -1,0 +1,81 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Demo/environment.tres" type="Environment" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody
+
+const GRAVITY = 55.0
+const MOUSE_SENSITIVITY = 400
+const JUMP_FORCE = 15.0
+const moving_speed = 1200.0
+
+var velocity = Vector3()
+
+onready var camera = $Camera
+
+func _ready():
+	
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	
+func _input(event):
+	
+	if event is InputEventKey and event.pressed and not event.is_echo():
+		
+		if event.scancode == KEY_ESCAPE:
+			get_tree().quit()
+			
+	#rotate camera
+	elif event is InputEventMouseMotion:
+
+		var rot_x = -event.relative.y / MOUSE_SENSITIVITY
+		var rot_y = -event.relative.x / MOUSE_SENSITIVITY
+
+		camera.rotate_x(rot_x)
+		rotate_y(rot_y)
+
+func _physics_process(delta):
+	
+	var input_dir = Vector3()
+	var camera_dir = camera.global_transform.basis
+	
+	if Input.is_action_pressed(\"move_forward\"):
+		input_dir += -camera_dir.z
+	if Input.is_action_pressed(\"move_backward\"):
+		input_dir += camera_dir.z
+	if Input.is_action_pressed(\"move_left\"):
+		input_dir += -camera_dir.x
+	if Input.is_action_pressed(\"move_right\"):
+		input_dir += camera_dir.x
+	
+	input_dir = input_dir.normalized()
+	
+	velocity.x = input_dir.x * moving_speed * delta
+	velocity.z = input_dir.z * moving_speed * delta
+
+	if Input.is_action_just_pressed(\"jump\"):
+		velocity.y = JUMP_FORCE
+	else:
+		if is_on_floor():
+			velocity.y = 0.0
+		else:
+			velocity.y -= GRAVITY * delta
+	
+	velocity = move_and_slide(velocity, Vector3.UP)
+"
+
+[sub_resource type="CapsuleShape" id=2]
+radius = 0.5
+
+[node name="Player" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+script = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+environment = ExtResource( 1 )
+far = 8192.0
