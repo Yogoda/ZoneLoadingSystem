@@ -32,13 +32,11 @@ class Queue_Action extends Reference:
 	
 	var action_id
 	var zone_id
-	var zone_path
 	
-	func _init(action_id, zone_id, zone_path = null):
+	func _init(action_id, zone_id):
 		
 		self.action_id = action_id
 		self.zone_id = zone_id
-		self.zone_path = zone_path
 
 func _ready():
 	
@@ -57,6 +55,20 @@ func _ready():
 func get_zone_path(zone_id):
 	return str(zone_path, zone_id, ".tscn")
 		
+func is_in_zone(zone_id):
+	return current_zones.has(zone_id)
+	
+func get_connected_zones(zone_id):
+	
+	var connected_zones = []
+	var zone = get_node(zone_id)
+	
+	if zone:
+		for connected_zone in zone.get_overlapping_areas():
+			connected_zones.append(connected_zone.name)
+			
+	return connected_zones
+
 func _on_zone_entered(zone_id):
 	
 	print("zone ", zone_id, " entered")
@@ -64,11 +76,40 @@ func _on_zone_entered(zone_id):
 	current_zone = zone_id
 	current_zones[zone_id] = zone_id
 	
-	#load and instance current zone
+	#load and instance current zone, in priority
 	request_instance(zone_id, true)
+	
+	var zone = get_node(zone_id)
+	
+	#load connected zones
+	for connected_zone in zone.get_overlapping_areas():
+		print("load connected zone ", connected_zone.name)
+		request_instance(connected_zone.name)
 	
 func _on_zone_exited(zone_id):
 	print("zone ", zone_id, " exited")
+	
+	current_zones.erase(zone_id)
+	
+	#when leaving a zone, we are still at least in one zone, this becomes the current zone
+	if current_zones.size() >= 1:
+		current_zone = current_zones.values()[0]
+		
+	#schedule unloading
+	get_tree().create_timer(3.0).connect("timeout", self, "_on_zone_unload", [zone_id])
+
+func _on_zone_unload(zone_id):
+	
+	if not is_in_zone(zone_id):
+		detach_zone(zone_id)
+
+	#unload all loaded zones that are not current or connected
+	var keep_zones = current_zones.keys()
+	
+	for zone_id in current_zones.keys():
+		keep_zones = keep_zones + get_connected_zones(zone_id)
+		
+	request_pruning(keep_zones)
 	
 func _on_zone_loading_finished(zone_id, resource):
 	pass
@@ -76,26 +117,37 @@ func _on_zone_loading_finished(zone_id, resource):
 func _on_zone_instance_available(zone_id, instance):
 
 	#if player is still in the zone, attach it
-	if current_zones.has(zone_id):
+	if is_in_zone(zone_id):
 		attach_zone(zone_id, instance)
-		
-func is_zone_attached(zone_id):
+
+func get_zone(zone_id):
 
 	for child in get_node(zone_id).get_children():
 		if not child is CollisionShape and not child is CollisionPolygon:
-			return true
+			return child
 			
-	return false
+	return null
 		
+#attach zone to the scene tree
 func attach_zone(zone_id, instance):
 	
-	print("A")
-	if not is_zone_attached(zone_id):
-		print("B")
+	if not get_zone(zone_id):
+	
 		get_node(zone_id).call_deferred("add_child", instance)
 		print("zone", zone_id, " attached")
+		
+#remove zone from the scene tree
+func detach_zone(zone_id):
 	
-func post_queue_action(action_id, zone_id, zone_path = null, priority = false):
+	var zone = get_node(zone_id)
+	
+	for child in get_node(zone_id).get_children():
+		if not child is CollisionShape and not child is CollisionPolygon:
+			zone.remove_child(child)
+			print("zone ", zone_id, " detached")
+			break
+		
+func post_queue_action(action_id, zone_id, priority = false):
 	
 	action_queue_lock.lock()
 	
@@ -111,9 +163,9 @@ func post_queue_action(action_id, zone_id, zone_path = null, priority = false):
 			print("action removed ", action.action_id, " ", action.zone_id)
 
 	if priority:
-		action_queue.push_front(Queue_Action.new(action_id, zone_id, zone_path))
+		action_queue.push_front(Queue_Action.new(action_id, zone_id))
 	else:
-		action_queue.push_back(Queue_Action.new(action_id, zone_id, zone_path))
+		action_queue.push_back(Queue_Action.new(action_id, zone_id))
 
 	action_queue_lock.unlock()
 	
@@ -310,7 +362,7 @@ func _loading_process(dummy):
 		
 	print("loading process stopped")
 		
-func request_load(zone_id, zone_path, priority = false):
+func request_load(zone_id, priority = false):
 	
 	print("request load zone ", zone_id)
 	
@@ -325,7 +377,7 @@ func request_load(zone_id, zone_path, priority = false):
 	
 	loaded_zones_lock.unlock()
 	
-	post_queue_action(Queue_Action.ACTION_LOAD, zone_id, zone_path, priority)
+	post_queue_action(Queue_Action.ACTION_LOAD, zone_id, priority)
 	
 func request_unload(zone_id):
 	
@@ -333,11 +385,11 @@ func request_unload(zone_id):
 	
 	post_queue_action(Queue_Action.ACTION_UNLOAD, zone_id, null)
 	
-func request_instance(zone_id, zone_path, priority = false):
+func request_instance(zone_id, priority = false):
 	
 	print("request instance zone ", zone_id)
 	
-	post_queue_action(Queue_Action.ACTION_INSTANCE, zone_id, zone_path, priority)
+	post_queue_action(Queue_Action.ACTION_INSTANCE, zone_id, priority)
 	
 func request_free_instance(zone_id):
 	

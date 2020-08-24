@@ -8,7 +8,8 @@ script/source = "extends KinematicBody
 const GRAVITY = 55.0
 const MOUSE_SENSITIVITY = 400
 const JUMP_FORCE = 15.0
-const moving_speed = 1200.0
+const WALK_SPEED = 1200
+const RUN_SPEED = 5000
 
 var velocity = Vector3()
 
@@ -50,8 +51,13 @@ func _physics_process(delta):
 	
 	input_dir = input_dir.normalized()
 	
-	velocity.x = input_dir.x * moving_speed * delta
-	velocity.z = input_dir.z * moving_speed * delta
+	var speed = WALK_SPEED
+	
+	if Input.is_key_pressed(KEY_SHIFT):
+		speed = RUN_SPEED
+	
+	velocity.x = input_dir.x * speed * delta
+	velocity.z = input_dir.z * speed * delta
 
 	if Input.is_action_just_pressed(\"jump\"):
 		velocity.y = JUMP_FORCE
