@@ -3,9 +3,6 @@
 [ext_resource path="res://Demo/Zones/Resources/rock.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Demo/Zones/Resources/Materials/terrain_green.material" type="Material" id=2]
 
-
-
-
 [node name="Zone01" type="Spatial"]
 
 [node name="CSGBox" type="CSGBox" parent="."]
@@ -24,7 +21,7 @@ depth = 98.0
 material = ExtResource( 2 )
 
 [node name="CSGBox" type="CSGBox" parent="CSGBox"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.44354, -50 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.282, -2.639, -50 )
 operation = 2
 width = 1.82969
 height = 2.72196
