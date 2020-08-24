@@ -83,5 +83,6 @@ shape = SubResource( 2 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+cull_mask = 1048573
 environment = ExtResource( 1 )
 far = 8192.0

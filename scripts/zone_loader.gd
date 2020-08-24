@@ -14,6 +14,8 @@ var loading_process:Thread = Thread.new()
 
 #var semaphore:Semaphore = Semaphore.new()
 
+enum {ACTION_LOAD, ACTION_UNLOAD, ACTION_INSTANCE, ACTION_FREE_INSTANCE}
+
 #list of actions to be executed by the background thread, in priority order
 var action_queue = []
 var action_queue_lock:Mutex = Mutex.new()
@@ -26,21 +28,9 @@ export var zone_path:String
 var current_zones = {} #zones the player is in (1-2)
 var current_zone #zone the player is in (arbitrary)
 
-class Queue_Action extends Reference:
-
-	enum {ACTION_LOAD, ACTION_UNLOAD, ACTION_INSTANCE, ACTION_FREE_INSTANCE}
-	
-	var action_id
-	var zone_id
-	
-	func _init(action_id, zone_id):
-		
-		self.action_id = action_id
-		self.zone_id = zone_id
-
 func _ready():
 	
-	connect("sig_zone_loading_finished", self, "_on_zone_loading_finished")
+	# warning-ignore:return_value_discarded
 	connect("sig_zone_instanced", self, "_on_zone_instance_available")
 
 	#connect all zone triggers
@@ -50,7 +40,8 @@ func _ready():
 		zone_trigger.connect("sig_zone_exited", self, "_on_zone_exited")
 
 	#start background loading process
-	loading_process.start(self, "_loading_process", null)
+	# warning-ignore:return_value_discarded
+	loading_process.start(self, "_loading_process")
 	
 func get_zone_path(zone_id):
 	return str(zone_path, zone_id, ".tscn")
@@ -96,6 +87,7 @@ func _on_zone_exited(zone_id):
 		current_zone = current_zones.values()[0]
 		
 	#schedule unloading
+	# warning-ignore:return_value_discarded
 	get_tree().create_timer(3.0).connect("timeout", self, "_on_zone_unload", [zone_id])
 
 func _on_zone_unload(zone_id):
@@ -110,9 +102,6 @@ func _on_zone_unload(zone_id):
 		keep_zones = keep_zones + get_connected_zones(zone_id)
 		
 	request_pruning(keep_zones)
-	
-func _on_zone_loading_finished(zone_id, resource):
-	pass
 	
 func _on_zone_instance_available(zone_id, instance):
 
@@ -155,7 +144,7 @@ func post_queue_action(action_id, zone_id, priority = false):
 		if action.zone_id == zone_id:
 			
 			#an action load should not replace an action instance, since it also do load
-			if action_id == Queue_Action.ACTION_LOAD and action.action_id == Queue_Action.ACTION_INSTANCE:
+			if action_id == ACTION_LOAD and action.action_id == ACTION_INSTANCE:
 				action_queue_lock.unlock()
 				return
 				
@@ -163,9 +152,9 @@ func post_queue_action(action_id, zone_id, priority = false):
 			print("action removed ", action.action_id, " ", action.zone_id)
 
 	if priority:
-		action_queue.push_front(Queue_Action.new(action_id, zone_id))
+		action_queue.push_front({action_id = action_id, zone_id = zone_id})
 	else:
-		action_queue.push_back(Queue_Action.new(action_id, zone_id))
+		action_queue.push_back({action_id = action_id, zone_id = zone_id})
 
 	action_queue_lock.unlock()
 	
@@ -323,6 +312,7 @@ func _process_free_instance_action(zone_id):
 	#we cannot keep the instance because of the error "_body_enter_tree: Condition "!E" is true"
 	_process_instance_action(zone_id)
 	
+# warning-ignore:unused_argument
 func _loading_process(dummy):
 
 	print("loading process started")
@@ -351,13 +341,13 @@ func _loading_process(dummy):
 			
 			match action.action_id:
 				
-				Queue_Action.ACTION_LOAD:
+				ACTION_LOAD:
 					_process_load_action(action.zone_id)
-				Queue_Action.ACTION_UNLOAD:
+				ACTION_UNLOAD:
 					_process_unload_action(action.zone_id)
-				Queue_Action.ACTION_INSTANCE:
+				ACTION_INSTANCE:
 					_process_instance_action(action.zone_id)
-				Queue_Action.ACTION_FREE_INSTANCE:
+				ACTION_FREE_INSTANCE:
 					_process_free_instance_action(action.zone_id)
 		
 	print("loading process stopped")
@@ -377,25 +367,25 @@ func request_load(zone_id, priority = false):
 	
 	loaded_zones_lock.unlock()
 	
-	post_queue_action(Queue_Action.ACTION_LOAD, zone_id, priority)
+	post_queue_action(ACTION_LOAD, zone_id, priority)
 	
 func request_unload(zone_id):
 	
 	print("request unload zone ", zone_id)
 	
-	post_queue_action(Queue_Action.ACTION_UNLOAD, zone_id, null)
+	post_queue_action(ACTION_UNLOAD, zone_id, null)
 	
 func request_instance(zone_id, priority = false):
 	
 	print("request instance zone ", zone_id)
 	
-	post_queue_action(Queue_Action.ACTION_INSTANCE, zone_id, priority)
+	post_queue_action(ACTION_INSTANCE, zone_id, priority)
 	
 func request_free_instance(zone_id):
 	
 	print("request free zone ", zone_id)
 	
-	post_queue_action(Queue_Action.ACTION_FREE_INSTANCE, zone_id)
+	post_queue_action(ACTION_FREE_INSTANCE, zone_id)
 	
 func request_pruning(keep_zones):
 	
