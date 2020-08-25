@@ -25,6 +25,7 @@ var exit_lock:Mutex = Mutex.new()
 
 export var zone_path:String
 export var show_debug = false
+export var unload_delay = 1.0
 
 var current_zones = {} #zones the player is in (1-2)
 var current_zone #zone the player is in (arbitrary)
@@ -91,10 +92,12 @@ func _on_zone_exited(zone_id):
 	#when leaving a zone, we are still at least in one zone, this becomes the current zone
 	if current_zones.size() >= 1:
 		current_zone = current_zones.values()[0]
+	else:
+		current_zone = null
 		
 	#schedule unloading
 	# warning-ignore:return_value_discarded
-	get_tree().create_timer(3.0).connect("timeout", self, "_on_zone_unload", [zone_id])
+	get_tree().create_timer(unload_delay).connect("timeout", self, "_on_zone_unload", [zone_id])
 
 func _on_zone_unload(zone_id):
 	
