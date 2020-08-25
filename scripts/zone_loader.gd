@@ -12,7 +12,7 @@ var loaded_zones = {}
 var loaded_zones_lock:Mutex = Mutex.new()
 var loading_process:Thread = Thread.new()
 
-#var semaphore:Semaphore = Semaphore.new()
+var semaphore:Semaphore = Semaphore.new()
 
 enum {ACTION_LOAD, ACTION_UNLOAD, ACTION_INSTANCE, ACTION_FREE_INSTANCE}
 
@@ -167,7 +167,8 @@ func post_queue_action(action_id, zone_id, priority = false):
 
 	action_queue_lock.unlock()
 	
-#	semaphore.post() #ask loading thread to process if waiting
+	# warning-ignore:return_value_discarded
+	semaphore.post() #ask loading thread to process if waiting
 	
 func _process_load_action(zone_id):
 	
@@ -260,8 +261,6 @@ func _process_instance_action(zone_id):
 
 	#zone not loaded, proceed to loading
 	else:
-
-		_print(str("instance: load zone ", zone_id))
 		_process_load_action(zone_id)
 
 	exit_lock.lock()
@@ -314,10 +313,9 @@ func _loading_process(dummy):
 	_print("loading process started")
 	
 	while true:
-	
-		OS.delay_msec(400)
 
-#		semaphore.wait() #wait for a new message to be posted in the queue
+		# warning-ignore:return_value_discarded
+		semaphore.wait() #wait for a new message to be posted in the queue
 		
 		#exit ?
 		exit_lock.lock()
@@ -398,6 +396,7 @@ func exit():
 	request_exit = true
 	exit_lock.unlock()
 	
-#	semaphore.post()
+	# warning-ignore:return_value_discarded
+	semaphore.post()
 	
 	loading_process.wait_to_finish()

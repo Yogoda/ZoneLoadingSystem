@@ -20,7 +20,7 @@ run/main_scene="res://demo/world.tscn"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "terrain_tool" )
+enabled=PoolStringArray(  )
 
 [input]
 
