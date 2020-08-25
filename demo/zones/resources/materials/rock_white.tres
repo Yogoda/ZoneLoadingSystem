@@ -1,0 +1,4 @@
+[gd_resource type="SpatialMaterial" format=2]
+
+[resource]
+roughness = 0.62

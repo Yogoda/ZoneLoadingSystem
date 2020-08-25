@@ -12,3 +12,6 @@ ambient_light_sky_contribution = 0.0
 tonemap_mode = 2
 tonemap_white = 1.34
 glow_enabled = true
+glow_intensity = 0.1
+glow_strength = 1.1
+glow_bloom = 0.5

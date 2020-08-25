@@ -41,6 +41,7 @@ shadow_bias = 0.2
 [node name="ZoneLoader" type="Spatial" parent="."]
 script = ExtResource( 5 )
 zone_path = "res://demo/zones/"
+show_debug = true
 
 [node name="zone_01" type="Area" parent="ZoneLoader"]
 collision_layer = 2
@@ -96,7 +97,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ViewportContainer" type="ViewportContainer" parent="UI"]
+[node name="MiniMap" type="ViewportContainer" parent="UI"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -107,13 +108,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Viewport" type="Viewport" parent="UI/ViewportContainer"]
+[node name="Viewport" type="Viewport" parent="UI/MiniMap"]
 size = Vector2( 200, 200 )
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
 
-[node name="Camera" type="Camera" parent="UI/ViewportContainer/Viewport"]
+[node name="Camera" type="Camera" parent="UI/MiniMap/Viewport"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 93.3085, -143.492 )
 projection = 1
 size = 500.0
