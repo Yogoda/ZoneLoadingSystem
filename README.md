@@ -2,7 +2,7 @@
 
 This is a dynamic zone loading system for Godot you can use in your games. This allows to have an infinite game world without loading screen (after the initial loading).
 
-![Test image](screenshots/demo.png)
+![Test image](screenshots/world.png)
 
 - Every zone is inside a trigger area.
 - When the player enters a trigger area, the zone is loaded and attached to the world
@@ -21,3 +21,5 @@ This is a dynamic zone loading system for Godot you can use in your games. This 
 - Zones need to be carfully designed so that they are occluded when not visible (needs turns and twists).
 
 Please report issues and feel free to contribute and help me improve this demo :)
+
+![Test image](screenshots/demo.png)
