@@ -2,9 +2,7 @@
 
 [ext_resource path="res://Demo/Zones/Resources/rock.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Demo/Zones/Resources/Materials/terrain_green.material" type="Material" id=2]
-[ext_resource path="res://demo/zones/resources/materials/rock_white.tres" type="Material" id=3]
-
-
+[ext_resource path="res://demo/zones/resources/materials/rock_white.material" type="Material" id=3]
 
 [node name="Zone01" type="Spatial"]
 
