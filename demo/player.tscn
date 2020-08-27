@@ -21,13 +21,7 @@ func _ready():
 	
 func _input(event):
 	
-	if event is InputEventKey and event.pressed and not event.is_echo():
-		
-		if event.scancode == KEY_ESCAPE:
-			get_tree().quit()
-			
-	#rotate camera
-	elif event is InputEventMouseMotion:
+	if event is InputEventMouseMotion:
 
 		var rot_x = -event.relative.y / MOUSE_SENSITIVITY
 		var rot_y = -event.relative.x / MOUSE_SENSITIVITY
