@@ -1,6 +1,6 @@
 # Zone Loading System
 
-This is a dynamic zone loading system for Godot you can use in your games, it can be used in 2D or 3D.
+This is a dynamic zone loading system for Godot you can use in your games, it can be used for 2D or 3D.
 This system allows to have an infinite game world without loading screen (after the initial loading).
 
 ![Test image](screenshots/world.png)
@@ -11,13 +11,13 @@ This system allows to have an infinite game world without loading screen (after 
 - Connected zones are zones that are overlapping the current zone, this is detected automatically, no need to register the connections.
 - Zones that are connected to the current zone(s) are automatically loaded in memory and instanced in background, so that they are ready when the player enters a new zone.
 
-## pros
+## Pros
 - No loading screen during the game.
 - Works for 2D and 3D.
 - The next zone is loading in background mode while the player explores the current map.
 - Connected zones are automatically detected.
 
-## cons
+## Cons
 - Need to manually split the game world into zones and set triggers.
 - Zones need to be carfully designed so that they are occluded when not visible (needs turns and twists).
 
