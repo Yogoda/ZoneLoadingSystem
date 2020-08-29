@@ -1,6 +1,6 @@
 # Zone Loading System
 
-This is a dynamic zone loading system for Godot you can use in your games, it can be use in 2D and 3D.
+This is a dynamic zone loading system for Godot you can use in your games, it can be used in 2D or 3D.
 This system allows to have an infinite game world without loading screen (after the initial loading).
 
 ![Test image](screenshots/world.png)
