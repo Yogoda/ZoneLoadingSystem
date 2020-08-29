@@ -1,14 +1,15 @@
 # Zone Loading System
 
-This is a dynamic zone loading system for Godot you can use in your games. This allows to have an infinite game world without loading screen (after the initial loading).
+This is a dynamic zone loading system for Godot you can use in your games, it can be use in 2D and 3D.
+This system allows to have an infinite game world without loading screen (after the initial loading).
 
 ![Test image](screenshots/world.png)
 
-- Every zone is inside a trigger area.
-- When the player enters a trigger area, the zone is loaded and attached to the world
-- Connected zones are zones that are overlapping the current zone, they are detected automatically.
-- All connected zones are automatically loaded and instanced by a background thread, so that attaching the zone to the tree is very fast.
-- When leaving a zone, it is detached from the tree but stays in memory. Zones that are not current or connected are freed from memory.
+- Every zone sits inside a trigger area that completely englobes the zone.
+- When the player enters a trigger area, the corresponding zone is loaded (if not already) and attached to the world.
+- When the player exits the area, the zone is removed from the tree but stays in memory, allowing to go back and forth quickly between the two zones. When the zone is not directly connected to an area the player is in, it is then freed from memory and unloaded.
+- Connected zones are zones that are overlapping the current zone, this is detected automatically, no need to register the connections.
+- Zones that are connected to the current zone(s) are automatically loaded in memory and instanced in background, so that they are ready when the player enters a new zone.
 
 ## pros
 - No loading screen during the game.
@@ -20,6 +21,9 @@ This is a dynamic zone loading system for Godot you can use in your games. This 
 - Need to manually split the game world into zones and set triggers.
 - Zones need to be carfully designed so that they are occluded when not visible (needs turns and twists).
 
-Please report issues and feel free to contribute and help me improve this demo :)
+## Contribute
+
+Please report any issues here: https://godotforums.org/discussion/23868/zone-loading-system
+You are free to contribute and improve this demo and do whatever you want with the code, this is a [Creative Commons](https://creativecommons.org/publicdomain/zero/1.0/)
 
 ![Test image](screenshots/demo.png)
