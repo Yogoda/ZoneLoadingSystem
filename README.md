@@ -1,7 +1,10 @@
 # Zone Loading System
 
-This is a dynamic zone loading system for Godot you can use in your games, it can be used for 2D or 3D.
-This system allows to have an infinite game world without loading screen (after the initial loading).
+This is a dynamic zone loading system that automatically loads and unloads zones according to the player position, this allows huge game worlds without loading screen.
+
+The zones can be as big or as small as needed, and this can be combined with other optimization methods. If done carefully, the zone transitions will be invisible to the player.
+
+It can be used for 2D and 3D games, indoor and outdoor environments.
 
 ![Test image](screenshots/world.png)
 
