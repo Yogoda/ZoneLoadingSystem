@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://Demo/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://demo/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/zone_loader.gd" type="Script" id=5]
 [ext_resource path="res://scripts/zone_trigger.gd" type="Script" id=6]
 

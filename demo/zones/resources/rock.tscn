@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Demo/Zones/Resources/Materials/rock.material" type="Material" id=1]
+[ext_resource path="res://demo/zones/resources/materials/rock.material" type="Material" id=1]
 
 [sub_resource type="CubeMesh" id=1]
 
