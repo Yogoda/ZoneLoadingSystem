@@ -1,6 +1,6 @@
 # Zone Loading System
 
-This is a zone loading system that automatically takes care of all the zone management for you when the player explores the world, using a background thread to minimize performance hiccups. This allows to have huge seamless worlds without loading screen.
+This is a zone loading system that automatically takes care of all the zone management for you, loading and unloading zones as the player explores the world, using a background thread to minimize performance hiccups. This allows to have huge seamless worlds without loading screen.
 
 The zones can be as big or as small as needed, and this can be combined with other optimization methods. If done carefully, the zone transitions will be invisible to the player, but for that you will need to break line of sight using twists and turns, so that the player can never see unloaded zones.
 
