@@ -1,10 +1,10 @@
 # Zone Loading System
 
-This is a dynamic zone loading system that automatically loads and unloads zones according to the player position, this allows huge game worlds without loading screen.
+This is a zone loading system that dynamically loads zones according to the player position in the background, this allows huge game worlds without loading screen.
 
 The zones can be as big or as small as needed, and this can be combined with other optimization methods. If done carefully, the zone transitions will be invisible to the player.
 
-It can be used for 2D and 3D games, indoor and outdoor environments.
+It can be used for indoor and outdoor environments. It can also work for 2D with minor modifications.
 
 ![Test image](screenshots/world.png)
 
