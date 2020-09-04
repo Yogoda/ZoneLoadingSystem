@@ -26,7 +26,8 @@ This system can be used for indoor and outdoor environments. It can also work fo
 
 ## Contribute
 
-Please report any issues here: https://godotforums.org/discussion/23868/zone-loading-system
-You are free to contribute and improve this demo and do whatever you want with the code, this is a [Creative Commons](https://creativecommons.org/publicdomain/zero/1.0/)
+You can leave comments here: https://github.com/Yogoda/ZoneLoadingSystem/issues/3 or here: https://godotforums.org/discussion/23868/zone-loading-system
+
+You are free to submit issues, contribute and improve this template, this is a [Creative Commons](https://creativecommons.org/publicdomain/zero/1.0/)
 
 ![Test image](screenshots/demo.png)
