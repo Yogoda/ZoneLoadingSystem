@@ -2,8 +2,6 @@ extends Node
 
 const GROUP_ZONES = "ZONE"
 
-var background_loader = BackgroundLoader.new()
-
 export var show_debug = false
 export var unload_delay = 1.0
 
@@ -15,7 +13,7 @@ var loaded_zones = {}
 func _ready():
 	
 	# warning-ignore:return_value_discarded
-	background_loader.connect("resource_instanced", self, "_on_zone_instance_available")
+	BackgroundLoader.connect("resource_instanced", self, "_on_zone_instance_available")
 
 	#connect all zone triggers
 	for zone_trigger in get_children():
@@ -25,18 +23,15 @@ func _ready():
 
 func _enter_tree():
 
-	background_loader = BackgroundLoader.new()
-	
-	background_loader.show_debug = true
+	BackgroundLoader.show_debug = true
 	
 	#start background resource loading process
-	background_loader.start()
+	BackgroundLoader.start()
 	
 func _exit_tree():
 	
 	#stop background process
-	background_loader.stop()
-#	background_loader.free()
+	BackgroundLoader.stop()
 	
 func _print(text):
 	
@@ -57,7 +52,7 @@ func _on_zone_entered(zone_id, zone_path):
 	current_zones[zone_id] = zone_id
 
 	#load and instance current zone, in priority
-	background_loader.request_instance(zone_id, zone_path, true)
+	BackgroundLoader.request_instance(zone_id, zone_path, true)
 
 	var zone = get_node(zone_id)
 
@@ -65,7 +60,7 @@ func _on_zone_entered(zone_id, zone_path):
 	for connected_zone in zone.get_overlapping_areas():
 	
 		_print(str("load connected zone ", connected_zone.zone_id))
-		background_loader.request_instance(connected_zone.zone_id, connected_zone.zone_path)
+		BackgroundLoader.request_instance(connected_zone.zone_id, connected_zone.zone_path)
 	
 func _on_zone_exited(zone_id):
 	
@@ -103,7 +98,7 @@ func _remove_zone(zone_id):
 
 		if not zone_id in keep_zones:
 			_print(str("prunning: request unload ", zone_id))
-			background_loader.request_unload(zone_id)
+			BackgroundLoader.request_unload(zone_id)
 	
 func _on_zone_instance_available(zone_id, instance):
 	

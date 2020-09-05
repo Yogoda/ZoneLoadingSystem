@@ -1,4 +1,4 @@
-class_name BackgroundLoader
+extends Node
 
 # warning-ignore:unused_signal
 signal resource_loading_finished(resource_id)
@@ -272,5 +272,22 @@ func _background_loading(dummy):
 					_process_instance_action(action.resource_id, action.resource_path)
 				ACTION_FREE:
 					_process_free_instance_action(action.resource_id)
+		
+	#remove all pending messages
+	action_queue_lock.lock()
+	action_queue.clear()
+	action_queue_lock.unlock()
+	
+	#clear all loaded resources
+	loaded_resources_lock.lock()
+	
+	for resource_id in loaded_resources:
+		
+		if loaded_resources[resource_id].instance != null:
+			loaded_resources[resource_id].instance.queue_free()
+
+	loaded_resources.clear()
+	
+	loaded_resources_lock.unlock()
 		
 	_print("loading process stopped")
