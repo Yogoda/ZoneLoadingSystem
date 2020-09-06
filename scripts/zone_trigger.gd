@@ -19,6 +19,7 @@ func _ready():
 # warning-ignore:unused_argument
 func zone_entered(player):
 
+	print("player entered zone ", zone_id)
 	emit_signal("zone_entered", zone_id, zone_path)
 	
 # warning-ignore:unused_argument

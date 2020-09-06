@@ -1,6 +1,7 @@
 extends Node
 
-const GROUP_ZONES = "ZONE"
+signal zone_entered(zone_id)
+signal zone_attached(zone_id)
 
 export var show_debug = false
 export var unload_delay = 1.0
@@ -16,10 +17,20 @@ func _ready():
 	BackgroundLoader.connect("resource_instanced", self, "_on_zone_instance_available")
 
 	#connect all zone triggers
-	for zone_trigger in get_children():
+	for zone_area in get_children():
 
-		zone_trigger.connect("zone_entered", self, "_on_zone_entered")
-		zone_trigger.connect("zone_exited", self, "_on_zone_exited")
+		if zone_area is Area:
+			
+			zone_area.connect("zone_entered", self, "_on_zone_entered")
+			zone_area.connect("zone_exited", self, "_on_zone_exited")
+
+		#check for already present zones
+		for child in zone_area.get_children():
+			
+			if not child is CollisionShape and not child is CollisionPolygon:
+				
+				print("ERROR: ", child.name, " already attached to tree, removing...")
+				zone_area.remove_child(child)
 
 func _enter_tree():
 
@@ -61,6 +72,8 @@ func _on_zone_entered(zone_id, zone_path):
 	
 		_print(str("load connected zone ", connected_zone.zone_id))
 		BackgroundLoader.request_instance(connected_zone.zone_id, connected_zone.zone_path)
+		
+	emit_signal("zone_entered", zone_id)
 	
 func _on_zone_exited(zone_id):
 	
@@ -102,6 +115,8 @@ func _remove_zone(zone_id):
 	
 func _on_zone_instance_available(zone_id, instance):
 	
+	instance.name = zone_id
+	
 	loaded_zones[zone_id] = instance
 
 	#if player is still in the zone, attach it
@@ -111,30 +126,29 @@ func _on_zone_instance_available(zone_id, instance):
 #return instanced zone node from the tree
 func get_zone(zone_id):
 
-	for child in get_node(zone_id).get_children():
-		
-		if child.is_in_group(GROUP_ZONES):
-			return child
-			
-	return null
-		
+	return get_node(zone_id).get_node_or_null(zone_id)
+
 #attach zone to the scene tree
 func attach_zone(zone_id, zone_instance):
 	
 	if not get_zone(zone_id):
 	
-		zone_instance.add_to_group(GROUP_ZONES)
-		get_node(zone_id).call_deferred("add_child", zone_instance)
+		call_deferred("attach_zone_deferred", zone_id, zone_instance)
+
+func attach_zone_deferred(zone_id, zone_instance):
+
+		get_node(zone_id).add_child(zone_instance)
 		_print(str("zone ", zone_id, " attached"))
+		
+		emit_signal("zone_attached", zone_id)
 		
 #remove zone from the scene tree
 func detach_zone(zone_id):
 	
-	var zone = get_node(zone_id)
+	var area = get_node(zone_id)
+	var zone = area.get_node_or_null(zone_id)
 	
-	for child in get_node(zone_id).get_children():
+	if zone:
 		
-		if child.is_in_group(GROUP_ZONES):
-			zone.remove_child(child)
-			_print(str("zone ", zone_id, " detached"))
-			break
+		area.remove_child(zone)
+		_print(str("zone ", zone_id, " detached"))
