@@ -8,7 +8,7 @@ This system can be used for indoor and outdoor environments. It can also work fo
 
 ![Test image](screenshots/world.png)
 
-- Every zone sits inside a trigger area that completely englobes the zone.
+- Every zone sits inside a trigger area that completely encompasses the zone.
 - When the player enters a trigger area, the corresponding zone is loaded, instanced (if not already) and attached to the world.
 - When the player exits the area, the zone is removed from the tree but stays in memory, allowing to go back and forth quickly between two zones. When the zone is not directly connected to an area the player is in, it is freed from memory and unloaded.
 - Zones that are connected to the current zone(s) are automatically loaded in memory and instanced in background, so that they are ready when the player enters a new zone. Connected zones are zones that are overlapping the current zone, this is detected automatically, no need to register the connections.
@@ -32,7 +32,7 @@ This system can be used for indoor and outdoor environments. It can also work fo
 - Set the zone path in the exported script variable
 - Instance your new zone under the area node, don't move it (this is just for setup)
 - Move the area where you want it to be relative to the other zones
-- Add one or more collision shapes that englobes the zone, the zone will be loaded when the player enters this area
+- Add one or more collision shapes that encompasses the zone, the zone will be loaded when the player enters this area
 - Delete your zone instance. No area should contain a zone, as they should not be loaded when the game starts.
 
 Done. Now the zone will be automatically loaded and instanced, and attached to the tree when the player enters the area.
