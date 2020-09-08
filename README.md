@@ -24,6 +24,19 @@ This system can be used for indoor and outdoor environments. It can also work fo
 - Need to manually split the game world into zones and set triggers.
 - Zones need to be carfully designed so that player cannot see unloaded zones (needs twists and turns).
 
+## How to add a new zone
+
+- Create a new area under `World/ZoneLoader`
+- Set the collision layer and mask to `zone_triggers`
+- Attach the script `zone_loader.gd` to the area
+- Set the zone path in the exported script variable
+- Instance your new zone under the area node, don't move it (this is just for setup)
+- Move the area where you want it to be relative to the other zones
+- Add one or more collision shapes that englobes the zone, the zone will be loaded when the player enters this area
+- Delete your zone instance. No area should contain a zone, as they should not be loaded when the game starts.
+
+Done. Now the zone will be automatically loaded and instanced, and attached to the tree when the player enters the area.
+
 ## Contribute
 
 You can leave comments here: https://github.com/Yogoda/ZoneLoadingSystem/issues/3 or here: https://godotforums.org/discussion/23868/zone-loading-system
