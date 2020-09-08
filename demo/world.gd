@@ -4,16 +4,23 @@ onready var zone_loader = $ZoneLoader
 
 export var player_scene:PackedScene
 
+#player spawn locations are in this group
 const GROUP_PLAYER_SPAWN = "PLAYER_SPAWN"
+
 var player
 
-var starting_zone = "Zone02"
+#you can change the starting zone here
+var starting_zone = "Zone01"
 
 func _input(event):
 	
 	if event is InputEventKey and event.pressed and not event.is_echo():
 		
 		if event.scancode == KEY_ESCAPE:
+
+			#ask the loading process to stop and wait for it to finish (proper way to quit)
+			BackgroundLoader.request_stop()
+			yield(BackgroundLoader, "loading_process_stopped")
 
 			print("exited")
 			get_tree().quit()
@@ -29,9 +36,10 @@ func _ready():
 		
 		get_tree().paused = true
 		
+		#show initial loading screen
 		$UI/LoadingScreen.show()
 
-#called when loading of the first area is finished
+#called when the initial first area has finished loading and is attached to the tree
 # warning-ignore:unused_argument
 func _on_first_zone_attached(zone_id):
 	

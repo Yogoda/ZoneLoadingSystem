@@ -5,11 +5,14 @@ signal resource_loading_finished(resource_id)
 # warning-ignore:unused_signal
 signal resource_instanced(resource_id, resource_instance)
 
+signal _loading_process_stopped #internal use
+signal loading_process_stopped #external use
+
 #resources that have been loaded (referencing prevent them from being freed)
 var loaded_resources = {}
 var loaded_resources_lock:Mutex = Mutex.new()
 
-var background_loading:Thread = Thread.new()
+var loading_process:Thread = Thread.new()
 
 var semaphore:Semaphore = Semaphore.new()
 
@@ -19,7 +22,8 @@ enum {ACTION_LOAD, ACTION_UNLOAD, ACTION_INSTANCE, ACTION_FREE}
 var action_queue = []
 var action_queue_lock:Mutex = Mutex.new()
 
-var request_exit = false
+var _request_exit = false
+
 var exit_lock:Mutex = Mutex.new()
 
 export var show_debug = false
@@ -30,12 +34,31 @@ func _print(text):
 		print(text)
 
 func start():
+	
+	if loading_process.is_active():
+		_print("loading process already running...")
+		return
+
+	_request_exit = false
 
 	#start background loading process
 	# warning-ignore:return_value_discarded
-	background_loading.start(self, "_background_loading")
+	loading_process.start(self, "_loading_process")
+
+func is_exiting():
 	
+	var exiting
+	
+	exit_lock.lock()
+	exiting = _request_exit
+	exit_lock.unlock()
+	
+	return exiting
+
 func request_load(resource_id, resource_path, priority = false):
+	
+	if is_exiting():
+		return
 	
 	_print(str("request load ", resource_id))
 	
@@ -54,32 +77,47 @@ func request_load(resource_id, resource_path, priority = false):
 	
 func request_unload(resource_id):
 	
+	if is_exiting():
+		return
+	
 	_print(str("request unload ", resource_id))
 	
 	_post_queue_action(ACTION_UNLOAD, resource_id, null)
 	
 func request_instance(resource_id, resource_path, priority = false):
 	
+	if is_exiting():
+		return
+	
 	_print(str("request instance ", resource_id))
 	
 	_post_queue_action(ACTION_INSTANCE, resource_id, resource_path, priority)
 	
-func request_free_instance(resource_id):
+func request_free(resource_id):
+	
+	if is_exiting():
+		return
 	
 	_print(str("request free ", resource_id))
 	
 	_post_queue_action(ACTION_FREE, resource_id)
 	
-func stop():
+func request_stop():
 	
 	exit_lock.lock()
-	request_exit = true
+	_request_exit = true
 	exit_lock.unlock()
 	
 	# warning-ignore:return_value_discarded
 	semaphore.post()
 	
-	background_loading.wait_to_finish()
+	#wait for the loading process to signal it has finished
+	#(prevents game from freezing when thread is instancing nodes)
+	yield(self, "_loading_process_stopped")
+	
+	loading_process.wait_to_finish()
+	
+	emit_signal("loading_process_stopped")
 
 func _post_queue_action(action_id, resource_id, resource_path = null, priority = false):
 	
@@ -118,11 +156,9 @@ func _process_load_action(resource_id, resource_path):
 	
 	while true:
 		
-		exit_lock.lock()
-		if request_exit:
-			_print("exiting, loading arborted")
+		if is_exiting():
+			_print(str("exiting, loading ", resource_id, " arborted"))
 			break
-		exit_lock.unlock()
 
 		var err = loader.poll()
 
@@ -139,6 +175,9 @@ func _process_load_action(resource_id, resource_path):
 		elif err != OK:
 			_print(str("error loading resource: ", resource_id , " ",  str(err)))
 			break
+			
+	if is_exiting():
+		return
 			
 	#using deferred so that the signal is processed by the main thread
 	call_deferred("emit_signal", "resource_loading_finished", resource_id, resource)
@@ -175,34 +214,31 @@ func _process_instance_action(resource_id, resource_path):
 	var resource_loaded = loaded_resources.has(resource_id)
 	loaded_resources_lock.unlock()
 
+	#resource already loaded
 	if resource_loaded:
 
 		loaded_resources_lock.lock()
 
-		if loaded_resources[resource_id] == null:
-			_print("ERROR: RESOURCE LOADED IS NULL")
-			loaded_resources_lock.unlock()
-			return
-		else:
-			resource_instance = loaded_resources[resource_id].instance
+		resource_instance = loaded_resources[resource_id].instance
 			
 		loaded_resources_lock.unlock()
 
+		#resource already instanced
 		if resource_instance != null:
 
 			_print(str("resource ", resource_id, " already instanced"))
-			call_deferred("emit_signal", "resource_instanced", resource_id, resource_instance)
+			
+			if not is_exiting():
+				call_deferred("emit_signal", "resource_instanced", resource_id, resource_instance)
 			return
 
 	#resource not loaded, proceed to loading
 	else:
 		_process_load_action(resource_id, resource_path)
 
-	exit_lock.lock()
-	if request_exit:
+	if is_exiting():
 		_print("exiting, loading arborted")
 		return
-	exit_lock.unlock()
 
 	var resource
 
@@ -219,9 +255,10 @@ func _process_instance_action(resource_id, resource_path):
 	loaded_resources[resource_id].instance = resource_instance
 	loaded_resources_lock.unlock()
 
-	call_deferred("emit_signal", "resource_instanced", resource_id, resource_instance)
+	if not is_exiting():
+		call_deferred("emit_signal", "resource_instanced", resource_id, resource_instance)
 
-func _process_free_instance_action(resource_id):
+func _process_free_action(resource_id):
 	
 	_print("free resource")
 	
@@ -238,9 +275,31 @@ func _process_free_instance_action(resource_id):
 			loaded_resources[resource_id].instance = null
 
 	loaded_resources_lock.unlock()
+	
+func _reset_state():
+	
+	#remove all pending messages
+	action_queue_lock.lock()
+	action_queue.clear()
+	action_queue_lock.unlock()
+	
+	#clear all loaded resources
+	loaded_resources_lock.lock()
+	
+	#free instanced nodes that are not attached to the tree
+	for resource_id in loaded_resources:
 
+		var node = loaded_resources[resource_id].instance
+		if node != null and not node.is_inside_tree():
+			loaded_resources[resource_id].instance.free()
+
+	loaded_resources.clear()
+	
+	loaded_resources_lock.unlock()
+
+#the background loading process executed by a thread
 # warning-ignore:unused_argument
-func _background_loading(dummy):
+func _loading_process(dummy):
 
 	_print("background process started")
 	
@@ -251,9 +310,13 @@ func _background_loading(dummy):
 		
 		#exit ?
 		exit_lock.lock()
-		if request_exit:
+		if _request_exit:
+			
+			_reset_state()
+
 			exit_lock.unlock()
 			break
+
 		exit_lock.unlock()
 		
 		action_queue_lock.lock()
@@ -271,23 +334,8 @@ func _background_loading(dummy):
 				ACTION_INSTANCE:
 					_process_instance_action(action.resource_id, action.resource_path)
 				ACTION_FREE:
-					_process_free_instance_action(action.resource_id)
-		
-	#remove all pending messages
-	action_queue_lock.lock()
-	action_queue.clear()
-	action_queue_lock.unlock()
+					_process_free_action(action.resource_id)
 	
-	#clear all loaded resources
-	loaded_resources_lock.lock()
+	call_deferred("emit_signal", "_loading_process_stopped")
 	
-	for resource_id in loaded_resources:
-		
-		if loaded_resources[resource_id].instance != null:
-			loaded_resources[resource_id].instance.queue_free()
-
-	loaded_resources.clear()
-	
-	loaded_resources_lock.unlock()
-		
 	_print("loading process stopped")

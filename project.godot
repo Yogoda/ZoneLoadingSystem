@@ -18,6 +18,7 @@ _global_script_class_icons={
 config/name="Zone Loading System"
 run/main_scene="res://demo/world.tscn"
 config/icon="res://icon.png"
+config/version="1.1"
 
 [autoload]
 

@@ -9,6 +9,7 @@ export var unload_delay = 1.0
 var current_zones = {} #zones the player is in (1-2)
 var current_zone #zone the player is in (arbitrary)
 
+#keep track of loaded zones to ask for unloading
 var loaded_zones = {}
 
 func _ready():
@@ -32,18 +33,12 @@ func _ready():
 				print("ERROR: ", child.name, " already attached to tree, removing...")
 				zone_area.remove_child(child)
 
-func _enter_tree():
-
-	BackgroundLoader.show_debug = true
+	if show_debug:
+		BackgroundLoader.show_debug = true
 	
 	#start background resource loading process
 	BackgroundLoader.start()
-	
-func _exit_tree():
-	
-	#stop background process
-	BackgroundLoader.stop()
-	
+
 func _print(text):
 	
 	if show_debug:
@@ -87,7 +82,8 @@ func _on_zone_exited(zone_id):
 	else:
 		current_zone = null
 		
-	#schedule unloading
+	#schedule unloading, not having immediate unloading prevents having 
+	#noticable transitions when going back and forth a small amount
 	# warning-ignore:return_value_discarded
 	get_tree().create_timer(unload_delay).connect("timeout", self, "_remove_zone", [zone_id])
 
@@ -121,7 +117,7 @@ func _on_zone_instance_available(zone_id, instance):
 
 	#if player is still in the zone, attach it
 	if is_in_zone(zone_id):
-		attach_zone(zone_id, instance)
+		call_deferred("attach_zone", zone_id, instance)
 
 #return instanced zone node from the tree
 func get_zone(zone_id):
@@ -130,12 +126,8 @@ func get_zone(zone_id):
 
 #attach zone to the scene tree
 func attach_zone(zone_id, zone_instance):
-	
-	if not get_zone(zone_id):
-	
-		call_deferred("attach_zone_deferred", zone_id, zone_instance)
 
-func attach_zone_deferred(zone_id, zone_instance):
+	if not get_zone(zone_id):
 
 		get_node(zone_id).add_child(zone_instance)
 		_print(str("zone ", zone_id, " attached"))
