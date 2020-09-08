@@ -28,7 +28,7 @@ This system can be used for indoor and outdoor environments. It can also work fo
 
 - Create a new area under `World/ZoneLoader`
 - Set the collision layer and mask to `zone_triggers`
-- Attach the script `zone_loader.gd` to the area
+- Attach the script `zone_trigger.gd` to the area
 - Set the zone path in the exported script variable
 - Instance your new zone under the area node, don't move it (this is just for setup)
 - Move the area where you want it to be relative to the other zones
