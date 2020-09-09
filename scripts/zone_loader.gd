@@ -50,25 +50,35 @@ func get_zone_path(zone_id):
 func is_in_zone(zone_id):
 	return current_zones.has(zone_id)
 
+func enter_zone(zone_id):
+	
+	get_node(zone_id).zone_entered(null)
+
 func _on_zone_entered(zone_id, zone_path):
 	
 	_print(str("zone ", zone_id, " entered"))
 	
 	current_zone = zone_id
 	current_zones[zone_id] = zone_id
-
+	
 	#load and instance current zone, in priority
 	BackgroundLoader.request_instance(zone_id, zone_path, true)
 
-	var zone = get_node(zone_id)
+	#deferred, otherwise connected zones might not be detected
+	call_deferred("_load_connected_zones", zone_id)
 
+	emit_signal("zone_entered", zone_id)
+	
+func _load_connected_zones(zone_id):
+	
+	var zone = get_node(zone_id)
+	
 	#load connected zones
 	for connected_zone in zone.get_overlapping_areas():
 	
-		_print(str("load connected zone ", connected_zone.zone_id))
-		BackgroundLoader.request_instance(connected_zone.zone_id, connected_zone.zone_path)
-		
-	emit_signal("zone_entered", zone_id)
+		if not loaded_zones.has(connected_zone.zone_id):
+			_print(str("load connected zone ", connected_zone.zone_id))
+			BackgroundLoader.request_instance(connected_zone.zone_id, connected_zone.zone_path)
 	
 func _on_zone_exited(zone_id):
 	

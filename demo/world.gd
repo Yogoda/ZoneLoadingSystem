@@ -31,9 +31,8 @@ func _ready():
 		zone_loader.connect("zone_attached", self, "_on_first_zone_attached", [], CONNECT_ONESHOT)
 		
 		#simulate player entering first zone area (as player is not in the world yet)
-		var zone_path = zone_loader.get_node(starting_zone).zone_path
-		zone_loader._on_zone_entered(starting_zone, zone_path)
-		
+		zone_loader.enter_zone(starting_zone)
+
 		get_tree().paused = true
 		
 		#show initial loading screen
