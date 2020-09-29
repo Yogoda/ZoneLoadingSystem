@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://demo/player_spawn2d.tscn" type="PackedScene" id=1]
+
+[node name="zone2d_01" type="Node2D"]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+color = Color( 0.207843, 0.32549, 0.258824, 1 )
+polygon = PoolVector2Array( -157.678, -6.65819, -133.894, -45.902, -102.975, -60.1725, -49.4605, -66.1186, 5.24304, -58.9833, 36.1624, -44.7128, 70.6494, -35.1992, 98.0012, -41.1452, 111.083, -66.1186, 126.542, -87.5243, 180.057, -64.9294, 172.921, -24.4963, 165.786, 24.2612, 121.785, 58.7482, 75.4063, 81.3432, -16.1627, 70.6403, -122.002, 52.8022, -151.732, 31.3965 )
+
+[node name="PlayerSpawn" type="Position2D" parent="." groups=[
+"PLAYER_SPAWN",
+] instance=ExtResource( 1 )]
+position = Vector2( -92.8648, -1.18921 )
