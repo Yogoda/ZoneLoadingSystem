@@ -1,4 +1,4 @@
-extends Spatial
+extends Node
 
 onready var zone_loader = $ZoneLoader
 

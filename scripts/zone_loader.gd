@@ -19,18 +19,19 @@ func _ready():
 
 	#connect all zone triggers
 	for zone_area in get_children():
-
-		if zone_area is Area:
-			
+		if zone_area is Area or zone_area is Area2D:
 			zone_area.connect("zone_entered", self, "_on_zone_entered")
 			zone_area.connect("zone_exited", self, "_on_zone_exited")
 
 		#check for already present zones
 		for child in zone_area.get_children():
-			
-			if not child is CollisionShape and not child is CollisionPolygon:
-				
-				print("ERROR: ", child.name, " already attached to tree, removing...")
+			if (
+				not child is CollisionShape
+				and not child is CollisionPolygon
+				and not child is CollisionShape2D
+				and not child is CollisionPolygon2D
+			):
+				print("ERROR: ", child.get_path(), " already attached to tree, removing...")
 				zone_area.remove_child(child)
 
 	if show_debug:

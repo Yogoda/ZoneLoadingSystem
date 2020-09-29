@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends KinematicBody2D
+
+var vel := Vector2.ZERO
+
+func _physics_process(delta):
+	var input := Vector2.ZERO
+	if Input.is_key_pressed(KEY_UP):
+		input.y -= 1
+	if Input.is_key_pressed(KEY_DOWN):
+		input.y += 1
+	if Input.is_key_pressed(KEY_LEFT):
+		input.x -= 1
+	if Input.is_key_pressed(KEY_RIGHT):
+		input.x += 1
+	if input == Vector2.ZERO:
+		vel *= 1 - delta
+	else:
+		vel += input.normalized() * 200.0 * delta
+	if vel.length() > 150:
+		vel = vel.normalized() * 150
+	vel = move_and_slide(vel)
+
+func _draw():
+	draw_circle(Vector2.ZERO, 32, Color.blueviolet)
+"
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 32.0
+
+[node name="Player2D" type="KinematicBody2D"]
+collision_mask = 3
+script = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
