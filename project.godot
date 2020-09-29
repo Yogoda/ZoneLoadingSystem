@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Zone Loading System"
-run/main_scene="res://demo/3d/demo_3d.tscn"
+run/main_scene="res://demo/main.tscn"
 config/icon="res://icon.png"
 config/version="1.1"
 

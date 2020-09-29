@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends CenterContainer
+
+func _on_Demo2D_pressed():
+	
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene(\"res://demo/2d/demo_2d.tscn\")
+
+func _on_Demo3D_pressed():
+	
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene(\"res://demo/3d/demo_3d.tscn\")
+"
+
+[node name="Control" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="."]
+margin_left = 417.0
+margin_top = 249.0
+margin_right = 607.0
+margin_bottom = 351.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 183.0
+margin_bottom = 95.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
+margin_right = 176.0
+margin_bottom = 54.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 156.0
+margin_bottom = 34.0
+text = "Zone Loading System"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+margin_top = 58.0
+margin_right = 176.0
+margin_bottom = 88.0
+alignment = 1
+
+[node name="Demo2D" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 6.0
+margin_right = 86.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 80, 30 )
+text = "Demo 2D"
+
+[node name="Demo3D" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+margin_left = 90.0
+margin_right = 170.0
+margin_bottom = 30.0
+rect_min_size = Vector2( 80, 30 )
+text = "Demo 3D"
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Demo2D" to="." method="_on_Demo2D_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Demo3D" to="." method="_on_Demo3D_pressed"]

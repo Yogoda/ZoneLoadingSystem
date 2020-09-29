@@ -22,7 +22,7 @@ height = 191.773
 [sub_resource type="BoxShape" id=5]
 extents = Vector3( 194.998, 87.5436, 105.035 )
 
-[node name="World" type="Spatial"]
+[node name="World" type="Node"]
 script = ExtResource( 3 )
 player_scene = ExtResource( 4 )
 starting_zone = "Zone01"
@@ -35,7 +35,6 @@ shadow_bias = 0.2
 
 [node name="ZoneLoader" type="Spatial" parent="."]
 script = ExtResource( 2 )
-show_debug = true
 
 [node name="Zone01" type="Area" parent="ZoneLoader"]
 collision_layer = 2

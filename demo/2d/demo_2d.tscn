@@ -1,13 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/zone_trigger.gd" type="Script" id=1]
 [ext_resource path="res://scripts/zone_loader.gd" type="Script" id=2]
 [ext_resource path="res://scripts/world.gd" type="Script" id=3]
 [ext_resource path="res://demo/2d/resources/player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://demo/2d/zones/zone_01.tscn" type="PackedScene" id=5]
-[ext_resource path="res://demo/2d/zones/zone_02.tscn" type="PackedScene" id=6]
-[ext_resource path="res://demo/2d/zones/zone_03.tscn" type="PackedScene" id=7]
-[ext_resource path="res://demo/2d/zones/zone_04.tscn" type="PackedScene" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 204.177, 121.92 )
@@ -21,8 +17,7 @@ extents = Vector2( 227.801, 131.194 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 226.9, 197.013 )
 
-[node name="World" type="Node2D"]
-position = Vector2( 19.799, 0 )
+[node name="World" type="Node"]
 script = ExtResource( 3 )
 player_scene = ExtResource( 4 )
 starting_zone = "Zone01"
@@ -44,8 +39,6 @@ zone_path = "res://demo/2d/zones/zone_01.tscn"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone01"]
 shape = SubResource( 1 )
 
-[node name="zone2d_01" parent="ZoneLoader/Zone01" instance=ExtResource( 5 )]
-
 [node name="Zone02" type="Area2D" parent="ZoneLoader"]
 position = Vector2( 464.354, 155.591 )
 collision_layer = 2
@@ -58,8 +51,6 @@ zone_path = "res://demo/2d/zones/zone_02.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone02"]
 shape = SubResource( 2 )
-
-[node name="zone2d_02" parent="ZoneLoader/Zone02" instance=ExtResource( 6 )]
 
 [node name="Zone03" type="Area2D" parent="ZoneLoader"]
 position = Vector2( 727.575, 318.551 )
@@ -74,8 +65,6 @@ zone_path = "res://demo/2d/zones/zone_03.tscn"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone03"]
 shape = SubResource( 3 )
 
-[node name="zone2d_03" parent="ZoneLoader/Zone03" instance=ExtResource( 7 )]
-
 [node name="Zone04" type="Area2D" parent="ZoneLoader"]
 position = Vector2( 485.22, 465.406 )
 collision_layer = 2
@@ -88,8 +77,6 @@ zone_path = "res://demo/2d/zones/zone_04.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone04"]
 shape = SubResource( 4 )
-
-[node name="zone2d_04" parent="ZoneLoader/Zone04" instance=ExtResource( 8 )]
 
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0

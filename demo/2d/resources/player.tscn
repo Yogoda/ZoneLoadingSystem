@@ -6,7 +6,7 @@ extends KinematicBody2D
 
 var vel := Vector2.ZERO
 
-export var max_speed = 400.0
+export var max_speed = 200.0
 var acceleration = 4.0
 var deceleration = 7.0
 
@@ -38,14 +38,14 @@ func _physics_process(delta):
 	vel = move_and_slide(vel)
 
 func _draw():
-	draw_circle(Vector2.ZERO, 20, Color.blueviolet)
+	draw_circle(Vector2.ZERO, 12, Color.blueviolet)
 "
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 20.0
+radius = 12.0
 
 [node name="Player2D" type="KinematicBody2D"]
-position = Vector2( 1.569e-23, 5.96106e-09 )
+position = Vector2( -111.357, 34.4081 )
 collision_mask = 3
 script = SubResource( 1 )
 max_speed = 600.0
