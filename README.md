@@ -14,15 +14,14 @@ This system can be used for indoor and outdoor environments. It can also work fo
 - Zones that are connected to the current zone(s) are automatically loaded in memory and instanced in background, so that they are ready when the player enters a new zone. Connected zones are zones that are overlapping the current zone, this is detected automatically, no need to register the connections.
 
 ## Pros
-- No loading screen during the game.
-- The next zone is loaded in background mode while the player explores the current map.
-- Allows huge seamless worlds.
-- Connected zones are automatically detected.
+- Good if loading the whole world at once would take too much time/memory.
+- Allows huge seamless worlds without loading screen.
 - Works for 2D and 3D.
 
 ## Cons
+- Useless if your whole world can be quickly loaded in memory, or if you don't mind loading screens.
 - Need to manually split the game world into zones and set triggers.
-- Zones need to be carfully designed so that player cannot see unloaded zones (needs twists and turns).
+- Zones need to be carfully designed so that player cannot see unloaded zones (needs twists and turns or fog).
 
 ## How to add a new zone
 
@@ -36,6 +35,14 @@ This system can be used for indoor and outdoor environments. It can also work fo
 - Delete your zone instance. No area should contain a zone, as they should not be loaded when the game starts.
 
 Done. Now the zone will be automatically loaded and instanced, and attached to the tree when the player enters the area.
+
+## Known issues
+
+### Stutter when a new zone is attached to the tree
+- New shaders are being compiled. Limit the number of different shader you use and use a shader cache to precompile the shaders during loading screen.
+
+### Objects/monsters are reset when going back
+- You need to save your zone data when it is unloaded and restore it when the zone is loaded.
 
 ## Contribute
 
