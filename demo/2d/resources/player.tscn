@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "tool
+extends KinematicBody2D
+
+var vel := Vector2.ZERO
+
+export var max_speed = 400.0
+var acceleration = 4.0
+var deceleration = 7.0
+
+func _physics_process(delta):
+	
+	var input := Vector2.ZERO
+	
+	if Input.is_key_pressed(KEY_UP) or Input.is_action_pressed(\"move_forward\"):
+		input.y -= 1
+	if Input.is_key_pressed(KEY_DOWN) or Input.is_action_pressed(\"move_backward\"):
+		input.y += 1
+	if Input.is_key_pressed(KEY_LEFT) or Input.is_action_pressed(\"move_left\"):
+		input.x -= 1
+	if Input.is_key_pressed(KEY_RIGHT) or Input.is_action_pressed(\"move_right\"):
+		input.x += 1
+		
+	var target_speed
+	var accel
+	
+	if input == Vector2.ZERO:
+		target_speed = Vector2.ZERO
+		accel = deceleration
+	else:
+		target_speed = input.normalized() * max_speed
+		accel = acceleration
+		
+	vel = vel.linear_interpolate(target_speed, accel * delta)
+
+	vel = move_and_slide(vel)
+
+func _draw():
+	draw_circle(Vector2.ZERO, 20, Color.blueviolet)
+"
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 20.0
+
+[node name="Player2D" type="KinematicBody2D"]
+position = Vector2( 1.569e-23, 5.96106e-09 )
+collision_mask = 3
+script = SubResource( 1 )
+max_speed = 600.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )

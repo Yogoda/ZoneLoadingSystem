@@ -1,9 +1,10 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://demo/zones/resources/rock.tscn" type="PackedScene" id=1]
-[ext_resource path="res://demo/zones/resources/materials/terrain_green.material" type="Material" id=2]
-[ext_resource path="res://demo/zones/resources/materials/rock_white.material" type="Material" id=3]
-[ext_resource path="res://demo/player_spawn.tscn" type="PackedScene" id=4]
+[ext_resource path="res://demo/3d/zones/resources/rock.tscn" type="PackedScene" id=1]
+[ext_resource path="res://demo/3d/zones/resources/materials/terrain_green.material" type="Material" id=2]
+[ext_resource path="res://demo/3d/zones/resources/materials/rock_white.material" type="Material" id=3]
+[ext_resource path="res://demo/3d/resources/player_spawn.tscn" type="PackedScene" id=4]
+
 
 [node name="Zone01" type="Spatial"]
 

@@ -4,13 +4,13 @@ onready var zone_loader = $ZoneLoader
 
 export var player_scene:PackedScene
 
+#you can change the starting zone here
+export(String) var starting_zone
+
 #player spawn locations are in this group
 const GROUP_PLAYER_SPAWN = "PLAYER_SPAWN"
 
 var player
-
-#you can change the starting zone here
-var starting_zone = "Zone01"
 
 func _input(event):
 	
