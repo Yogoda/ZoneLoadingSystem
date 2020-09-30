@@ -4,7 +4,7 @@ This is a dynamic zone loading system for Godot that takes care of the zone mana
 
 The zones can be as big or as small as needed, and this can be combined with other optimization methods. If done carefully, the zone transitions will be invisible to the player, but for that you will need to break line of sight using twists and turns, so that the player can never see unloaded zones.
 
-This system can be used for indoor and outdoor environments. It can also work for 2D with minor modifications.
+This system can be used for indoor and outdoor environments. It also works for 2D (example included).
 
 ![Test image](screenshots/world.png)
 
