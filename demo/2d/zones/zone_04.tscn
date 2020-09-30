@@ -2,7 +2,7 @@
 
 [ext_resource path="res://demo/2d/resources/player_spawn.tscn" type="PackedScene" id=1]
 
-[node name="zone2d_04" type="Node2D"]
+[node name="Zone04" type="Node2D"]
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color( 0.513726, 0.415686, 0.270588, 1 )

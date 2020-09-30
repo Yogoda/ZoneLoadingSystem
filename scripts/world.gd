@@ -22,7 +22,6 @@ func _input(event):
 			BackgroundLoader.request_stop()
 			yield(BackgroundLoader, "loading_process_stopped")
 
-			print("exited")
 			get_tree().quit()
 
 func _ready():

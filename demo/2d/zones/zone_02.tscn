@@ -2,11 +2,11 @@
 
 [ext_resource path="res://demo/2d/resources/player_spawn.tscn" type="PackedScene" id=1]
 
-[node name="zone2d_02" type="Node2D"]
+[node name="Zone02" type="Node2D"]
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color( 0.329412, 0.392157, 0.356863, 1 )
 polygon = PoolVector2Array( -128, 64, -112, 32, -104, -16, -88, -80, -40, -120, 40, -112, 104, -88, 120, -48, 128, 8, 128, 80, 96, 120, 72, 56, 45.6761, 14.7476, 0, 16, -48, 40, -80, 88 )
 
 [node name="PlayerSpawn" parent="." instance=ExtResource( 1 )]
-position = Vector2( 8, 80 )
+position = Vector2( 22.2866, -42.2299 )
