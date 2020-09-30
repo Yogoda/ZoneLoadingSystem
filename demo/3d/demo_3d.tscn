@@ -41,7 +41,7 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )
 zone_path = "res://demo/3d/zones/zone_01.tscn"
-preview = false
+preview = true
 
 [node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/Zone01"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.8995 )
@@ -53,7 +53,7 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )
 zone_path = "res://demo/3d/zones/zone_02.tscn"
-preview = false
+preview = true
 
 [node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/Zone02"]
 shape = SubResource( 2 )
@@ -72,7 +72,7 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource( 1 )
 zone_path = "res://demo/3d/zones/zone_03.tscn"
-preview = false
+preview = true
 
 [node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/Zone03"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 103.504, 0, 0 )
