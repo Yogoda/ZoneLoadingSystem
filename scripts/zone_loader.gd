@@ -23,17 +23,6 @@ func _ready():
 			zone_area.connect("zone_entered", self, "_on_zone_entered")
 			zone_area.connect("zone_exited", self, "_on_zone_exited")
 
-		#check for already present zones
-		for child in zone_area.get_children():
-			if (
-				not child is CollisionShape
-				and not child is CollisionPolygon
-				and not child is CollisionShape2D
-				and not child is CollisionPolygon2D
-			):
-				print("ERROR: ", child.get_path(), " already attached to tree, removing...")
-				zone_area.remove_child(child)
-
 	if show_debug:
 		BackgroundLoader.show_debug = true
 	
