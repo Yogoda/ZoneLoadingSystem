@@ -28,11 +28,10 @@ This system can be used for indoor and outdoor environments. It also works for 2
 - Create a new area under `World/ZoneLoader`
 - Set the collision layer and mask to `zone_triggers`
 - Attach the script `zone_trigger.gd` to the area
-- Set the zone path in the exported script variable
-- Instance your new zone under the area node, don't move it (this is just for setup)
+- Set the zone path in the inspector
+- Click the checkbox "Preview" to make the zone visible
 - Move the area where you want it to be relative to the other zones
 - Add one or more collision shapes that encompasses the zone, the zone will be loaded when the player enters this area
-- Delete your zone instance. No area should contain a zone, as they should not be loaded when the game starts.
 
 Done. Now the zone will be automatically loaded and instanced, and attached to the tree when the player enters the area.
 
