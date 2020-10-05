@@ -66,10 +66,13 @@ func _load_connected_zones(zone_id):
 	#load connected zones
 	for connected_zone in zone.get_overlapping_areas():
 	
-		if not loaded_zones.has(connected_zone.zone_id):
-			_print(str("load connected zone ", connected_zone.zone_id))
-			BackgroundLoader.request_instance(connected_zone.zone_id, connected_zone.zone_path)
-	
+		#don't consider player trigger area
+		if connected_zone.get("zone_id"):
+		
+			if not loaded_zones.has(connected_zone.zone_id):
+				_print(str("load connected zone ", connected_zone.zone_id))
+				BackgroundLoader.request_instance(connected_zone.zone_id, connected_zone.zone_path)
+		
 func _on_zone_exited(zone_id):
 	
 	_print(str("zone ", zone_id, " exited"))
@@ -101,7 +104,11 @@ func _remove_zone(zone_id):
 		
 		#add all zones connected to a zone the player is in
 		for connected_zone in zone.get_overlapping_areas():
-			keep_zones.append(connected_zone.zone_id)
+			
+			#don't consider player trigger area
+			if connected_zone.get("zone_id"):
+				
+				keep_zones.append(connected_zone.zone_id)
 	
 	for zone_id in loaded_zones:
 

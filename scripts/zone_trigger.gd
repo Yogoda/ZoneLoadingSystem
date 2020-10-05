@@ -19,33 +19,53 @@ func _get_configuration_warning():
 
 
 func _ready():
+	
 	if Engine.editor_hint:
 		return
+		
 	zone_id = self.name
 
 	# warning-ignore:return_value_discarded
 	connect("body_entered", self, "zone_entered")
 	# warning-ignore:return_value_discarded
 	connect("body_exited", self, "zone_exited")
-
+	
+	# warning-ignore:return_value_discarded
+	connect("area_entered", self, "zone_entered")
+	# warning-ignore:return_value_discarded
+	connect("area_exited", self, "zone_exited")
 
 # warning-ignore:unused_argument
 func zone_entered(player):
+	
 	if Engine.editor_hint:
 		return
+		
+	#discard initial contact with other areas
+	if player != null and player.get("zone_id"):
+		return
+		
 	emit_signal("zone_entered", zone_id, zone_path)
 
 
 # warning-ignore:unused_argument
 func zone_exited(player):
+	
 	if Engine.editor_hint:
 		return
+		
+	#discard initial contact with other areas
+	if player != null and player.get("zone_id"):
+		return
+		
 	emit_signal("zone_exited", zone_id)
 
 
 func set_preview(value: bool):
-	if not Engine.editor_hint || preview == value:
+	
+	if not Engine.editor_hint or preview == value:
 		return
+		
 	preview = value
 
 	# remove existing node, if any

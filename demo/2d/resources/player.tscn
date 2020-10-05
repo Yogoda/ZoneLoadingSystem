@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [sub_resource type="GDScript" id=1]
 script/source = "tool
@@ -11,6 +11,9 @@ var acceleration = 4.0
 var deceleration = 7.0
 
 func _physics_process(delta):
+	
+	if Engine.editor_hint:
+		return
 	
 	var input := Vector2.ZERO
 	
@@ -44,11 +47,23 @@ func _draw():
 [sub_resource type="CircleShape2D" id=2]
 radius = 12.0
 
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 512, 300 )
+
 [node name="Player2D" type="KinematicBody2D"]
-position = Vector2( -111.357, 34.4081 )
-collision_mask = 3
+position = Vector2( -32750, -282.961 )
 script = SubResource( 1 )
 max_speed = 600.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="ScreenTrigger" type="Area2D" parent="Camera2D"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScreenTrigger"]
+shape = SubResource( 3 )
