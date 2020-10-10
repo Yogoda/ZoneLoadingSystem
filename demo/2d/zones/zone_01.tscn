@@ -1,8 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://demo/2d/resources/player_spawn.tscn" type="PackedScene" id=1]
-
-[sub_resource type="RectangleShape2D" id=1]
 
 [node name="Zone01" type="Node2D"]
 
@@ -14,8 +12,14 @@ polygon = PoolVector2Array( -157.678, -6.65819, -133.894, -45.902, -102.975, -60
 [node name="PlayerSpawn" parent="." instance=ExtResource( 1 )]
 position = Vector2( -92.8648, -1.18921 )
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Wall" type="StaticBody2D" parent="."]
 position = Vector2( -20.0226, 264.966 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource( 1 )
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
+polygon = PoolVector2Array( -162.561, -1.4971, -458.426, -48.2857, -584.284, -132.191, -610.237, -292.744, -512.722, -450.908, -378.342, -509.179, -184.236, -527.744, 36.6914, -506.801, 161.558, -440.205, 313.203, -403.385, 403.101, -422.863, 467.528, -536.734, 530.457, -614.646, 180.43, -662.619, -576.792, -580.185, -665.192, -431.852, -749.097, -108.218, -227.687, 200.433, 314.439, 182.4, 330.426, 56.8831, 72.3676, 30.7206 )
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2( -20.0226, 264.966 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall2"]
+polygon = PoolVector2Array( 686.757, -178.673, 836.428, -64.6376, 993.45, -436.26, 853.759, -507.693, 740.211, -526.123 )

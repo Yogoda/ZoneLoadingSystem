@@ -11,3 +11,13 @@ polygon = PoolVector2Array( -32.8116, 17.1259, -64, 40, -64, 64, -72, 104, -144,
 
 [node name="PlayerSpawn" parent="." instance=ExtResource( 1 )]
 position = Vector2( -8.00001, 56 )
+
+[node name="Wall" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
+polygon = PoolVector2Array( -1049.8, -387.877, -772.62, -385.357, -674.346, -266.924, -636.549, -50.2179, -636.549, 279.881, -571.033, 443.671, -286.291, 413.433, -253.533, 257.203, -256.052, 156.409, -130.06, 70.7345, -19.1874, 151.369, 71.527, 284.921, 3.49121, 385.715, 154.682, 478.949, 409.186, 511.707, 610.773, 481.469, 610.773, 352.957, 507.46, 209.326, 542.286, -72.486, 605.733, -317.321, 777.083, -284.563, 774.563, 670.457, -994.366, 632.659 )
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall2"]
+polygon = PoolVector2Array( -450.08, -607.103, -291.33, -327.4, -89.7427, -327.4, 94.2058, -423.154, 311.581, -448.275, 212.542, -650.143, -389.604, -791.051 )
