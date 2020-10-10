@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://demo/2d/resources/player_spawn.tscn" type="PackedScene" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
 
 [node name="Zone01" type="Node2D"]
 
@@ -11,3 +13,9 @@ polygon = PoolVector2Array( -157.678, -6.65819, -133.894, -45.902, -102.975, -60
 
 [node name="PlayerSpawn" parent="." instance=ExtResource( 1 )]
 position = Vector2( -92.8648, -1.18921 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( -20.0226, 264.966 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 1 )

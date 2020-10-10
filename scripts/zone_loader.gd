@@ -124,7 +124,11 @@ func _on_zone_instance_available(zone_id, instance):
 
 	#if player is still in the zone, attach it
 	if is_in_zone(zone_id):
-		call_deferred("attach_zone", zone_id, instance)
+
+		#use a timer as a workaround for this issue:
+		#https://github.com/godotengine/godot/issues/19465
+		# warning-ignore:return_value_discarded
+		get_tree().create_timer(0.0).connect("timeout", self, "attach_zone", [zone_id, instance])
 
 #return instanced zone node from the tree
 func get_zone(zone_id):

@@ -17,7 +17,7 @@ extents = Vector2( 841.391, 398.189 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 758.777, 612.111 )
 
-[node name="World" type="Node"]
+[node name="World" type="Node2D"]
 script = ExtResource( 3 )
 player_scene = ExtResource( 4 )
 starting_zone = "Zone01"
@@ -35,7 +35,6 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_01.tscn"
-preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone01"]
 shape = SubResource( 1 )
@@ -49,7 +48,6 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_02.tscn"
-preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone02"]
 shape = SubResource( 2 )
@@ -63,7 +61,6 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_03.tscn"
-preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone03"]
 shape = SubResource( 3 )
@@ -77,7 +74,6 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_04.tscn"
-preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone04"]
 position = Vector2( -25.3984, -38.0976 )

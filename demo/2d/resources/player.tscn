@@ -61,9 +61,9 @@ shape = SubResource( 2 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
-[node name="ScreenTrigger" type="Area2D" parent="Camera2D"]
+[node name="ZoneTrigger" type="Area2D" parent="Camera2D"]
 collision_layer = 0
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ScreenTrigger"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ZoneTrigger"]
 shape = SubResource( 3 )
