@@ -24,7 +24,6 @@ starting_zone = "Zone01"
 
 [node name="ZoneLoader" type="Node2D" parent="."]
 script = ExtResource( 2 )
-show_debug = true
 
 [node name="Zone01" type="Area2D" parent="ZoneLoader"]
 position = Vector2( 571.435, 293.19 )
