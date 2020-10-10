@@ -34,6 +34,7 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_01.tscn"
+preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone01"]
 shape = SubResource( 1 )
@@ -47,6 +48,7 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_02.tscn"
+preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone02"]
 shape = SubResource( 2 )
@@ -60,6 +62,7 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_03.tscn"
+preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone03"]
 shape = SubResource( 3 )
@@ -73,6 +76,7 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_04.tscn"
+preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone04"]
 position = Vector2( -25.3984, -38.0976 )
