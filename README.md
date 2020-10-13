@@ -39,6 +39,12 @@ Done. Now the zone will be automatically loaded and instanced, and attached to t
 
 ### Stutter when a new zone is attached to the tree
 - New shaders are being compiled. Limit the number of different shader you use and use a shader cache to precompile the shaders during loading screen.
+- outputting to the console using print() and errors can create stutters.
+
+### Error: _body_enter_tree: Condition "!E" is true.
+
+- Can happen when exiting and reentering a zone in 3D, this is a bug in Godot.
+- Will be fixed in next release, hopefully: https://github.com/godotengine/godot/pull/41470
 
 ### Objects/monsters are reset when going back
 - You need to save your zone data when it is unloaded and restore it when the zone is loaded.
