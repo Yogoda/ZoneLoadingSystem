@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://scripts/zone_trigger.gd" type="Script" id=1]
-[ext_resource path="res://scripts/zone_loader.gd" type="Script" id=2]
-[ext_resource path="res://scripts/world.gd" type="Script" id=3]
-[ext_resource path="res://demo/2d/resources/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/world.gd" type="Script" id=1]
+[ext_resource path="res://scripts/zone_trigger.gd" type="Script" id=2]
+[ext_resource path="res://scripts/zone_loader.gd" type="Script" id=3]
+[ext_resource path="res://demo/2d_topdown/resources/player.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 755.996, 428.289 )
@@ -18,22 +18,22 @@ extents = Vector2( 841.391, 398.189 )
 extents = Vector2( 758.777, 612.111 )
 
 [node name="World" type="Node2D"]
-script = ExtResource( 3 )
+script = ExtResource( 1 )
 player_scene = ExtResource( 4 )
 starting_zone = "Zone01"
 
 [node name="ZoneLoader" type="Node2D" parent="."]
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="Zone01" type="Area2D" parent="ZoneLoader"]
 position = Vector2( 571.435, 293.19 )
 collision_layer = 2
 collision_mask = 2
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-zone_path = "res://demo/2d/zones/zone_01.tscn"
+zone_path = "res://demo/2d_topdown/zones/zone_01.tscn"
 preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone01"]
@@ -43,11 +43,11 @@ shape = SubResource( 1 )
 position = Vector2( 1585.84, -290.04 )
 collision_layer = 2
 collision_mask = 2
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-zone_path = "res://demo/2d/zones/zone_02.tscn"
+zone_path = "res://demo/2d_topdown/zones/zone_02.tscn"
 preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone02"]
@@ -57,11 +57,11 @@ shape = SubResource( 2 )
 position = Vector2( 2654.43, 358.333 )
 collision_layer = 2
 collision_mask = 2
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-zone_path = "res://demo/2d/zones/zone_03.tscn"
+zone_path = "res://demo/2d_topdown/zones/zone_03.tscn"
 preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone03"]
@@ -71,11 +71,11 @@ shape = SubResource( 3 )
 position = Vector2( 1676.66, 997.679 )
 collision_layer = 2
 collision_mask = 2
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-zone_path = "res://demo/2d/zones/zone_04.tscn"
+zone_path = "res://demo/2d_topdown/zones/zone_04.tscn"
 preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone04"]

@@ -3,10 +3,15 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends CenterContainer
 
-func _on_Demo2D_pressed():
+func _on_Demo2D_TD_pressed():
 	
 	# warning-ignore:return_value_discarded
-	get_tree().change_scene(\"res://demo/2d/demo_2d.tscn\")
+	get_tree().change_scene(\"res://demo/2d_topdown/demo_2d_topdown.tscn\")
+	
+func _on_Demo2D_AV_pressed():
+	
+	# warning-ignore:return_value_discarded
+	get_tree().change_scene(\"res://demo/2d_angled/demo_2d_angled.tscn\")
 
 func _on_Demo3D_pressed():
 	
@@ -24,15 +29,15 @@ __meta__ = {
 
 [node name="Panel" type="PanelContainer" parent="."]
 margin_left = 417.0
-margin_top = 240.0
+margin_top = 206.0
 margin_right = 607.0
-margin_bottom = 359.0
+margin_bottom = 393.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 183.0
-margin_bottom = 112.0
+margin_bottom = 180.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -54,24 +59,26 @@ text = "Zone Loading System
 Demo"
 align = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+[node name="Demo3D" type="Button" parent="Panel/VBoxContainer"]
 margin_top = 75.0
 margin_right = 176.0
 margin_bottom = 105.0
-alignment = 1
-
-[node name="Demo2D" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
-margin_left = 6.0
-margin_right = 86.0
-margin_bottom = 30.0
-rect_min_size = Vector2( 80, 30 )
-text = "Demo 2D"
-
-[node name="Demo3D" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
-margin_left = 90.0
-margin_right = 170.0
-margin_bottom = 30.0
 rect_min_size = Vector2( 80, 30 )
 text = "Demo 3D"
-[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Demo2D" to="." method="_on_Demo2D_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/Demo3D" to="." method="_on_Demo3D_pressed"]
+
+[node name="Demo2D_TD" type="Button" parent="Panel/VBoxContainer"]
+margin_top = 109.0
+margin_right = 176.0
+margin_bottom = 139.0
+rect_min_size = Vector2( 80, 30 )
+text = "Demo 2D Top Down"
+
+[node name="Demo2D_AV" type="Button" parent="Panel/VBoxContainer"]
+margin_top = 143.0
+margin_right = 176.0
+margin_bottom = 173.0
+rect_min_size = Vector2( 80, 30 )
+text = "Demo 2D Angled View"
+[connection signal="pressed" from="Panel/VBoxContainer/Demo3D" to="." method="_on_Demo3D_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Demo2D_TD" to="." method="_on_Demo2D_TD_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Demo2D_AV" to="." method="_on_Demo2D_AV_pressed"]

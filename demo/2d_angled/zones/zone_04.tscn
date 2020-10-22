@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://demo/2d/resources/player_spawn.tscn" type="PackedScene" id=1]
+[ext_resource path="res://demo/2d_topdown/resources/player_spawn.tscn" type="PackedScene" id=1]
+
 
 [node name="Zone04" type="Node2D"]
 

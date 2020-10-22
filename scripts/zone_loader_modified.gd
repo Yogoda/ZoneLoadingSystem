@@ -19,7 +19,7 @@ func _ready():
 
 	#connect all zone triggers
 	for zone_area in get_children():
-		if zone_area is Area or zone_area is Area2D:
+		if zone_area is YSort:
 			zone_area.connect("zone_entered", self, "_on_zone_entered")
 			zone_area.connect("zone_exited", self, "_on_zone_exited")
 
@@ -66,11 +66,11 @@ func _load_connected_zones(zone_id):
 	for connected_zone in zone.get_overlapping_areas():
 	
 		#don't consider player trigger area
-		if connected_zone.get("zone_id"):
+		if connected_zone.get_parent().get("zone_id"):
 		
-			if not loaded_zones.has(connected_zone.zone_id):
-				_print(str("load connected zone ", connected_zone.zone_id))
-				BackgroundLoader.request_instance(connected_zone.zone_id, connected_zone.zone_path)
+			if not loaded_zones.has(connected_zone.get_parent().zone_id):
+				_print(str("load connected zone ", connected_zone.get_parent().zone_id))
+				BackgroundLoader.request_instance(connected_zone.get_parent().zone_id, connected_zone.get_parent().zone_path)
 		
 func _on_zone_exited(zone_id):
 	
@@ -132,7 +132,7 @@ func _on_zone_instance_available(zone_id, instance):
 #return instanced zone node from the tree
 func get_zone(zone_id):
 
-	return get_node("Ysort_"+zone_id).get_node_or_null(zone_id)
+	return get_node(zone_id).get_node_or_null(zone_id)
 
 #attach zone to the scene tree
 func attach_zone(zone_id, zone_instance):
