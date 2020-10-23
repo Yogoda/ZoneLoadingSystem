@@ -3,7 +3,7 @@
 [ext_resource path="res://scripts/world.gd" type="Script" id=1]
 [ext_resource path="res://scripts/zone_trigger.gd" type="Script" id=2]
 [ext_resource path="res://scripts/zone_loader.gd" type="Script" id=3]
-[ext_resource path="res://demo/2d_topdown/resources/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://demo/2d/resources/player.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 755.996, 428.289 )
@@ -33,7 +33,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-zone_path = "res://demo/2d_topdown/zones/zone_01.tscn"
+zone_path = "res://demo/2d/zones/zone_01.tscn"
 preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone01"]
@@ -47,7 +47,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-zone_path = "res://demo/2d_topdown/zones/zone_02.tscn"
+zone_path = "res://demo/2d/zones/zone_02.tscn"
 preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone02"]
@@ -61,7 +61,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-zone_path = "res://demo/2d_topdown/zones/zone_03.tscn"
+zone_path = "res://demo/2d/zones/zone_03.tscn"
 preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone03"]
@@ -75,7 +75,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-zone_path = "res://demo/2d_topdown/zones/zone_04.tscn"
+zone_path = "res://demo/2d/zones/zone_04.tscn"
 preview = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone04"]

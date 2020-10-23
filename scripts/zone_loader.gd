@@ -132,7 +132,8 @@ func _on_zone_instance_available(zone_id, instance):
 #return instanced zone node from the tree
 func get_zone(zone_id):
 
-	return get_node("Ysort_"+zone_id).get_node_or_null(zone_id)
+#	return get_node("Ysort_"+zone_id).get_node_or_null(zone_id)
+	return get_node(zone_id).get_node_or_null(zone_id)
 
 #attach zone to the scene tree
 func attach_zone(zone_id, zone_instance):

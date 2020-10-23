@@ -6,12 +6,12 @@ script/source = "extends CenterContainer
 func _on_Demo2D_TD_pressed():
 	
 	# warning-ignore:return_value_discarded
-	get_tree().change_scene(\"res://demo/2d_topdown/demo_2d_topdown.tscn\")
+	get_tree().change_scene(\"res://demo/2d/demo_2d.tscn\")
 	
 func _on_Demo2D_AV_pressed():
 	
 	# warning-ignore:return_value_discarded
-	get_tree().change_scene(\"res://demo/2d_angled/demo_2d_angled.tscn\")
+	get_tree().change_scene(\"res://demo/2d_ysort/demo_2d_ysort.tscn\")
 
 func _on_Demo3D_pressed():
 	
@@ -66,19 +66,19 @@ margin_bottom = 105.0
 rect_min_size = Vector2( 80, 30 )
 text = "Demo 3D"
 
-[node name="Demo2D_TD" type="Button" parent="Panel/VBoxContainer"]
+[node name="Demo2D" type="Button" parent="Panel/VBoxContainer"]
 margin_top = 109.0
 margin_right = 176.0
 margin_bottom = 139.0
 rect_min_size = Vector2( 80, 30 )
-text = "Demo 2D Top Down"
+text = "Demo 2D"
 
-[node name="Demo2D_AV" type="Button" parent="Panel/VBoxContainer"]
+[node name="Demo2D_Ysort" type="Button" parent="Panel/VBoxContainer"]
 margin_top = 143.0
 margin_right = 176.0
 margin_bottom = 173.0
 rect_min_size = Vector2( 80, 30 )
-text = "Demo 2D Angled View"
+text = "Demo 2D with Y sort"
 [connection signal="pressed" from="Panel/VBoxContainer/Demo3D" to="." method="_on_Demo3D_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Demo2D_TD" to="." method="_on_Demo2D_TD_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Demo2D_AV" to="." method="_on_Demo2D_AV_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Demo2D" to="." method="_on_Demo2D_TD_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Demo2D_Ysort" to="." method="_on_Demo2D_AV_pressed"]
