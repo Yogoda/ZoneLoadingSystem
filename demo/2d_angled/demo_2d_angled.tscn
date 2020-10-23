@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/world.gd" type="Script" id=1]
-[ext_resource path="res://scripts/zone.gd" type="Script" id=2]
-[ext_resource path="res://scripts/zone_loader_modified.gd" type="Script" id=3]
+[ext_resource path="res://scripts/zone_angled2D.gd" type="Script" id=2]
+[ext_resource path="res://scripts/zone_loader_angled2D.gd" type="Script" id=3]
 [ext_resource path="res://demo/2d_angled/resources/player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scripts/zone_trigger_modified.gd" type="Script" id=5]
+[ext_resource path="res://scripts/zone_trigger_angled2D.gd" type="Script" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 755.996, 428.289 )

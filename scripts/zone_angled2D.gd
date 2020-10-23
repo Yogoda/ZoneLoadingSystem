@@ -13,8 +13,12 @@ var trigger
 
 
 func _get_configuration_warning():
-	var this = get_node("ZoneTrigger")
-	if not (this is Area || this is Area2D):
+	var this = self
+	if not (this is YSort):
+		return "Zone-Parent must be a YSort node"
+	return ""
+	var trigger = get_node("ZoneTrigger")
+	if not (trigger is Area || trigger is Area2D):
 		return "ZoneTrigger must be an Area(2D) node"
 	return ""
 
