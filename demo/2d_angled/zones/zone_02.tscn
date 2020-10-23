@@ -1,12 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://demo/2d_topdown/resources/player_spawn.tscn" type="PackedScene" id=1]
+[ext_resource path="res://demo/2d_angled/resources/npc.tscn" type="PackedScene" id=2]
 
-
-[node name="Zone02" type="Node2D"]
+[node name="Zone02" type="YSort"]
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 scale = Vector2( 4, 4 )
+z_index = -1
 color = Color( 0.329412, 0.392157, 0.356863, 1 )
 polygon = PoolVector2Array( -128, 64, -112, 32, -104, -16, -88, -80, -40, -120, 40, -112, 104, -88, 120, -48, 128, 8, 128, 80, 96, 120, 72, 56, 45.6761, 14.7476, 0, 16, -48, 40, -80, 88 )
 
@@ -22,3 +23,12 @@ polygon = PoolVector2Array( -513.539, 251.663, -445.281, 121.496, -350.037, -316
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall2"]
 polygon = PoolVector2Array( -316.702, 345.319, -194.472, 156.419, 3.95282, 67.5244, 184.916, 54.8253, 288.097, 213.565, 384.929, 472.311, 288.43, 517.112, 216.665, 508.822, -99.228, 410.403 )
+
+[node name="NPC2D" parent="." instance=ExtResource( 2 )]
+position = Vector2( -136, -104 )
+
+[node name="NPC2D2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 208, -144 )
+
+[node name="NPC2D3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 32, -296 )
