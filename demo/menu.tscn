@@ -3,25 +3,38 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends CenterContainer
 
-func _on_Demo2D_TD_pressed():
+func _ready():
+	
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func _input(event):
+	
+	if event is InputEventKey and event.pressed and not event.is_echo():
+		
+		if event.scancode == KEY_ESCAPE:
+
+			get_tree().quit()
+
+func _on_Demo2D_pressed():
 	
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene(\"res://demo/2d/demo_2d.tscn\")
-	
-func _on_Demo2D_AV_pressed():
-	
-	# warning-ignore:return_value_discarded
-	get_tree().change_scene(\"res://demo/2d_ysort/demo_2d_ysort.tscn\")
 
 func _on_Demo3D_pressed():
 	
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene(\"res://demo/3d/demo_3d.tscn\")
+
+func _on_Exit_pressed():
+	
+	get_tree().quit()
 "
 
 [node name="Control" type="CenterContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -0.8909
+margin_bottom = -0.890869
 script = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -29,15 +42,15 @@ __meta__ = {
 
 [node name="Panel" type="PanelContainer" parent="."]
 margin_left = 417.0
-margin_top = 206.0
+margin_top = 204.0
 margin_right = 607.0
-margin_bottom = 393.0
+margin_bottom = 396.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 183.0
-margin_bottom = 180.0
+margin_bottom = 185.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -73,12 +86,18 @@ margin_bottom = 139.0
 rect_min_size = Vector2( 80, 30 )
 text = "Demo 2D"
 
-[node name="Demo2D_Ysort" type="Button" parent="Panel/VBoxContainer"]
+[node name="Separator" type="Panel" parent="Panel/VBoxContainer"]
 margin_top = 143.0
 margin_right = 176.0
-margin_bottom = 173.0
+margin_bottom = 144.0
+rect_min_size = Vector2( 0, 1 )
+
+[node name="Quit" type="Button" parent="Panel/VBoxContainer"]
+margin_top = 148.0
+margin_right = 176.0
+margin_bottom = 178.0
 rect_min_size = Vector2( 80, 30 )
-text = "Demo 2D with Y sort"
+text = "Quit"
 [connection signal="pressed" from="Panel/VBoxContainer/Demo3D" to="." method="_on_Demo3D_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Demo2D" to="." method="_on_Demo2D_TD_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Demo2D_Ysort" to="." method="_on_Demo2D_AV_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Demo2D" to="." method="_on_Demo2D_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/Quit" to="." method="_on_Exit_pressed"]

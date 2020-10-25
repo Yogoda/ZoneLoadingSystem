@@ -1,7 +1,7 @@
 extends Node
 
 # warning-ignore:unused_signal
-signal resource_loading_finished(resource_id)
+signal resource_loaded(resource_id)
 # warning-ignore:unused_signal
 signal resource_instanced(resource_id, resource_instance)
 
@@ -68,7 +68,7 @@ func request_load(resource_id, resource_path, priority = false):
 		var resource = loaded_resources[resource_id].resource
 		_print(str("resource ", resource_id, " already loaded"))
 		loaded_resources_lock.unlock()
-		emit_signal("resource_loading_finished", resource_id, resource)
+		emit_signal("resource_loaded", resource_id, resource)
 		return
 	
 	loaded_resources_lock.unlock()
@@ -180,7 +180,7 @@ func _process_load_action(resource_id, resource_path):
 		return
 			
 	#using deferred so that the signal is processed by the main thread
-	call_deferred("emit_signal", "resource_loading_finished", resource_id, resource)
+	call_deferred("emit_signal", "resource_loaded", resource_id, resource)
 	
 func _process_unload_action(resource_id):
 	

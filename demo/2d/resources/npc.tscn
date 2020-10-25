@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 12, 4 )
 
 [node name="NPC2D" type="StaticBody2D"]
@@ -17,4 +17,4 @@ polygon = PoolVector2Array( -32, -24, -24, -24, -16, -24, -16, -16, -24, -16, -3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -4 )
-shape = SubResource( 2 )
+shape = SubResource( 1 )

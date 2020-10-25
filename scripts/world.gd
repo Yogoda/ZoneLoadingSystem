@@ -22,7 +22,8 @@ func _input(event):
 			BackgroundLoader.request_stop()
 			yield(BackgroundLoader, "loading_process_stopped")
 
-			get_tree().quit()
+			# warning-ignore:return_value_discarded
+			get_tree().change_scene("res://demo/menu.tscn")
 
 func _ready():
 	

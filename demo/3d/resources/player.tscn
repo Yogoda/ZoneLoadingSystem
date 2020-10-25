@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://demo/3d/resources/environment.tres" type="Environment" id=1]
 
@@ -67,16 +67,18 @@ func _physics_process(delta):
 [sub_resource type="CapsuleShape" id=2]
 radius = 0.5
 
-[sub_resource type="CapsuleMesh" id=3]
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 15.0655, 19.1802, 16.0363 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="CapsuleMesh" id=4]
+
+[sub_resource type="SpatialMaterial" id=5]
 flags_unshaded = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.968627, 1, 0, 1 )
 
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
-collision_mask = 3
 script = SubResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -90,8 +92,15 @@ environment = ExtResource( 1 )
 current = true
 far = 8192.0
 
+[node name="ZoneTrigger" type="Area" parent="Camera"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape" parent="Camera/ZoneTrigger"]
+shape = SubResource( 3 )
+
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 10, 0, 0, 0, -1.62921e-06, 10, 0, -10, -1.62921e-06, 0, 0, 0 )
 cast_shadow = 0
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
