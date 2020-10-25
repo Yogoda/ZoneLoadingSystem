@@ -35,6 +35,10 @@ This system can be used for indoor and outdoor environments. It also works for 2
 
 Done. Now the zone will be automatically loaded and instanced, and attached to the tree when the player enters the area.
 
+## How does it work ?
+
+Here is the ![documentation](doc.md)
+
 ## Known issues
 
 ### Stutter when a new zone is attached to the tree
