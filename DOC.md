@@ -1,4 +1,6 @@
-### How does it work ?
+## Documentation
+
+### BackgroundLoader
 
 BackgroundLoader is an autoload singleton that takes requests to load/instance resources.
 
