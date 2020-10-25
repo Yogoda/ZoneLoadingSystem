@@ -37,7 +37,7 @@ Done. Now the zone will be automatically loaded and instanced, and attached to t
 
 ## How does it work ?
 
-Here is the ![documentation](doc.md)
+Here is the ![documentation](DOC.md)
 
 ## Known issues
 
