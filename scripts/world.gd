@@ -12,6 +12,7 @@ const GROUP_PLAYER_SPAWN = "PLAYER_SPAWN"
 
 var player
 
+
 func _input(event):
 	
 	if event is InputEventKey and event.pressed and not event.is_echo():
@@ -25,31 +26,33 @@ func _input(event):
 			# warning-ignore:return_value_discarded
 			get_tree().change_scene("res://demo/menu.tscn")
 
+
 func _ready():
 	
-		#this will fire the first time a zone is attached to the world (initial loading)
-		zone_loader.connect("zone_attached", self, "_on_first_zone_attached", [], CONNECT_ONESHOT)
-		
-		#simulate player entering first zone area (as player is not in the world yet)
-		zone_loader.enter_zone(starting_zone)
+	#this will fire the first time a zone is attached to the world (initial loading)
+	zone_loader.connect("zone_attached", self, "_on_first_zone_attached", [], CONNECT_ONESHOT)
+	
+	#simulate player entering first zone area (as player is not in the world yet)
+	zone_loader.enter_zone(starting_zone)
 
-		get_tree().paused = true
-		
-		#show initial loading screen
-		$UI/LoadingScreen.show()
+	get_tree().paused = true
+	
+	#show initial loading screen
+	$UI/LoadingScreen.show()
+
 
 #called when the initial first area has finished loading and is attached to the tree
 # warning-ignore:unused_argument
 func _on_first_zone_attached(zone_id):
 	
-		#get player spawn on the map
-		var player_spawn = get_tree().get_nodes_in_group(GROUP_PLAYER_SPAWN)[0]
-		
-		#spawn player
-		player = player_scene.instance()
-		player.global_transform = player_spawn.global_transform
-		add_child(player)
-		
-		get_tree().paused = false
-		
-		$UI/LoadingScreen.hide()
+	#get player spawn on the map
+	var player_spawn = get_tree().get_nodes_in_group(GROUP_PLAYER_SPAWN)[0]
+	
+	#spawn player
+	player = player_scene.instance()
+	player.global_transform = player_spawn.global_transform
+	add_child(player)
+	
+	get_tree().paused = false
+	
+	$UI/LoadingScreen.hide()
