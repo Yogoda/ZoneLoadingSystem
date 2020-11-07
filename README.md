@@ -59,4 +59,6 @@ You can leave comments here: https://github.com/Yogoda/ZoneLoadingSystem/issues/
 
 You are free to submit issues, contribute and improve this template, this is a [Creative Commons](https://creativecommons.org/publicdomain/zero/1.0/)
 
+Big thanks to rmvermeulen and Wrzlprnft for their contributions!
+
 ![Test image](screenshots/demo.png)
