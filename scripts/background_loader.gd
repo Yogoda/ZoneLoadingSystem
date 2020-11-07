@@ -291,7 +291,7 @@ func _reset_state():
 
 		var node = loaded_resources[resource_id].instance
 		if node != null and not node.is_inside_tree():
-			loaded_resources[resource_id].instance.free()
+			loaded_resources[resource_id].instance.queue_free()
 
 	loaded_resources.clear()
 	
