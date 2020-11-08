@@ -8,19 +8,22 @@ export (String, FILE) var zone_path
 export (bool) var preview := false setget set_preview
 
 var zone_id
+var zone_trigger
 var _preview_node: Node = null
 
 
 func _get_configuration_warning():
+	
+	var trigger
 
-	var trigger = get_node_or_null("ZoneTrigger")
+	for child in get_children():
+		if child is Area or child is Area2D:
+			trigger = child
+			break
 
 	if trigger == null:
-		return "ZoneTrigger child expected"
+		return "Area or Area2D child expected for zone trigger"
 
-	if not (trigger is Area || trigger is Area2D):
-		return "ZoneTrigger must be an Area(2D) node"
-		
 	return ""
 
 
@@ -30,8 +33,17 @@ func _ready():
 		return
 		
 	zone_id = self.name
+	
+	var trigger
 
-	var trigger = get_node("ZoneTrigger")
+	for child in get_children():
+		if child is Area or child is Area2D:
+			trigger = child
+			break
+
+	assert(trigger!=null)
+	
+	zone_trigger = trigger
 
 	# warning-ignore:return_value_discarded
 	trigger.connect("area_entered", self, "zone_entered")

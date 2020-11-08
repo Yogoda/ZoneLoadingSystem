@@ -64,7 +64,7 @@ func _load_connected_zones(zone_id):
 	var zone = get_node(zone_id)
 	
 	#load connected zones
-	for connected_area in zone.get_node("ZoneTrigger").get_overlapping_areas():
+	for connected_area in zone.zone_trigger.get_overlapping_areas():
 	
 		var connected_zone = connected_area.get_parent()
 	
@@ -105,7 +105,7 @@ func _remove_zone(zone_id):
 		var zone = get_node(zone_id)
 		
 		#add all zones connected to a zone the player is in
-		for connected_area in zone.get_node("ZoneTrigger").get_overlapping_areas():
+		for connected_area in zone.zone_trigger.get_overlapping_areas():
 			
 			var connected_zone = connected_area.get_parent()
 			
