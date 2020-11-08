@@ -64,7 +64,7 @@ Here is the ![documentation](DOC.md)
 
 ## Contribute
 
-You can leave comments here: https://github.com/Yogoda/ZoneLoadingSystem/issues/3 or here: https://godotforums.org/discussion/23868/zone-loading-system
+You can leave comments here: https://github.com/Yogoda/ZoneLoadingSystem/issues/3
 
 You are free to submit issues, contribute and improve this template, this is a [Creative Commons](https://creativecommons.org/publicdomain/zero/1.0/)
 
