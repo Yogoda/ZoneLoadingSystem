@@ -21,7 +21,7 @@ This system can be used for indoor and outdoor environments. It also works for 2
 ## Cons
 - Useless if your whole world can be quickly loaded in memory, or if you don't mind loading screens.
 - Need to manually split the game world into zones and set triggers.
-- Zones need to be carfully designed so that player cannot see unloaded zones (needs twists and turns or fog).
+- In 3D, zones need to be carfully designed so that player cannot see unloaded zones (needs twists and turns or fog).
 
 ## Configure the player
 
@@ -32,16 +32,17 @@ This system can be used for indoor and outdoor environments. It also works for 2
 
 ## Add a new zone
 
-- Create a new node with your zone name under `World/ZoneLoader`
-- Create a new Area (or Area2D) node
-- Set the collision layer and mask to `zone_triggers`
-- Attach the script `zone_trigger.gd` to the area
+- Create a zone, save it as a separate scene.
+- Create a new node under `World/ZoneLoader`, name it with your zone name.
+- Attach the script `zone.gd` to the node
 - Set the zone path in the inspector
 - Click the checkbox "Preview" to make the zone visible
 - Move the zone node where you want it to be relative to the other zones
+- Add a new Area (or Area2D) node as child, name it `ZoneTrigger`
+- Set the collision layer and mask to `zone_triggers`
 - Add one or more collision shapes that encompasses the zone, the zone will be loaded when the player enters this area
 
-Done. Now the zone will be automatically loaded and instanced, and attached to the tree when the player enters the area.
+Done. Now the zone will be loaded, instanced and attached to the tree automatically by the system.
 
 ## How does it work ?
 
