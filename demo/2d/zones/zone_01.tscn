@@ -4,7 +4,6 @@
 [ext_resource path="res://demo/2d/resources/npc.tscn" type="PackedScene" id=2]
 [ext_resource path="res://demo/2d/resources/demo_tileset.png" type="Texture" id=3]
 
-
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 32, 64, 32, 64, 64, 0, 64 )
 
@@ -137,11 +136,20 @@ position = Vector2( -328, -56 )
 [node name="NPC2D2" parent="." instance=ExtResource( 2 )]
 position = Vector2( -304, 48 )
 
+[node name="Polygon2D" parent="NPC2D2" index="0"]
+color = Color( 0, 0.831373, 0.109804, 1 )
+
 [node name="NPC2D3" parent="." instance=ExtResource( 2 )]
 position = Vector2( -400, 16 )
 
+[node name="Polygon2D" parent="NPC2D3" index="0"]
+color = Color( 0.803922, 0, 0.831373, 1 )
+
 [node name="NPC2D4" parent="." instance=ExtResource( 2 )]
 position = Vector2( -296, 72 )
+
+[node name="Polygon2D" parent="NPC2D4" index="0"]
+color = Color( 0.831373, 0.545098, 0, 1 )
 
 [node name="TileMap_Ysort" type="TileMap" parent="."]
 tile_set = SubResource( 8 )
@@ -156,3 +164,9 @@ tile_set = SubResource( 9 )
 cell_tile_origin = 2
 format = 1
 tile_data = PoolIntArray( -8, 0, 0, -7, 0, 0, -6, 0, 0, -5, 0, 0, -4, 0, 0, 65528, 0, 0, 65529, 0, 0, 65530, 0, 0, 65531, 0, 0, 65532, 0, 0, 131066, 0, 0 )
+
+[editable path="NPC2D2"]
+
+[editable path="NPC2D3"]
+
+[editable path="NPC2D4"]
