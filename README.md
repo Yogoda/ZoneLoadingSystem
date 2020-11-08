@@ -32,7 +32,7 @@ This system can be used for indoor and outdoor environments. It also works for 2
 
 ## Add a new zone
 
-- Create a new node with your area name under `World/ZoneLoader`
+- Create a new node with your zone name under `World/ZoneLoader`
 - Create a new Area (or Area2D) node
 - Set the collision layer and mask to `zone_triggers`
 - Attach the script `zone_trigger.gd` to the area
