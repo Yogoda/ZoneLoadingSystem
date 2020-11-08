@@ -143,13 +143,13 @@ color = Color( 0, 0.831373, 0.109804, 1 )
 position = Vector2( -400, 16 )
 
 [node name="Polygon2D" parent="NPC2D3" index="0"]
-color = Color( 0.803922, 0, 0.831373, 1 )
+color = Color( 0.976471, 0.266667, 1, 1 )
 
 [node name="NPC2D4" parent="." instance=ExtResource( 2 )]
 position = Vector2( -296, 72 )
 
 [node name="Polygon2D" parent="NPC2D4" index="0"]
-color = Color( 0.831373, 0.545098, 0, 1 )
+color = Color( 1, 0.560784, 0, 1 )
 
 [node name="TileMap_Ysort" type="TileMap" parent="."]
 tile_set = SubResource( 8 )

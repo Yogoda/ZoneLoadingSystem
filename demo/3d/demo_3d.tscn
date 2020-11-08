@@ -2,8 +2,9 @@
 
 [ext_resource path="res://scripts/zone_loader.gd" type="Script" id=2]
 [ext_resource path="res://scripts/world.gd" type="Script" id=3]
-[ext_resource path="res://demo/3d/resources/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://demo/3d/player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/zone.gd" type="Script" id=5]
+
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 84.4297, 87.5218, 94.2749 )
