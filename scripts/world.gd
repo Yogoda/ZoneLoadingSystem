@@ -55,4 +55,7 @@ func _on_first_zone_attached(zone_id):
 	
 	get_tree().paused = false
 	
+	#wait one frame
+	yield(get_tree(), "idle_frame")
+	
 	$UI/LoadingScreen.hide()
