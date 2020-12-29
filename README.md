@@ -2,9 +2,9 @@
 
 This is a dynamic zone loading system for Godot that takes care of the zone management for you, loading and unloading zones as your player explores the world, using a background thread to minimize performance hiccups. This allows to have huge seamless worlds without loading screen.
 
-The zones can be as big or as small as needed, and this can be combined with other optimization methods. If done carefully, the zone transitions will be invisible to the player, but for that you will need to break line of sight using twists and turns, so that the player can never see unloaded zones.
+Basically a zone is attached to the tree when the player enters the zone trigger (that should be bigger than the zone) and detached when the player exits the trigger. Zones are preloaded and preinstanced one zone in advance so there is no loading lag.
 
-This system can be used for indoor and outdoor environments. It also works for 2D (example included).
+This system works in 2D and 3D (see demo) and can be used for indoor and outdoor environments. In 3D, zones need to be carfully designed so that player cannot see unloaded zones (needs twists and turns or fog).
 
 ![Test image](screenshots/world.png)
 
