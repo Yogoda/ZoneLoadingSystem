@@ -2,6 +2,8 @@ extends Node
 
 signal zone_entered(zone_id)
 signal zone_attached(zone_id)
+#useful if you need to save the zone data
+signal zone_about_to_unload(zone_id)
 
 export var show_debug = false
 export var unload_delay = 1.0
@@ -118,6 +120,7 @@ func _remove_zone(zone_id):
 
 		if not zone_id in keep_zones:
 			_print(str("prunning: request unload ", zone_id))
+			emit_signal("zone_about_to_unload", zone_id)
 			BackgroundLoader.request_unload(zone_id)
 	
 func _on_zone_instance_available(zone_id, instance):

@@ -32,6 +32,8 @@ func _ready():
 	#this will fire the first time a zone is attached to the world (initial loading)
 	zone_loader.connect("zone_attached", self, "_on_first_zone_attached", [], CONNECT_ONESHOT)
 	
+	zone_loader.connect("zone_about_to_unload", self, "_on_zone_about_to_unload")
+	
 	#simulate player entering first zone area (as player is not in the world yet)
 	zone_loader.enter_zone(starting_zone)
 
@@ -59,3 +61,8 @@ func _on_first_zone_attached(zone_id):
 	yield(get_tree(), "idle_frame")
 	
 	$UI/LoadingScreen.hide()
+
+#save zone data here
+func _on_zone_about_to_unload(zone):
+
+	pass
