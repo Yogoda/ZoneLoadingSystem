@@ -1,9 +1,12 @@
 extends Node
 
-# warning-ignore:unused_signal
-signal resource_loaded(resource_id)
+#the resource was just instanced
 # warning-ignore:unused_signal
 signal resource_instanced(resource_id, resource_instance)
+
+#the resource instance is available (maybe it was already instanced)
+# warning-ignore:unused_signal
+signal resource_instance_available(resource_id, resource_instance)
 
 signal _loading_process_stopped #internal use
 signal loading_process_stopped #external use
@@ -68,7 +71,6 @@ func request_load(resource_id, resource_path, priority = false):
 		var resource = loaded_resources[resource_id].resource
 		_print(str("resource ", resource_id, " already loaded"))
 		loaded_resources_lock.unlock()
-		emit_signal("resource_loaded", resource_id, resource)
 		return
 	
 	loaded_resources_lock.unlock()
@@ -178,10 +180,7 @@ func _process_load_action(resource_id, resource_path):
 			
 	if is_exiting():
 		return
-			
-	#using deferred so that the signal is processed by the main thread
-	call_deferred("emit_signal", "resource_loaded", resource_id, resource)
-	
+
 func _process_unload_action(resource_id):
 	
 	_print(str("process unload resource ", resource_id))
@@ -229,7 +228,7 @@ func _process_instance_action(resource_id, resource_path):
 			_print(str("resource ", resource_id, " already instanced"))
 			
 			if not is_exiting():
-				call_deferred("emit_signal", "resource_instanced", resource_id, resource_instance)
+				call_deferred("emit_signal", "resource_instance_available", resource_id, resource_instance)
 			return
 
 	#resource not loaded, proceed to loading
@@ -257,6 +256,7 @@ func _process_instance_action(resource_id, resource_path):
 
 	if not is_exiting():
 		call_deferred("emit_signal", "resource_instanced", resource_id, resource_instance)
+		call_deferred("emit_signal", "resource_instance_available", resource_id, resource_instance)
 
 func _process_free_action(resource_id):
 	

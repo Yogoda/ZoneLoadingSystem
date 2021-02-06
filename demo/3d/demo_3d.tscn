@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/zone_loader.gd" type="Script" id=2]
 [ext_resource path="res://scripts/world.gd" type="Script" id=3]
-[ext_resource path="res://demo/3d/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://demo/3d/player_3d.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/zone.gd" type="Script" id=5]
 
 [sub_resource type="BoxShape" id=1]
@@ -41,11 +41,11 @@ script = ExtResource( 5 )
 zone_path = "res://demo/3d/zones/zone_01.tscn"
 preview = true
 
-[node name="ZoneTrigger" type="Area" parent="ZoneLoader/Zone01"]
-collision_layer = 2
-collision_mask = 2
+[node name="LoadTrigger" type="Area" parent="ZoneLoader/Zone01"]
+collision_layer = 32768
+collision_mask = 32768
 
-[node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/Zone01/ZoneTrigger"]
+[node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/Zone01/LoadTrigger"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -18.8995 )
 shape = SubResource( 1 )
 
@@ -55,18 +55,18 @@ script = ExtResource( 5 )
 zone_path = "res://demo/3d/zones/zone_02.tscn"
 preview = true
 
-[node name="ZoneTrigger" type="Area" parent="ZoneLoader/Zone02"]
-collision_layer = 2
-collision_mask = 2
+[node name="LoadTrigger" type="Area" parent="ZoneLoader/Zone02"]
+collision_layer = 32768
+collision_mask = 32768
 
-[node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/Zone02/ZoneTrigger"]
+[node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/Zone02/LoadTrigger"]
 shape = SubResource( 2 )
 
-[node name="CollisionShape2" type="CollisionShape" parent="ZoneLoader/Zone02/ZoneTrigger"]
+[node name="CollisionShape2" type="CollisionShape" parent="ZoneLoader/Zone02/LoadTrigger"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.00438, -7.66248, 102.302 )
 shape = SubResource( 3 )
 
-[node name="CollisionShape3" type="CollisionShape" parent="ZoneLoader/Zone02/ZoneTrigger"]
+[node name="CollisionShape3" type="CollisionShape" parent="ZoneLoader/Zone02/LoadTrigger"]
 transform = Transform( 0.888409, 0, -0.459053, 0, 1, 0, 0.459053, 0, 0.888409, 1.30605, 0, -154.593 )
 shape = SubResource( 4 )
 
@@ -76,11 +76,11 @@ script = ExtResource( 5 )
 zone_path = "res://demo/3d/zones/zone_03.tscn"
 preview = true
 
-[node name="ZoneTrigger" type="Area" parent="ZoneLoader/Zone03"]
-collision_layer = 2
-collision_mask = 2
+[node name="LoadTrigger" type="Area" parent="ZoneLoader/Zone03"]
+collision_layer = 32768
+collision_mask = 32768
 
-[node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/Zone03/ZoneTrigger"]
+[node name="CollisionShape" type="CollisionShape" parent="ZoneLoader/Zone03/LoadTrigger"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 103.504, 0, 0 )
 shape = SubResource( 5 )
 

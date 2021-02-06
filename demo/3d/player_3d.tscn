@@ -94,7 +94,7 @@ far = 8192.0
 
 [node name="ZoneTrigger" type="Area" parent="Camera"]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 32768
 
 [node name="CollisionShape" type="CollisionShape" parent="Camera/ZoneTrigger"]
 shape = SubResource( 3 )

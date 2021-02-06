@@ -60,8 +60,8 @@ jump={
 
 2d_physics/layer_1="solid"
 3d_physics/layer_1="solid"
-2d_physics/layer_2="zone_triggers"
-3d_physics/layer_2="zone_triggers"
+2d_physics/layer_16="zone_triggers"
+3d_physics/layer_16="zone_triggers"
 
 [rendering]
 

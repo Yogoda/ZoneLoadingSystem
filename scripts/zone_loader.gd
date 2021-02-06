@@ -2,10 +2,14 @@ extends Node
 
 signal zone_entered(zone_id)
 signal zone_attached(zone_id)
+
+#useful if you need to load the zone data
+signal zone_loaded(zone_id, zone_node)
 #useful if you need to save the zone data
-signal zone_about_to_unload(zone_id)
+signal zone_about_to_unload(zone_id, zone_node)
 
 export var show_debug = false
+
 export var unload_delay = 1.0
 
 var current_zones = {} #zones the player is in (1-2)
@@ -17,8 +21,11 @@ var loaded_zones = {}
 func _ready():
 	
 	# warning-ignore:return_value_discarded
-	BackgroundLoader.connect("resource_instanced", self, "_on_zone_instance_available")
-
+	BackgroundLoader.connect("resource_instance_available", self, "_on_zone_instance_available")
+	
+	# warning-ignore:return_value_discarded
+	BackgroundLoader.connect("resource_instanced", self, "_on_zone_loaded")
+	
 	#connect all zone triggers
 	for zone in get_children():
 		
@@ -119,9 +126,23 @@ func _remove_zone(zone_id):
 	for zone_id in loaded_zones:
 
 		if not zone_id in keep_zones:
+			
 			_print(str("prunning: request unload ", zone_id))
-			emit_signal("zone_about_to_unload", zone_id)
+			
+			emit_signal("zone_about_to_unload", zone_id, loaded_zones[zone_id])
+			
 			BackgroundLoader.request_unload(zone_id)
+
+			loaded_zones.erase(zone_id)
+	
+func _on_zone_loaded(zone_id, instance):
+	
+	emit_signal("zone_loaded", zone_id, instance)
+	
+#func _on_zone_unloaded(zone_id, instance):
+#
+#	print("erase zone ", zone_id)
+#	current_zones.erase(zone_id)
 	
 func _on_zone_instance_available(zone_id, instance):
 	
