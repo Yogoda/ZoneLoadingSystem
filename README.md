@@ -30,7 +30,7 @@ This system works in 2D and 3D (see demo) and can be used for indoor and outdoor
 - For 2D, add an Area2D to your player's camera with a collision shape covering the whole screen. This way zones will be loaded when they become visible on screen.
 - For 3D, add an Area to your player's camera with a collision shape encompassing the player.
 - Set the area's collision mask to "zone_triggers" (leave collision layer empty), this way the area will collide only with zone triggers.
-- Assign your player scene to the world's "Player Scene" attribute, it will be automatically spawned on world load.
+- Assign your player scene to the world's "Player Scene" attribute, it will be automatically spawned on world load, at the location of a node in the group PLAYER_SPAWN.
 
 ## Add a new zone
 
