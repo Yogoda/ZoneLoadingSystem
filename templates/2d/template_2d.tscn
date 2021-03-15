@@ -31,15 +31,3 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone01/LoadTrigger"]
 shape = SubResource( 1 )
-
-[node name="UI" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="LoadingScreen" type="Panel" parent="UI"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0

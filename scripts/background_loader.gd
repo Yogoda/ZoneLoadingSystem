@@ -8,6 +8,7 @@ signal resource_instanced(resource_id, resource_instance)
 # warning-ignore:unused_signal
 signal resource_instance_available(resource_id, resource_instance)
 
+# warning-ignore:unused_signal
 signal _loading_process_stopped #internal use
 signal loading_process_stopped #external use
 
@@ -68,7 +69,6 @@ func request_load(resource_id, resource_path, priority = false):
 	loaded_resources_lock.lock()
 	
 	if loaded_resources.has(resource_id):
-		var resource = loaded_resources[resource_id].resource
 		_print(str("resource ", resource_id, " already loaded"))
 		loaded_resources_lock.unlock()
 		return

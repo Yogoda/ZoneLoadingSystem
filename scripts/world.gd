@@ -1,5 +1,8 @@
 extends Node
 
+#signalling parent the world has finished loading (hide loading screen)
+signal world_loaded
+
 onready var zone_loader = $ZoneLoader
 
 export var player_scene:PackedScene
@@ -39,9 +42,6 @@ func _ready():
 	zone_loader.enter_zone(starting_zone)
 
 	get_tree().paused = true
-	
-	#show initial loading screen
-	$UI/LoadingScreen.show()
 
 
 #called when the initial first area has finished loading and is attached to the tree
@@ -61,16 +61,20 @@ func _on_first_zone_attached(zone_id):
 	#wait one frame
 	yield(get_tree(), "idle_frame")
 	
-	$UI/LoadingScreen.hide()
+	emit_signal("world_loaded")
 
 #load zone data here
 # warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_zone_loaded(zone_id, zone_node):
 
-	print("zone loaded ", zone_id)
+	pass
+#	print("zone loaded ", zone_id)
 
 #save zone data here
 # warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func _on_zone_about_to_unload(zone_id, zone_node):
 
-	print("zone unloaded ", zone_id)
+	pass
+#	print("zone unloaded ", zone_id)
