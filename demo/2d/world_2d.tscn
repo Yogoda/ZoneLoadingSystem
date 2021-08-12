@@ -32,10 +32,8 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_01.tscn"
-preview = true
 
 [node name="LoadTrigger" type="Area2D" parent="ZoneLoader/Zone01"]
-visible = false
 collision_layer = 32768
 collision_mask = 32768
 __meta__ = {
@@ -52,10 +50,8 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_02.tscn"
-preview = true
 
 [node name="LoadTrigger" type="Area2D" parent="ZoneLoader/Zone02"]
-visible = false
 collision_layer = 32768
 collision_mask = 32768
 __meta__ = {
@@ -72,10 +68,8 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_03.tscn"
-preview = true
 
 [node name="LoadTrigger" type="Area2D" parent="ZoneLoader/Zone03"]
-visible = false
 collision_layer = 32768
 collision_mask = 32768
 __meta__ = {
@@ -92,10 +86,8 @@ __meta__ = {
 "_edit_group_": true
 }
 zone_path = "res://demo/2d/zones/zone_04.tscn"
-preview = true
 
 [node name="LoadTrigger" type="Area2D" parent="ZoneLoader/Zone04"]
-visible = false
 collision_layer = 32768
 collision_mask = 32768
 __meta__ = {

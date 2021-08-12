@@ -98,6 +98,7 @@ margin_right = 176.0
 margin_bottom = 178.0
 rect_min_size = Vector2( 80, 30 )
 text = "Quit"
+
 [connection signal="pressed" from="Panel/VBoxContainer/Demo2D" to="." method="_on_Demo2D_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/Demo3D" to="." method="_on_Demo3D_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/Quit" to="." method="_on_Exit_pressed"]
