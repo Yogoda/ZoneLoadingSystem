@@ -299,7 +299,7 @@ func _reset_state():
 
 #the background loading process executed by a thread
 # warning-ignore:unused_argument
-func _loading_process():
+func _loading_process(_thread):
 
 	_print("background process started")
 	
