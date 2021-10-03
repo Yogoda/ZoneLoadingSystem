@@ -4,7 +4,7 @@ This template shows you how your game can automatically load/unload zones accord
 
 This works for both 2D games and 3D games, try the demo by executing this project.
 
-Note that it is not a chunk system based on distance to the player, if you need chunks loading for an open world, please check other solutions.
+*Note that it is not a chunk system based on distance to the player, if you need chunks loading for an open world, please check other solutions.
 
 ![Test image](screenshots/world.png)
 
@@ -76,6 +76,6 @@ You can leave comments here: https://github.com/Yogoda/ZoneLoadingSystem/issues/
 
 You are free to submit issues, contribute and improve this template, this is a [Creative Commons](https://creativecommons.org/publicdomain/zero/1.0/)
 
-Big thanks to *rmvermeulen* and *Wrzlprnft* for their contributions!
+Big thanks to **rmvermeulen** and **Wrzlprnft** for their contributions!
 
 ![Test image](screenshots/demo.png)
