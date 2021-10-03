@@ -1,19 +1,12 @@
 # Zone Loading System
 
-This is a dynamic zone loading system for Godot that takes care of the zone management for you, loading and unloading zones as your player explores the world, using a background thread to minimize performance hiccups. This allows to have huge seamless worlds without loading screen.
+This template shows you how your game can automatically load/unload zones according to your player position. By implementing this template in your game you can have a seamless world as big as needed, without loading screens.
 
-This system is for handcrafted zones like in a FPS, Adventure game or 2D game. It is not a chunk system based on distance to the player.
+This works for both 2D games and 3D games, try the demo by executing this project.
 
-How it works: a zone is attached to the tree when the player enters the zone trigger (that should be bigger than the zone) and detached when the player exits the trigger. Zones are preloaded and preinstanced one zone in advance so there is no loading lag.
-
-This system works in 2D and 3D (see demo) and can be used for indoor and outdoor environments. In 3D, zones need to be carfully designed so that player cannot see unloaded zones (needs twists and turns or fog).
+Note that it is not a chunk system based on distance to the player, if you need chunks loading for an open world, please check other solutions.
 
 ![Test image](screenshots/world.png)
-
-- Every zone sits inside a trigger area that completely encompasses the zone.
-- When the player enters a trigger area, the corresponding zone is loaded, instanced (if not already) and attached to the world.
-- When the player exits the area, the zone is removed from the tree but stays in memory, allowing to go back and forth quickly between two zones. When the zone is not directly connected to an area the player is in, it is freed from memory and unloaded.
-- Zones that are connected to the current zone(s) are automatically loaded in memory and instanced in background, so that they are ready when the player enters a new zone. Connected zones are zones that are overlapping the current zone, this is detected automatically, no need to register the connections.
 
 ## Pros
 - Good if loading the whole world at once would take too much time/memory.
@@ -24,6 +17,23 @@ This system works in 2D and 3D (see demo) and can be used for indoor and outdoor
 - Useless if your whole world can be quickly loaded in memory, or if you don't mind loading screens.
 - Need to manually split the game world into zones and set triggers.
 - In 3D, zones need to be carfully designed so that player cannot see unloaded zones (needs twists and turns or fog).
+
+## How does it work ?
+
+Each zone of your world sits inside a trigger area that is larger than the zone, the areas should be overlapping.
+
+Zones overlapping the one the player is in are preloaded (loaded but not attached to the game tree). This mean the zone should be already loaded when the player enters a new area.
+
+When the player enters a new zone, the zone is attached to the tree (made visible).
+When the player exits the zone, the zone is detached from the tree, but kept in memory in case the player returns.
+
+Zones no longer overlapping the one the player is in are unloaded (freed from memory).
+
+## Background loading
+
+All the loading and instancing is done by one background thread that runs parallel to your main game, so it should not create stutters, please check "background_loader.gd". 
+
+The thread is automatically started at thes start of the game, and stopped at the end. Stopping the thread can take a few seconds if the thread is currently loading data.
 
 ## Configure the player
 
@@ -46,23 +56,19 @@ This system works in 2D and 3D (see demo) and can be used for indoor and outdoor
 
 Done. Now the zone will be loaded, instanced and attached to the tree automatically by the system.
 
-## How does it work ?
-
-Here is the ![documentation](DOC.md)
-
 ## Known issues
 
 ### Stutter when a new zone is attached to the tree
 - New shaders are being compiled. Limit the number of different shader you use and use a shader cache to precompile the shaders during loading screen.
 - outputting to the console using print() and errors can create stutters.
 
-### Error: _body_enter_tree: Condition "!E" is true.
+### Error: _body_enter_tree: Condition "!E" is true (fixed in Godot 3.4 beta 4!).
 
-- Can happen when exiting and reentering a zone in 3D, this is a bug in Godot.
-- Will be fixed in next release, hopefully: https://github.com/godotengine/godot/pull/41470
+- Can happen when exiting and reentering a zone in 3D, this is a bug in Godot before 3.4 beta 4.
 
 ### Objects/monsters are reset when going back
-- You need to save your zone data when it is unloaded and restore it when the zone is loaded.
+
+- You need to save your zone data when it is unloaded and restore it when the zone is loaded, it is not in the scope of this template.
 
 ## Contribute
 
@@ -70,6 +76,6 @@ You can leave comments here: https://github.com/Yogoda/ZoneLoadingSystem/issues/
 
 You are free to submit issues, contribute and improve this template, this is a [Creative Commons](https://creativecommons.org/publicdomain/zero/1.0/)
 
-Big thanks to rmvermeulen and Wrzlprnft for their contributions!
+Big thanks to *rmvermeulen* and *Wrzlprnft* for their contributions!
 
 ![Test image](screenshots/demo.png)
