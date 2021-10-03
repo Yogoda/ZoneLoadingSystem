@@ -4,7 +4,7 @@ This template shows you how your game can automatically load/unload zones accord
 
 This works for both 2D games and 3D games, try the demo by executing this project.
 
-*Note that it is not a chunk system based on distance to the player, if you need chunks loading for an open world, please check other solutions.
+*Note that it is not a chunk system based on distance to the player, if you need chunks loading for an open world, please check other solutions.*
 
 ![Test image](screenshots/world.png)
 
@@ -33,7 +33,7 @@ Zones no longer overlapping the one the player is in are unloaded (freed from me
 
 All the loading and instancing is done by one background thread that runs parallel to your main game, so it should not create stutters, please check "background_loader.gd". 
 
-The thread is automatically started at thes start of the game, and stopped at the end. Stopping the thread can take a few seconds if the thread is currently loading data.
+The thread is automatically started at the start of the game, and stopped at the end. Stopping the thread can take a few seconds if the thread is currently loading data.
 
 ## Configure the player
 
