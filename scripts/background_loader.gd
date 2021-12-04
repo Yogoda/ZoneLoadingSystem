@@ -44,10 +44,26 @@ func start():
 		return
 
 	_request_exit = false
+	
+	#quitting will trigger a notification, which will allow us to cleanly stop the process
+	get_tree().set_auto_accept_quit(false);
 
 	#start background loading process
 	# warning-ignore:return_value_discarded
 	loading_process.start(self, "_loading_process")
+	
+#will stop the loading process and quit when a quit notification is received 
+#(closing the window with the x button)
+func _notification(what):
+	
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+	
+		if loading_process.is_active():
+			
+			request_stop()
+			yield(self, "_loading_process_stopped")
+
+		get_tree().quit()
 
 func is_exiting():
 	
