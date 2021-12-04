@@ -20,7 +20,7 @@ This works for both 2D games and 3D games, try the demo by executing this projec
 
 ## How does it work ?
 
-Each zone of the world sits inside a trigger (area) that should be larger than the zone, the triggers should be overlapping.
+The geometry/sprites of each zone sits inside an area node that should encompass all the zone geometry/sprites. The zones areas should be overlapping.
 
 Rules:
 - The player can be in one or more zones at the same time (overlapping zones).
