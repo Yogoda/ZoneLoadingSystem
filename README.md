@@ -20,18 +20,19 @@ This works for both 2D games and 3D games, try the demo by executing this projec
 
 ## How does it work ?
 
-Each zone of your world sits inside a trigger area that is larger than the zone, the areas should be overlapping.
+Each zone of the world sits inside a trigger (area) that should be larger than the zone, the triggers should be overlapping.
 
-Zones overlapping the one the player is in are preloaded (loaded but not attached to the game tree). This mean the zone should be already loaded when the player enters a new area.
-
-When the player enters a new zone, the zone is attached to the tree (made visible).
-When the player exits the zone, the zone is detached from the tree, but kept in memory in case the player returns.
-
-Zones no longer overlapping the one the player is in are unloaded (freed from memory).
+Rules:
+- The player can be in one or more zones at the same time (overlapping zones).
+- Zones overlapping the player zone(s) are automatically preloaded (loaded but not attached to the game tree). 
+- When the player enters a new zone, that zone is attached to the tree (made visible).
+- When the player exits a zone, that zone is detached from the tree (invisible, but stays loaded).
+- Zones not direcly overlapping the player zone(s) are unloaded (freed from memory).
+- Zones are detached with a small delay (a few seconds) to prevent unnecessary work when player moves back and forth a small amount.
 
 ## Background loading
 
-All the loading and instancing is done by one background thread that runs parallel to your main game, so it should not create stutters, please check "background_loader.gd". 
+All the loading and instancing is done by one background thread that runs parallel to the main game, so it should not create stutters, please check "background_loader.gd". 
 
 The thread is automatically started at the start of the game, and stopped at the end. Stopping the thread can take a few seconds if the thread is currently loading data.
 
