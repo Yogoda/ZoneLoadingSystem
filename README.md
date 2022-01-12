@@ -23,7 +23,7 @@ This works for both 2D games and 3D games, try the demo by executing this projec
 The geometry/sprites of each zone sits inside an area node that should encompass all the zone geometry/sprites. The zones areas should be overlapping.
 
 Rules:
-- The player can be in one or more zones at the same time (overlapping zones).
+- The player can be in one or more zones at the same time (player zone(s)).
 - Zones overlapping the player zone(s) are automatically preloaded (loaded but not attached to the game tree). 
 - When the player enters a new zone, that zone is attached to the tree (made visible).
 - When the player exits a zone, that zone is detached from the tree (invisible, but stays loaded).
