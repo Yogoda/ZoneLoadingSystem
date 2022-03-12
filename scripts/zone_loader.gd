@@ -180,6 +180,13 @@ func detach_zone(zone_id):
 	var zone = area.get_node_or_null(zone_id)
 	
 	if zone:
+
+		# warning-ignore:return_value_discarded
+		get_tree().create_timer(0.0).connect("timeout", self, "remove_from_tree", [area, zone])
 		
-		area.remove_child(zone)
 		_print(str("zone ", zone_id, " detached"))
+
+func remove_from_tree(area, zone):
+
+	if is_instance_valid(zone):
+		area.remove_child(zone)
