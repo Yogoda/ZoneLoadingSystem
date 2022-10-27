@@ -8,12 +8,12 @@ extents = Vector2( 12, 4 )
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color( 0.105882, 0, 0.831373, 1 )
 offset = Vector2( -4, 0 )
-polygon = PoolVector2Array( 8, 0, 16, 0, 16, -32, -8, -32, -8, 0, 0, 0, 0, -8, 8, -8 )
+polygon = PackedVector2Array( 8, 0, 16, 0, 16, -32, -8, -32, -8, 0, 0, 0, 0, -8, 8, -8 )
 
 [node name="Polygon2D2" type="Polygon2D" parent="."]
 color = Color( 0.698039, 0.854902, 0.85098, 1 )
 offset = Vector2( 24, -4 )
-polygon = PoolVector2Array( -32, -24, -24, -24, -16, -24, -16, -16, -24, -16, -32, -16 )
+polygon = PackedVector2Array( -32, -24, -24, -24, -16, -24, -16, -16, -24, -16, -32, -16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -4 )

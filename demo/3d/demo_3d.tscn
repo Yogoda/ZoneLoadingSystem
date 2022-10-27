@@ -9,14 +9,14 @@ script/source = "extends Control
 func _ready():
 
 	# warning-ignore:return_value_discarded
-	$World.connect(\"world_loaded\", self, \"_on_world_loaded\")
+	$World3D.connect(\"world_loaded\",Callable(self,\"_on_world_loaded\"))
 	
 	$LoadingScreen.show()
 	
 func _on_world_loaded():
 	
 	#simulate a loading time (too fast in the demo), so we can see the loading screen
-	yield(get_tree().create_timer(0.2), \"timeout\")
+	await get_tree().create_timer(0.2).timeout
 	
 	$LoadingScreen.hide()
 "
@@ -29,27 +29,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="World" parent="." instance=ExtResource( 1 )]
+[node name="World3D" parent="." instance=ExtResource( 1 )]
 
-[node name="MiniMap" type="ViewportContainer" parent="."]
+[node name="MiniMap" type="SubViewportContainer" parent="."]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -200.0
-margin_top = -200.0
+offset_left = -200.0
+offset_top = -200.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Viewport" type="Viewport" parent="MiniMap"]
+[node name="SubViewport" type="SubViewport" parent="MiniMap"]
 size = Vector2( 200, 200 )
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
 
-[node name="Camera" type="Camera" parent="MiniMap/Viewport"]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 35.8958, 93.3085, -163.976 )
+[node name="Camera3D" type="Camera3D" parent="MiniMap/SubViewport"]
+transform = Transform3D( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 35.8958, 93.3085, -163.976 )
 projection = 1
 size = 585.91
 
@@ -62,8 +62,8 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -31.0
-margin_top = -7.0
-margin_right = 31.0
-margin_bottom = 7.0
+offset_left = -31.0
+offset_top = -7.0
+offset_right = 31.0
+offset_bottom = 7.0
 text = "LOADING"

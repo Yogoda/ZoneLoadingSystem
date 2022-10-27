@@ -7,14 +7,14 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 755.996, 428.289 )
 
-[node name="World" type="YSort"]
+[node name="World3D" type="Node2D"]
 script = ExtResource( 2 )
 starting_zone = "Zone01"
 
-[node name="ZoneLoader" type="YSort" parent="."]
+[node name="ZoneLoader" type="Node2D" parent="."]
 script = ExtResource( 3 )
 
-[node name="Zone01" type="YSort" parent="ZoneLoader"]
+[node name="Zone01" type="Node2D" parent="ZoneLoader"]
 position = Vector2( 571.435, 293.19 )
 script = ExtResource( 1 )
 __meta__ = {

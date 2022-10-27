@@ -3,12 +3,12 @@ extends Node
 #signalling parent the world has finished loading (hide loading screen)
 signal world_loaded
 
-onready var zone_loader = $ZoneLoader
+@onready var zone_loader = $ZoneLoader
 
-export var player_scene:PackedScene
+@export var player_scene:PackedScene
 
 #you can change the starting zone here
-export(String) var starting_zone
+@export var starting_zone: String
 
 #player spawn locations are in this group
 const GROUP_PLAYER_SPAWN = "PLAYER_SPAWN"
@@ -24,19 +24,19 @@ func _input(event):
 
 			#ask the loading process to stop and wait for it to finish (proper way to quit)
 			BackgroundLoader.request_stop()
-			yield(BackgroundLoader, "loading_process_stopped")
+			await BackgroundLoader.loading_process_stopped
 
 			# warning-ignore:return_value_discarded
-			get_tree().change_scene("res://demo/menu.tscn")
+			get_tree().change_scene_to_file("res://demo/menu.tscn")
 
 
 func _ready():
 	
 	#this will fire the first time a zone is attached to the world (initial loading)
-	zone_loader.connect("zone_attached", self, "_on_first_zone_attached", [], CONNECT_ONESHOT)
+	zone_loader.connect("zone_attached",Callable(self,"_on_first_zone_attached").bind(),CONNECT_ONE_SHOT)
 	
-	zone_loader.connect("zone_loaded", self, "_on_zone_loaded")
-	zone_loader.connect("zone_about_to_unload", self, "_on_zone_about_to_unload")
+	zone_loader.connect("zone_loaded",Callable(self,"_on_zone_loaded"))
+	zone_loader.connect("zone_about_to_unload",Callable(self,"_on_zone_about_to_unload"))
 	
 	#simulate player entering first zone area (as player is not in the world yet)
 	zone_loader.enter_zone(starting_zone)
@@ -48,18 +48,18 @@ func _ready():
 # warning-ignore:unused_argument
 func _on_first_zone_attached(zone_id):
 	
-	#get player spawn on the map
+	#get player spawn checked the map
 	var player_spawn = get_tree().get_nodes_in_group(GROUP_PLAYER_SPAWN)[0]
 	
 	#spawn player
-	player = player_scene.instance()
+	player = player_scene.instantiate()
 	player.global_transform = player_spawn.global_transform
 	add_child(player)
 	
 	get_tree().paused = false
 	
 	#wait one frame
-	yield(get_tree(), "idle_frame")
+	await get_tree().idle_frame
 	
 	emit_signal("world_loaded")
 

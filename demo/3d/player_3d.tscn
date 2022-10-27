@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://cbrbf8fobi4wj"]
 
-[ext_resource path="res://demo/3d/resources/environment.tres" type="Environment" id=1]
+[ext_resource type="Environment" uid="uid://52a2cttutger" path="res://demo/3d/resources/environment.tres" id="1"]
 
-[sub_resource type="GDScript" id=1]
-script/source = "extends KinematicBody
+[sub_resource type="GDScript" id="1"]
+script/source = "extends CharacterBody3D
 
 const GRAVITY = 55.0
 const MOUSE_SENSITIVITY = 400
@@ -11,9 +11,7 @@ const JUMP_FORCE = 15.0
 const WALK_SPEED = 1200
 const RUN_SPEED = 3000
 
-var velocity = Vector3()
-
-onready var camera = $Camera
+@onready var camera = $Camera3D
 
 func _ready():
 	
@@ -61,46 +59,42 @@ func _physics_process(delta):
 		else:
 			velocity.y -= GRAVITY * delta
 	
-	velocity = move_and_slide(velocity, Vector3.UP)
+	set_velocity(velocity)
+	set_up_direction(Vector3.UP)
+	move_and_slide()
+	velocity = velocity
 "
 
-[sub_resource type="CapsuleShape" id=2]
-radius = 0.5
+[sub_resource type="CapsuleShape3D" id="2"]
 
-[sub_resource type="BoxShape" id=3]
-extents = Vector3( 15.0655, 19.1802, 16.0363 )
+[sub_resource type="BoxShape3D" id="3"]
+size = Vector3(30.131, 38.3604, 32.0726)
 
-[sub_resource type="CapsuleMesh" id=4]
+[sub_resource type="CapsuleMesh" id="4"]
 
-[sub_resource type="SpatialMaterial" id=5]
-flags_unshaded = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.968627, 1, 0, 1 )
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+script = SubResource("1")
 
-[node name="Player" type="KinematicBody"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
-script = SubResource( 1 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0)
+shape = SubResource("2")
 
-[node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0 )
-shape = SubResource( 2 )
-
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 cull_mask = 1048573
-environment = ExtResource( 1 )
+environment = ExtResource("1")
 current = true
 far = 8192.0
 
-[node name="ZoneTrigger" type="Area" parent="Camera"]
+[node name="ZoneTrigger" type="Area3D" parent="Camera3D"]
 collision_layer = 0
 collision_mask = 32768
 
-[node name="CollisionShape" type="CollisionShape" parent="Camera/ZoneTrigger"]
-shape = SubResource( 3 )
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/ZoneTrigger"]
+shape = SubResource("3")
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 10, 0, 0, 0, -1.62921e-06, 10, 0, -10, -1.62921e-06, 0, 0, 0 )
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, -1.62921e-06, 10, 0, -10, -1.62921e-06, 0, 0, 0)
 cast_shadow = 0
-mesh = SubResource( 4 )
-material/0 = SubResource( 5 )
+mesh = SubResource("4")

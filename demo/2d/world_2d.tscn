@@ -17,15 +17,15 @@ extents = Vector2( 841.391, 398.189 )
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 758.777, 612.111 )
 
-[node name="World" type="YSort"]
+[node name="World3D" type="Node2D"]
 script = ExtResource( 2 )
 player_scene = ExtResource( 1 )
 starting_zone = "Zone01"
 
-[node name="ZoneLoader" type="YSort" parent="."]
+[node name="ZoneLoader" type="Node2D" parent="."]
 script = ExtResource( 4 )
 
-[node name="Zone01" type="YSort" parent="ZoneLoader"]
+[node name="Zone01" type="Node2D" parent="ZoneLoader"]
 position = Vector2( 571.435, 293.19 )
 script = ExtResource( 3 )
 __meta__ = {
@@ -43,7 +43,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone01/LoadTrigger"]
 shape = SubResource( 1 )
 
-[node name="Zone02" type="YSort" parent="ZoneLoader"]
+[node name="Zone02" type="Node2D" parent="ZoneLoader"]
 position = Vector2( 1585.84, -290.04 )
 script = ExtResource( 3 )
 __meta__ = {
@@ -61,7 +61,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone02/LoadTrigger"]
 shape = SubResource( 2 )
 
-[node name="Zone03" type="YSort" parent="ZoneLoader"]
+[node name="Zone03" type="Node2D" parent="ZoneLoader"]
 position = Vector2( 2654.43, 358.333 )
 script = ExtResource( 3 )
 __meta__ = {
@@ -79,7 +79,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone03/LoadTrigger"]
 shape = SubResource( 3 )
 
-[node name="Zone04" type="YSort" parent="ZoneLoader"]
+[node name="Zone04" type="Node2D" parent="ZoneLoader"]
 position = Vector2( 1676.66, 997.679 )
 script = ExtResource( 3 )
 __meta__ = {

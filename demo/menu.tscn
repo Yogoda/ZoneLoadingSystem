@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://b2deyu45o83it"]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id="1"]
 script/source = "extends CenterContainer
 
 func _ready():
@@ -18,12 +18,12 @@ func _input(event):
 func _on_Demo2D_pressed():
 	
 	# warning-ignore:return_value_discarded
-	get_tree().change_scene(\"res://demo/2d/demo_2d.tscn\")
+	get_tree().change_scene_to_file(\"res://demo/2d/demo_2d.tscn\")
 
 func _on_Demo3D_pressed():
 	
 	# warning-ignore:return_value_discarded
-	get_tree().change_scene(\"res://demo/3d/demo_3d.tscn\")
+	get_tree().change_scene_to_file(\"res://demo/3d/demo_3d.tscn\")
 
 func _on_Exit_pressed():
 	
@@ -31,72 +31,54 @@ func _on_Exit_pressed():
 "
 
 [node name="Control" type="CenterContainer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_top = -0.8909
-margin_bottom = -0.890869
-script = SubResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_top = -0.8909
+offset_bottom = -0.890869
+script = SubResource("1")
 
 [node name="Panel" type="PanelContainer" parent="."]
-margin_left = 417.0
-margin_top = 204.0
-margin_right = 607.0
-margin_bottom = 396.0
+offset_left = 494.0
+offset_top = 243.0
+offset_right = 658.0
+offset_bottom = 404.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 183.0
-margin_bottom = 185.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
+offset_right = 164.0
+offset_bottom = 161.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
-margin_right = 176.0
-margin_bottom = 71.0
-custom_constants/margin_right = 20
-custom_constants/margin_top = 20
-custom_constants/margin_left = 20
-custom_constants/margin_bottom = 20
+offset_right = 164.0
+offset_bottom = 52.0
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer"]
-margin_left = 20.0
-margin_top = 20.0
-margin_right = 156.0
-margin_bottom = 51.0
+offset_right = 164.0
+offset_bottom = 52.0
 text = "Zone Loading System
 Demo"
-align = 1
 
 [node name="Demo2D" type="Button" parent="Panel/VBoxContainer"]
-margin_top = 75.0
-margin_right = 176.0
-margin_bottom = 105.0
-rect_min_size = Vector2( 80, 30 )
+offset_top = 56.0
+offset_right = 164.0
+offset_bottom = 87.0
 text = "Demo 2D"
 
 [node name="Demo3D" type="Button" parent="Panel/VBoxContainer"]
-margin_top = 109.0
-margin_right = 176.0
-margin_bottom = 139.0
-rect_min_size = Vector2( 80, 30 )
+offset_top = 91.0
+offset_right = 164.0
+offset_bottom = 122.0
 text = "Demo 3D"
 
 [node name="Separator" type="Panel" parent="Panel/VBoxContainer"]
-margin_top = 143.0
-margin_right = 176.0
-margin_bottom = 144.0
-rect_min_size = Vector2( 0, 1 )
+offset_top = 126.0
+offset_right = 164.0
+offset_bottom = 126.0
 
 [node name="Quit" type="Button" parent="Panel/VBoxContainer"]
-margin_top = 148.0
-margin_right = 176.0
-margin_bottom = 178.0
-rect_min_size = Vector2( 80, 30 )
+offset_top = 130.0
+offset_right = 164.0
+offset_bottom = 161.0
 text = "Quit"
 
 [connection signal="pressed" from="Panel/VBoxContainer/Demo2D" to="." method="_on_Demo2D_pressed"]

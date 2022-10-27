@@ -30,7 +30,7 @@ var _request_exit = false
 
 var exit_lock:Mutex = Mutex.new()
 
-export var show_debug = false
+@export var show_debug = false
 
 func _print(text):
 	
@@ -39,7 +39,7 @@ func _print(text):
 
 func start():
 	
-	if loading_process.is_active():
+	if loading_process.is_alive():
 		_print("loading process already running...")
 		return
 
@@ -47,18 +47,19 @@ func start():
 
 	#start background loading process
 	# warning-ignore:return_value_discarded
-	loading_process.start(self, "_loading_process")
+	loading_process.start(Callable(self,"_loading_process"))
 	
 #will stop the loading process when a quit request is received 
 #(closing the window with the x button)
 func _notification(what):
 
-	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+	#GODOT3 if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST: 
+	if what == MainLoop.NOTIFICATION_PREDELETE:
 
-		if loading_process.is_active():
+		if loading_process.is_alive():
 
 			request_stop()
-			yield(self, "_loading_process_stopped")
+			await self._loading_process_stopped
 
 func is_exiting():
 	
@@ -126,7 +127,7 @@ func request_stop():
 	
 	#wait for the loading process to signal it has finished
 	#(prevents game from freezing when thread is instancing nodes)
-	yield(self, "_loading_process_stopped")
+	await self._loading_process_stopped
 	
 	loading_process.wait_to_finish()
 	
@@ -162,9 +163,9 @@ func _process_load_action(resource_id, resource_path):
 	
 	_print(str("process load resource ", resource_id))
 
-	var ts = OS.get_ticks_msec()
+	var ts = Time.get_ticks_msec()
 	
-	var loader = ResourceLoader.load_interactive(resource_path)
+	var loader = ResourceLoader.load_threaded_request(resource_path)
 	var resource
 	
 	while true:
@@ -181,7 +182,7 @@ func _process_load_action(resource_id, resource_path):
 			resource = loader.get_resource()
 			loaded_resources_lock.lock()
 			loaded_resources[resource_id] = {resource = resource, instance = null}
-			_print(str("resource ", resource_id, " loaded in ", (OS.get_ticks_msec() - ts) / 1000.0, "s"))
+			_print(str("resource ", resource_id, " loaded in ", (Time.get_ticks_msec() - ts) / 1000.0, "s"))
 			loaded_resources_lock.unlock()
 			break
 			
@@ -257,9 +258,9 @@ func _process_instance_action(resource_id, resource_path):
 	resource = loaded_resources[resource_id].resource
 	loaded_resources_lock.unlock()
 
-	var ts = OS.get_ticks_msec()
-	resource_instance = resource.instance()
-	_print(str("resource ", resource_id, " instanced in ", (OS.get_ticks_msec() - ts) / 1000.0, "s"))
+	var ts = Time.get_ticks_msec()
+	resource_instance = resource.instantiate()
+	_print(str("resource ", resource_id, " instanced in ", (Time.get_ticks_msec() - ts) / 1000.0, "s"))
 
 	loaded_resources_lock.lock()
 	loaded_resources[resource_id].instance = resource_instance
@@ -289,7 +290,7 @@ func _process_free_action(resource_id):
 	
 func _reset_state():
 	
-	#remove all pending messages
+	#remove_at all pending messages
 	action_queue_lock.lock()
 	action_queue.clear()
 	action_queue_lock.unlock()

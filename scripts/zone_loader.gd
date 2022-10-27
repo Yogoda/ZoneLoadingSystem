@@ -8,9 +8,9 @@ signal zone_loaded(zone_id, zone_node)
 #useful if you need to save the zone data
 signal zone_about_to_unload(zone_id, zone_node)
 
-export var show_debug = false
+@export var show_debug = false
 
-export var unload_delay = 1.0
+@export var unload_delay = 1.0
 
 var current_zones = {} #zones the player is in (1-2)
 var current_zone #zone the player is in (arbitrary)
@@ -21,17 +21,17 @@ var loaded_zones = {}
 func _ready():
 	
 	# warning-ignore:return_value_discarded
-	BackgroundLoader.connect("resource_instance_available", self, "_on_zone_instance_available")
+	BackgroundLoader.connect("resource_instance_available",Callable(self,"_on_zone_instance_available"))
 	
 	# warning-ignore:return_value_discarded
-	BackgroundLoader.connect("resource_instanced", self, "_on_zone_loaded")
+	BackgroundLoader.connect("resource_instanced",Callable(self,"_on_zone_loaded"))
 	
 	#connect all zone triggers
 	for zone in get_children():
 		
 		if zone.get("zone_id"):
-			zone.connect("zone_entered", self, "_on_zone_entered")
-			zone.connect("zone_exited", self, "_on_zone_exited")
+			zone.connect("zone_entered",Callable(self,"_on_zone_entered"))
+			zone.connect("zone_exited",Callable(self,"_on_zone_exited"))
 
 	if show_debug:
 		BackgroundLoader.show_debug = true
@@ -51,7 +51,7 @@ func is_in_zone(zone_id):
 	return current_zones.has(zone_id)
 
 func enter_zone(zone_id):
-	get_node(zone_id).zone_entered(null)
+	get_node(zone_id).enter_zone(null)
 
 func _on_zone_entered(zone_id, zone_path):
 	
@@ -99,7 +99,7 @@ func _on_zone_exited(zone_id):
 	#schedule unloading, not having immediate unloading prevents having 
 	#noticable transitions when going back and forth a small amount
 	# warning-ignore:return_value_discarded
-	get_tree().create_timer(unload_delay).connect("timeout", self, "_remove_zone", [zone_id])
+	get_tree().create_timer(unload_delay).connect("timeout",Callable(self,"_remove_zone").bind(zone_id))
 
 func _remove_zone(zone_id):
 	
@@ -109,9 +109,9 @@ func _remove_zone(zone_id):
 	#unload all loaded zones that are not current or connected
 	var keep_zones = current_zones.keys()
 
-	for zone_id in current_zones.keys():
+	for current_zone_id in current_zones.keys():
 		
-		var zone = get_node(zone_id)
+		var zone = get_node(current_zone_id)
 		
 		#add all zones connected to a zone the player is in
 		for connected_area in zone.zone_trigger.get_overlapping_areas():
@@ -123,17 +123,17 @@ func _remove_zone(zone_id):
 				
 				keep_zones.append(connected_zone.zone_id)
 	
-	for zone_id in loaded_zones:
+	for loaded_zone_id in loaded_zones:
 
-		if not zone_id in keep_zones:
+		if not loaded_zone_id in keep_zones:
 			
-			_print(str("prunning: request unload ", zone_id))
+			_print(str("prunning: request unload ", loaded_zone_id))
 			
-			emit_signal("zone_about_to_unload", zone_id, loaded_zones[zone_id])
+			emit_signal("zone_about_to_unload", loaded_zone_id, loaded_zones[loaded_zone_id])
 			
-			BackgroundLoader.request_unload(zone_id)
+			BackgroundLoader.request_unload(loaded_zone_id)
 
-			loaded_zones.erase(zone_id)
+			loaded_zones.erase(loaded_zone_id)
 	
 func _on_zone_loaded(zone_id, instance):
 	
@@ -156,7 +156,7 @@ func _on_zone_instance_available(zone_id, instance):
 		#use a timer as a workaround for this issue:
 		#https://github.com/godotengine/godot/issues/19465
 		# warning-ignore:return_value_discarded
-		get_tree().create_timer(0.0).connect("timeout", self, "attach_zone", [zone_id, instance])
+		get_tree().create_timer(0.0).connect("timeout",Callable(self,"attach_zone").bind(zone_id, instance))
 
 #return instanced zone node from the tree
 func get_zone(zone_id):
@@ -173,7 +173,7 @@ func attach_zone(zone_id, zone_instance):
 		
 		emit_signal("zone_attached", zone_id)
 		
-#remove zone from the scene tree
+#remove_at zone from the scene tree
 func detach_zone(zone_id):
 	
 	var area = get_node(zone_id)
@@ -182,7 +182,7 @@ func detach_zone(zone_id):
 	if zone:
 
 		# warning-ignore:return_value_discarded
-		get_tree().create_timer(0.0).connect("timeout", self, "remove_from_tree", [area, zone])
+		get_tree().create_timer(0.0).connect("timeout",Callable(self,"remove_from_tree").bind(area, zone))
 		
 		_print(str("zone ", zone_id, " detached"))
 

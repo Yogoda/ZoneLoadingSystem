@@ -11,4 +11,4 @@ shape = SubResource( 1 )
 [node name="Wall" type="Polygon2D" parent="."]
 scale = Vector2( 0.958378, 0.624703 )
 color = Color( 0.65098, 0.65098, 0.65098, 1 )
-polygon = PoolVector2Array( -129.505, -40.5046, -129.874, 42.1248, 130.944, 41.5588, 129.838, -41.0705 )
+polygon = PackedVector2Array( -129.505, -40.5046, -129.874, 42.1248, 130.944, 41.5588, 129.838, -41.0705 )
