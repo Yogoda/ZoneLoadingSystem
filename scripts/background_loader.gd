@@ -165,33 +165,68 @@ func _process_load_action(resource_id, resource_path):
 
 	var ts = Time.get_ticks_msec()
 	
-	var loader = ResourceLoader.load_threaded_request(resource_path)
-	var resource
+	var resource = ResourceLoader.load(resource_path)
 	
-	while true:
+	loaded_resources_lock.lock()
+	loaded_resources[resource_id] = {resource = resource, instance = null}
+	_print(str("resource ", resource_id, " loaded in ", (Time.get_ticks_msec() - ts) / 1000.0, "s"))
+	loaded_resources_lock.unlock()
+	return
+	
+#	var r = ResourceLoader.load_threaded_request(resource_path)
+#	if r != OK:
+#		print("cannot load resource ", resource_path)
+#		return
+#
+#	while ResourceLoader.load_threaded_get_status(resource_path) == ResourceLoader.ThreadLoadStatus.THREAD_LOAD_IN_PROGRESS:
+#		if is_exiting():
+#			_print(str("exiting, loading ", resource_id, " arborted"))
+#			break
+#
+#	var status = ResourceLoader.load_threaded_get_status(resource_path)
+#
+#	if status == ResourceLoader.THREAD_LOAD_LOADED:
+#		resource = ResourceLoader.load_threaded_get(resource_path)
+#
+#		loaded_resources_lock.lock()
+#		loaded_resources[resource_id] = {resource = resource, instance = null}
+#		_print(str("resource ", resource_id, " loaded in ", (Time.get_ticks_msec() - ts) / 1000.0, "s"))
+#		loaded_resources_lock.unlock()
+#		return
+#
+#	else:
+#		_print(str("error loading resource: ", resource_id , " ",  str(status)))
+#		return
 		
-		if is_exiting():
-			_print(str("exiting, loading ", resource_id, " arborted"))
-			break
-
-		var err = loader.poll()
-
-		#finished loading
-		if err == ERR_FILE_EOF:
-
-			resource = loader.get_resource()
-			loaded_resources_lock.lock()
-			loaded_resources[resource_id] = {resource = resource, instance = null}
-			_print(str("resource ", resource_id, " loaded in ", (Time.get_ticks_msec() - ts) / 1000.0, "s"))
-			loaded_resources_lock.unlock()
-			break
+#==================================
+#	while true:
+#
+#		if is_exiting():
+#			_print(str("exiting, loading ", resource_id, " arborted"))
+#			print("b")
+#			break
+#
+#		var err = loader.poll()
+#
+#		#finished loading
+#		if err == ERR_FILE_EOF:
+#
+#			resource = loader.get_resource()
+#			loaded_resources_lock.lock()
+#			loaded_resources[resource_id] = {resource = resource, instance = null}
+#			_print(str("resource ", resource_id, " loaded in ", (Time.get_ticks_msec() - ts) / 1000.0, "s"))
+#			loaded_resources_lock.unlock()
+#			break
+#
+#		elif err != OK:
+#			_print(str("error loading resource: ", resource_id , " ",  str(err)))
+#			break
+#
+#		else:
+#			print(err)
 			
-		elif err != OK:
-			_print(str("error loading resource: ", resource_id , " ",  str(err)))
-			break
-			
-	if is_exiting():
-		return
+#	if is_exiting():
+#		return
 
 func _process_unload_action(resource_id):
 	

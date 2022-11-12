@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://wvd3hpmynj48"]
+[gd_scene load_steps=7 format=3 uid="uid://wvd3hpmynj48"]
 
-[ext_resource type="PackedScene" path="res://demo/3d/zones/resources/rock.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://cso1vj3hiyts2" path="res://demo/3d/zones/resources/rock.tscn" id="1"]
 [ext_resource type="Material" path="res://demo/3d/zones/resources/materials/terrain_blue.material" id="2"]
 [ext_resource type="PackedScene" path="res://demo/3d/resources/player_spawn.tscn" id="3"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mutmr"]
+albedo_color = Color(0, 0, 0, 1)
+
 [sub_resource type="BoxMesh" id="1"]
+material = SubResource("StandardMaterial3D_mutmr")
+size = Vector3(2, 2, 2)
 
 [sub_resource type="BoxShape3D" id="3"]
 
@@ -16,7 +21,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 191, 7.82312, 0)
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 112.984, 0, 0)
 use_collision = true
-size = Vector3(296.443, 1, 108.072)
+size = Vector3(310.564, 1, 100)
 material = ExtResource("2")
 
 [node name="Rocks" type="Node3D" parent="."]

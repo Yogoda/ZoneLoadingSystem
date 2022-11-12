@@ -1,3 +1,9 @@
-res://demo/3d/zones/zone_02.tscn
+res://demo/menu.tscn
+res://scripts/zone_loader.gd
+res://scripts/world.gd
+res://demo/3d/world_3d.tscn
 res://demo/3d/resources/environment.tres
-res://demo/3d/zones/zone_03.tscn
+res://scripts/background_loader.gd
+res://demo/3d/demo_3d.tscn
+res://scripts/zone.gd
+res://demo/3d/player_3d.tscn

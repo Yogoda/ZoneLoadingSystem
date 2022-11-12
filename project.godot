@@ -8,8 +8,15 @@
 
 config_version=5
 
-_global_script_classes=[]
-_global_script_class_icons={}
+_global_script_classes=[{
+"base": "Node",
+"class": &"ZoneLoader",
+"language": &"GDScript",
+"path": "res://scripts/zone_loader.gd"
+}]
+_global_script_class_icons={
+"ZoneLoader": ""
+}
 
 [application]
 
@@ -22,6 +29,10 @@ config/version="1.4"
 [autoload]
 
 BackgroundLoader="*res://scripts/background_loader.gd"
+
+[debug]
+
+gdscript/warnings/return_value_discarded=0
 
 [editor_plugins]
 

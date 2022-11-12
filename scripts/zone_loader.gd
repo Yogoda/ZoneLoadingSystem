@@ -1,4 +1,5 @@
 extends Node
+class_name ZoneLoader
 
 signal zone_entered(zone_id)
 signal zone_attached(zone_id)
@@ -29,9 +30,10 @@ func _ready():
 	#connect all zone triggers
 	for zone in get_children():
 		
-		if zone.get("zone_id"):
-			zone.connect("zone_entered",Callable(self,"_on_zone_entered"))
-			zone.connect("zone_exited",Callable(self,"_on_zone_exited"))
+		if zone.get("zone_id") != null:
+			
+			var err = zone.connect("zone_entered",Callable(self,"_on_zone_entered"))
+			err = zone.connect("zone_exited",Callable(self,"_on_zone_exited"))
 
 	if show_debug:
 		BackgroundLoader.show_debug = true
@@ -68,7 +70,7 @@ func _on_zone_entered(zone_id, zone_path):
 
 	emit_signal("zone_entered", zone_id)
 	
-func _load_connected_zones(zone_id):
+func _load_connected_zones(zone_id:String):
 	
 	var zone = get_node(zone_id)
 	
@@ -78,7 +80,7 @@ func _load_connected_zones(zone_id):
 		var connected_zone = connected_area.get_parent()
 	
 		#don't consider player trigger area
-		if connected_zone.get("zone_id"):
+		if connected_zone.get("zone_id") != null:
 		
 			if not loaded_zones.has(connected_zone.zone_id):
 				_print(str("load connected zone ", connected_zone.zone_id))
@@ -119,7 +121,7 @@ func _remove_zone(zone_id):
 			var connected_zone = connected_area.get_parent()
 			
 			#don't consider player trigger area
-			if connected_zone.get("zone_id"):
+			if connected_zone.get("zone_id") != null:
 				
 				keep_zones.append(connected_zone.zone_id)
 	
@@ -159,12 +161,12 @@ func _on_zone_instance_available(zone_id, instance):
 		get_tree().create_timer(0.0).connect("timeout",Callable(self,"attach_zone").bind(zone_id, instance))
 
 #return instanced zone node from the tree
-func get_zone(zone_id):
+func get_zone(zone_id:String):
 
 	return get_node(zone_id).get_node_or_null(zone_id)
 
 #attach zone to the scene tree
-func attach_zone(zone_id, zone_instance):
+func attach_zone(zone_id:String, zone_instance):
 
 	if not get_zone(zone_id):
 
@@ -174,7 +176,7 @@ func attach_zone(zone_id, zone_instance):
 		emit_signal("zone_attached", zone_id)
 		
 #remove_at zone from the scene tree
-func detach_zone(zone_id):
+func detach_zone(zone_id:String):
 	
 	var area = get_node(zone_id)
 	var zone = area.get_node_or_null(zone_id)

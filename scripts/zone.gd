@@ -6,13 +6,14 @@ signal zone_exited(zone_id)
 
 @export_file var zone_path
 
-@export var preview:bool = false: 
-	get:
-		return preview
-	set(new_value):
-		set_preview(new_value)
+@export var preview:bool = false
+#@export var preview:bool = false: 
+#	get:
+#		return preview
+#	set(new_value):
+#		set_preview(new_value)
 
-var zone_id
+var zone_id:String
 var zone_trigger
 var _preview_node: Node = null
 
@@ -51,9 +52,9 @@ func _ready():
 	zone_trigger = trigger
 
 	# warning-ignore:return_value_discarded
-	trigger.connect("area_entered",Callable(self,"zone_entered"))
+	trigger.connect("area_entered",Callable(self,"enter_zone"))
 	# warning-ignore:return_value_discarded
-	trigger.connect("area_exited",Callable(self,"zone_exited"))
+	trigger.connect("area_exited",Callable(self,"exit_zone"))
 	
 	trigger.add_to_group("zone_trigger")
 
@@ -65,9 +66,10 @@ func enter_zone(area):
 		return
 		
 	#discard initial contact with other areas
-	if area != null and area.is_in_group("zone_trigger"):
+	if area and area.is_in_group("zone_trigger"):
 		return
 		
+	print("zone_entered", zone_id, zone_path)
 	emit_signal("zone_entered", zone_id, zone_path)
 
 

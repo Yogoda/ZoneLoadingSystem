@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://be1smvcq472cn"]
 
 [sub_resource type="GDScript" id="1"]
-script/source = "tool
+script/source = "@tool
 extends CharacterBody2D
 
 var vel := Vector2.ZERO

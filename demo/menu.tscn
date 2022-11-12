@@ -11,7 +11,7 @@ func _input(event):
 	
 	if event is InputEventKey and event.pressed and not event.is_echo():
 		
-		if event.scancode == KEY_ESCAPE:
+		if event.keycode == KEY_ESCAPE:
 
 			get_tree().quit()
 
@@ -36,6 +36,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -0.8909
 offset_bottom = -0.890869
+grow_horizontal = 2
+grow_vertical = 2
 script = SubResource("1")
 
 [node name="Panel" type="PanelContainer" parent="."]

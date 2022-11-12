@@ -3,7 +3,7 @@ extends Node
 #signalling parent the world has finished loading (hide loading screen)
 signal world_loaded
 
-@onready var zone_loader = $ZoneLoader
+@onready var zone_loader:ZoneLoader = $ZoneLoader
 
 @export var player_scene:PackedScene
 
@@ -20,7 +20,7 @@ func _input(event):
 	
 	if event is InputEventKey and event.pressed and not event.is_echo():
 		
-		if event.scancode == KEY_ESCAPE:
+		if event.keycode == KEY_ESCAPE:
 
 			#ask the loading process to stop and wait for it to finish (proper way to quit)
 			BackgroundLoader.request_stop()
@@ -33,10 +33,11 @@ func _input(event):
 func _ready():
 	
 	#this will fire the first time a zone is attached to the world (initial loading)
-	zone_loader.connect("zone_attached",Callable(self,"_on_first_zone_attached").bind(),CONNECT_ONE_SHOT)
+	#zone_loader.connect("zone_attached", _on_first_zone_attached, CONNECT_ONE_SHOT)
+	zone_loader.zone_attached.connect(_on_first_zone_attached, CONNECT_ONE_SHOT)
 	
-	zone_loader.connect("zone_loaded",Callable(self,"_on_zone_loaded"))
-	zone_loader.connect("zone_about_to_unload",Callable(self,"_on_zone_about_to_unload"))
+	zone_loader.connect("zone_loaded", Callable(self, "_on_zone_loaded"))
+	zone_loader.connect("zone_about_to_unload", Callable(self, "_on_zone_about_to_unload"))
 	
 	#simulate player entering first zone area (as player is not in the world yet)
 	zone_loader.enter_zone(starting_zone)
@@ -45,7 +46,7 @@ func _ready():
 
 
 #called when the initial first area has finished loading and is attached to the tree
-# warning-ignore:unused_argument
+@warning_ignore(unused_parameter)
 func _on_first_zone_attached(zone_id):
 	
 	#get player spawn checked the map
@@ -59,21 +60,19 @@ func _on_first_zone_attached(zone_id):
 	get_tree().paused = false
 	
 	#wait one frame
-	await get_tree().idle_frame
+	#await get_tree().idle_frame
 	
 	emit_signal("world_loaded")
 
 #load zone data here
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
+@warning_ignore(unused_parameter)
 func _on_zone_loaded(zone_id, zone_node):
 
 	pass
 #	print("zone loaded ", zone_id)
 
 #save zone data here
-# warning-ignore:unused_argument
-# warning-ignore:unused_argument
+@warning_ignore(unused_parameter)
 func _on_zone_about_to_unload(zone_id, zone_node):
 
 	pass

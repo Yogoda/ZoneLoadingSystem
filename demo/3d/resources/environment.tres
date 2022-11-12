@@ -1,10 +1,10 @@
 [gd_resource type="Environment" load_steps=2 format=3 uid="uid://52a2cttutger"]
 
-[sub_resource type="Sky" id="1"]
+[sub_resource type="Sky" id="Sky_8duhn"]
 
 [resource]
 background_mode = 2
-sky = SubResource("1")
+sky = SubResource("Sky_8duhn")
 ambient_light_color = Color(0.509804, 0.509804, 0.509804, 1)
 ambient_light_sky_contribution = 0.0
 tonemap_mode = 2
