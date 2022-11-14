@@ -7,6 +7,7 @@ signal zone_exited(zone_id)
 @export_file var zone_path
 
 @export var preview:bool = false
+	
 #@export var preview:bool = false: 
 #	get:
 #		return preview
@@ -62,11 +63,19 @@ func _ready():
 # warning-ignore:unused_argument
 func enter_zone(area):
 	
+	print("A ", zone_id)
+	
 	if Engine.is_editor_hint():
 		return
+	
+	if area != null:
+		print("B ", zone_id)
+		
+		for grp in area.get_groups():
+			print(grp)
 		
 	#discard initial contact with other areas
-	if area and area.is_in_group("zone_trigger"):
+	if area != null and area.is_in_group("zone_trigger"):
 		return
 		
 	print("zone_entered", zone_id, zone_path)

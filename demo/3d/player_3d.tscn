@@ -67,18 +67,21 @@ func _physics_process(delta):
 
 [sub_resource type="CapsuleShape3D" id="2"]
 
+[sub_resource type="CapsuleMesh" id="4"]
+
 [sub_resource type="BoxShape3D" id="3"]
 size = Vector3(30.131, 38.3604, 32.0726)
 
-[sub_resource type="CapsuleMesh" id="4"]
-
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.998517, 0)
 script = SubResource("1")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 0, 0)
 shape = SubResource("2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("4")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -88,13 +91,8 @@ current = true
 far = 8192.0
 
 [node name="ZoneTrigger" type="Area3D" parent="Camera3D"]
-collision_layer = 0
+collision_layer = 32768
 collision_mask = 32768
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/ZoneTrigger"]
 shape = SubResource("3")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, -1.62921e-06, 10, 0, -10, -1.62921e-06, 0, 0, 0)
-cast_shadow = 0
-mesh = SubResource("4")

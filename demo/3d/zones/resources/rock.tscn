@@ -6,6 +6,7 @@
 size = Vector3(2, 2, 2)
 
 [sub_resource type="BoxShape3D" id="2"]
+size = Vector3(2, 2, 2)
 
 [node name="Rock" type="StaticBody3D"]
 
