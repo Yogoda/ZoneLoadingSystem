@@ -30,10 +30,6 @@ config/version="1.4"
 
 BackgroundLoader="*res://scripts/background_loader.gd"
 
-[debug]
-
-gdscript/warnings/return_value_discarded=0
-
 [editor_plugins]
 
 enabled=PackedStringArray()
