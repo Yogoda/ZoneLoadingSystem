@@ -12,7 +12,7 @@ var deceleration = 7.0
 
 func _physics_process(delta):
 	
-	if Engine.editor_hint:
+	if Engine.is_editor_hint():
 		return
 	
 	var input := Vector2.ZERO
