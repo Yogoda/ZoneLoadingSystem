@@ -32,8 +32,8 @@ func _ready():
 		
 		if zone.get("zone_id") != null:
 			
-			var err = zone.connect("zone_entered",Callable(self,"_on_zone_entered"))
-			err = zone.connect("zone_exited",Callable(self,"_on_zone_exited"))
+			zone.connect("zone_entered",Callable(self,"_on_zone_entered"))
+			zone.connect("zone_exited",Callable(self,"_on_zone_exited"))
 
 	if show_debug:
 		BackgroundLoader.show_debug = true

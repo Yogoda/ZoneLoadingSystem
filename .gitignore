@@ -2,8 +2,6 @@
 .import/
 .godot
 .godot/
-.godot/editor
-.godot/editor/
 export.cfg
 export_presets.cfg
 
@@ -19,3 +17,4 @@ data_*/
 .godot/editor/filesystem_update4
 .godot/editor/project_metadata.cfg
 .godot/editor/script_editor_cache.cfg
+.godot/editor/create_recent.Node

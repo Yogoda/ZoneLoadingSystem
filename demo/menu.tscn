@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://b2deyu45o83it"]
+[gd_scene load_steps=6 format=3 uid="uid://b2deyu45o83it"]
 
 [sub_resource type="GDScript" id="1"]
 script/source = "extends CenterContainer
@@ -30,6 +30,27 @@ func _on_Exit_pressed():
 	get_tree().quit()
 "
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ns33"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.466667, 0.466667, 0.466667, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yrhps"]
+content_margin_bottom = 4.0
+bg_color = Color(0.466667, 0.466667, 0.466667, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_y5vab"]
+font_color = Color(0.886275, 1, 0.635294, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bo0gp"]
+bg_color = Color(0.247059, 0.247059, 0.247059, 1)
+
 [node name="Control" type="CenterContainer"]
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,48 +62,37 @@ grow_vertical = 2
 script = SubResource("1")
 
 [node name="Panel" type="PanelContainer" parent="."]
-offset_left = 494.0
-offset_top = 243.0
-offset_right = 658.0
-offset_bottom = 404.0
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7ns33")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-offset_right = 164.0
-offset_bottom = 161.0
+layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer"]
-offset_right = 164.0
-offset_bottom = 52.0
-
-[node name="Label" type="Label" parent="Panel/VBoxContainer/MarginContainer"]
-offset_right = 164.0
-offset_bottom = 52.0
+[node name="Title" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_yrhps")
 text = "Zone Loading System
 Demo"
+label_settings = SubResource("LabelSettings_y5vab")
+horizontal_alignment = 1
 
-[node name="Demo2D" type="Button" parent="Panel/VBoxContainer"]
-offset_top = 56.0
-offset_right = 164.0
-offset_bottom = 87.0
+[node name="BtnDemo2D" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
 text = "Demo 2D"
 
-[node name="Demo3D" type="Button" parent="Panel/VBoxContainer"]
-offset_top = 91.0
-offset_right = 164.0
-offset_bottom = 122.0
+[node name="BtnDemo3D" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
 text = "Demo 3D"
 
-[node name="Separator" type="Panel" parent="Panel/VBoxContainer"]
-offset_top = 126.0
-offset_right = 164.0
-offset_bottom = 126.0
+[node name="Separator" type="PanelContainer" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bo0gp")
 
-[node name="Quit" type="Button" parent="Panel/VBoxContainer"]
-offset_top = 130.0
-offset_right = 164.0
-offset_bottom = 161.0
+[node name="BtnQuit" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
 text = "Quit"
 
-[connection signal="pressed" from="Panel/VBoxContainer/Demo2D" to="." method="_on_Demo2D_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Demo3D" to="." method="_on_Demo3D_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Quit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/BtnDemo2D" to="." method="_on_Demo2D_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/BtnDemo3D" to="." method="_on_Demo3D_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/BtnQuit" to="." method="_on_Exit_pressed"]

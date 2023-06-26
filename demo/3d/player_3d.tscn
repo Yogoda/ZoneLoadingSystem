@@ -1,6 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbrbf8fobi4wj"]
-
-[ext_resource type="Environment" uid="uid://52a2cttutger" path="res://demo/3d/resources/environment.tres" id="1"]
+[gd_scene load_steps=7 format=3 uid="uid://cbrbf8fobi4wj"]
 
 [sub_resource type="GDScript" id="1"]
 script/source = "extends CharacterBody3D
@@ -72,6 +70,12 @@ func _physics_process(delta):
 [sub_resource type="BoxShape3D" id="3"]
 size = Vector3(30.131, 38.3604, 32.0726)
 
+[sub_resource type="SphereMesh" id="SphereMesh_5gxgs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fqo33"]
+shading_mode = 0
+albedo_color = Color(1, 0, 0.945098, 1)
+
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.998517, 0)
 script = SubResource("1")
@@ -86,13 +90,19 @@ mesh = SubResource("4")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 cull_mask = 1048573
-environment = ExtResource("1")
 current = true
 far = 8192.0
 
 [node name="ZoneTrigger" type="Area3D" parent="Camera3D"]
 collision_layer = 32768
-collision_mask = 32768
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/ZoneTrigger"]
 shape = SubResource("3")
+
+[node name="MapMarker" type="MeshInstance3D" parent="."]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 20, 0)
+layers = 2
+cast_shadow = 0
+mesh = SubResource("SphereMesh_5gxgs")
+surface_material_override/0 = SubResource("StandardMaterial3D_fqo33")

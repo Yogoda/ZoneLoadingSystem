@@ -1,9 +1,22 @@
-[gd_scene load_steps=10 format=3 uid="uid://fcrncph26c2e"]
+[gd_scene load_steps=13 format=3 uid="uid://fcrncph26c2e"]
 
 [ext_resource type="Script" path="res://scripts/zone_loader.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/world.gd" id="3"]
 [ext_resource type="PackedScene" uid="uid://cbrbf8fobi4wj" path="res://demo/3d/player_3d.tscn" id="4"]
 [ext_resource type="Script" path="res://scripts/zone.gd" id="5"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ab8fl"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_41vfc"]
+sky_material = SubResource("ProceduralSkyMaterial_ab8fl")
+
+[sub_resource type="Environment" id="Environment_fcqca"]
+background_mode = 2
+sky = SubResource("Sky_41vfc")
+tonemap_mode = 2
+glow_enabled = true
 
 [sub_resource type="BoxShape3D" id="1"]
 size = Vector3(168.859, 175.044, 188.55)
@@ -26,6 +39,9 @@ size = Vector3(389.996, 175.087, 210.07)
 script = ExtResource("3")
 player_scene = ExtResource("4")
 starting_zone = "Zone01"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fcqca")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.742589, 0.498052, -0.447779, -0.258248, 0.829808, 0.494698, 0.617956, -0.251719, 0.744828, 0, 31.8574, 0)

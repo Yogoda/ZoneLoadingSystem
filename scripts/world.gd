@@ -46,8 +46,7 @@ func _ready():
 
 
 #called when the initial first area has finished loading and is attached to the tree
-@warning_ignore(unused_parameter)
-func _on_first_zone_attached(zone_id):
+func _on_first_zone_attached(_zone_id):
 	
 	#get player spawn checked the map
 	var player_spawn = get_tree().get_nodes_in_group(GROUP_PLAYER_SPAWN)[0]
@@ -65,15 +64,13 @@ func _on_first_zone_attached(zone_id):
 	emit_signal("world_loaded")
 
 #load zone data here
-@warning_ignore(unused_parameter)
-func _on_zone_loaded(zone_id, zone_node):
+func _on_zone_loaded(_zone_id, _zone_node):
 
 	pass
 #	print("zone loaded ", zone_id)
 
 #save zone data here
-@warning_ignore(unused_parameter)
-func _on_zone_about_to_unload(zone_id, zone_node):
+func _on_zone_about_to_unload(_zone_id, _zone_node):
 
 	pass
 #	print("zone unloaded ", zone_id)
