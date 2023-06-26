@@ -50,6 +50,7 @@ size = Vector2(24, 8)
 size = Vector2(1024, 600)
 
 [node name="Player2D" type="CharacterBody2D"]
+y_sort_enabled = true
 script = SubResource("1")
 max_speed = 600.0
 
@@ -68,11 +69,10 @@ position = Vector2(0, -4)
 shape = SubResource("2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-current = true
 
 [node name="ZoneTrigger" type="Area2D" parent="Camera2D"]
-collision_layer = 0
-collision_mask = 32768
+collision_layer = 32768
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/ZoneTrigger"]
 visible = false

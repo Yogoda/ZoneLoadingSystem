@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Zone Loading System"
 run/main_scene="res://demo/menu.tscn"
-config/features=PackedStringArray("4.0")
+config/features=PackedStringArray("4.1")
 config/icon="res://icon.png"
 config/version="1.4"
 

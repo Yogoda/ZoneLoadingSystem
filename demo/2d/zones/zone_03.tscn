@@ -1,41 +1,43 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bj8l8kp2i1hmm"]
 
-[ext_resource path="res://demo/2d/resources/player_spawn.tscn" type="PackedScene" id=1]
-[ext_resource path="res://demo/2d/resources/npc.tscn" type="PackedScene" id=2]
+[ext_resource type="PackedScene" path="res://demo/2d/resources/player_spawn.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://bv82lun5glc6a" path="res://demo/2d/resources/npc.tscn" id="2"]
 
 [node name="Zone03" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-scale = Vector2( 4, 4 )
 z_index = -1
-color = Color( 0.207843, 0.278431, 0.32549, 1 )
-polygon = PackedVector2Array( -32.8116, 17.1259, -80, 40, -96, 80, -168, 48, -160, 0, -176, -48, -144, -80, -96, -88, -56, -56, -24, -80, 36.1624, -44.7128, 88, -80, 152, -56, 152, 24, 72, 64, -4.27063, 40.9101 )
+scale = Vector2(4, 4)
+color = Color(0.207843, 0.278431, 0.32549, 1)
+polygon = PackedVector2Array(-32.8116, 17.1259, -80, 40, -96, 80, -168, 48, -160, 0, -176, -48, -144, -80, -96, -88, -56, -56, -24, -80, 36.1624, -44.7128, 88, -80, 152, -56, 152, 24, 72, 64, -4.27063, 40.9101)
 
-[node name="PlayerSpawn" parent="." instance=ExtResource( 1 )]
-position = Vector2( 104, 24 )
+[node name="PlayerSpawn" parent="." instance=ExtResource("1")]
+position = Vector2(104, 24)
 
 [node name="Wall" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
-polygon = PackedVector2Array( -549.796, -444.035, -580.283, -321.524, -388.283, -353.524, -224.283, -231.524, -94.283, -317.524, 143.717, -183.524, 351.717, -321.524, 607.717, -223.524, 613.717, 82.476, 281.201, 250.923, -7.12451, 170.832, -135.269, 66.7148, -319.477, 157.484, -380.88, 317.665, -28.4819, 664.723, 921.924, 176.172, 863.717, -558, -158.283, -694, -424.78, -679.235 )
+polygon = PackedVector2Array(-549.796, -444.035, -580.283, -321.524, -388.283, -353.524, -224.283, -231.524, -94.283, -317.524, 143.717, -183.524, 351.717, -321.524, 607.717, -223.524, 613.717, 82.476, 281.201, 250.923, -7.12451, 170.832, -135.269, 66.7148, -319.477, 157.484, -380.88, 317.665, -28.4819, 664.723, 921.924, 176.172, 863.717, -558, -158.283, -694, -424.78, -679.235)
 
 [node name="Wall2" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall2"]
-polygon = PackedVector2Array( -1072.28, 22, -902.283, -254, -704.283, -196, -640.283, -2, -672.283, 186, -1114.28, 202 )
+polygon = PackedVector2Array(-1072.28, 22, -902.283, -254, -704.283, -196, -640.283, -2, -672.283, 186, -1114.28, 202)
 
-[node name="NPC2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( 368, -104 )
+[node name="NPC2D" parent="." instance=ExtResource("2")]
+y_sort_enabled = true
+position = Vector2(368, -104)
 
 [node name="Polygon2D" parent="NPC2D" index="0"]
-color = Color( 0.419608, 0.27451, 0, 1 )
+color = Color(0.419608, 0.27451, 0, 1)
 
-[node name="NPC2D3" parent="." instance=ExtResource( 2 )]
-position = Vector2( 384, -120 )
+[node name="NPC2D3" parent="." instance=ExtResource("2")]
+y_sort_enabled = true
+position = Vector2(384, -120)
 
 [node name="Polygon2D" parent="NPC2D3" index="0"]
-color = Color( 0, 0.360784, 0.00392157, 1 )
+color = Color(0, 0.360784, 0.00392157, 1)
 
 [editable path="NPC2D"]
-
 [editable path="NPC2D3"]

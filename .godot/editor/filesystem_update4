@@ -1,5 +1,1 @@
-res://demo/menu.tscn
-res://demo/3d/resources/environment.tres
-res://demo/3d/demo_3d.tscn
-res://demo/3d/player_3d.tscn
-res://demo/3d/world_3d.tscn
+res://demo/2d/demo_2d.tscn

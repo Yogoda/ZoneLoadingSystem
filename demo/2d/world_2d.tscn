@@ -1,99 +1,81 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=9 format=3 uid="uid://u6dbrx7boxr0"]
 
-[ext_resource path="res://demo/2d/player_2d.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scripts/world.gd" type="Script" id=2]
-[ext_resource path="res://scripts/zone.gd" type="Script" id=3]
-[ext_resource path="res://scripts/zone_loader.gd" type="Script" id=4]
+[ext_resource type="PackedScene" uid="uid://be1smvcq472cn" path="res://demo/2d/player_2d.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/world.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/zone.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/zone_loader.gd" id="4"]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 755.996, 428.289 )
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(1511.99, 856.578)
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 614.661, 546.691 )
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(1229.32, 1093.38)
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 841.391, 398.189 )
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(1682.78, 796.378)
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 758.777, 612.111 )
+[sub_resource type="RectangleShape2D" id="4"]
+size = Vector2(1517.55, 1224.22)
 
-[node name="World3D" type="Node2D"]
-script = ExtResource( 2 )
-player_scene = ExtResource( 1 )
+[node name="World2D" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("2")
+player_scene = ExtResource("1")
 starting_zone = "Zone01"
 
 [node name="ZoneLoader" type="Node2D" parent="."]
-script = ExtResource( 4 )
+y_sort_enabled = true
+script = ExtResource("4")
 
 [node name="Zone01" type="Node2D" parent="ZoneLoader"]
-position = Vector2( 571.435, 293.19 )
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_group_": true
-}
+y_sort_enabled = true
+position = Vector2(571.435, 293.19)
+script = ExtResource("3")
 zone_path = "res://demo/2d/zones/zone_01.tscn"
 
 [node name="LoadTrigger" type="Area2D" parent="ZoneLoader/Zone01"]
 collision_layer = 32768
 collision_mask = 32768
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone01/LoadTrigger"]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
 [node name="Zone02" type="Node2D" parent="ZoneLoader"]
-position = Vector2( 1585.84, -290.04 )
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_group_": true
-}
+y_sort_enabled = true
+position = Vector2(1585.84, -290.04)
+script = ExtResource("3")
 zone_path = "res://demo/2d/zones/zone_02.tscn"
 
 [node name="LoadTrigger" type="Area2D" parent="ZoneLoader/Zone02"]
 collision_layer = 32768
 collision_mask = 32768
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone02/LoadTrigger"]
-shape = SubResource( 2 )
+shape = SubResource("2")
 
 [node name="Zone03" type="Node2D" parent="ZoneLoader"]
-position = Vector2( 2654.43, 358.333 )
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_group_": true
-}
+y_sort_enabled = true
+position = Vector2(2654.43, 358.333)
+script = ExtResource("3")
 zone_path = "res://demo/2d/zones/zone_03.tscn"
 
 [node name="LoadTrigger" type="Area2D" parent="ZoneLoader/Zone03"]
 collision_layer = 32768
 collision_mask = 32768
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone03/LoadTrigger"]
-shape = SubResource( 3 )
+shape = SubResource("3")
 
 [node name="Zone04" type="Node2D" parent="ZoneLoader"]
-position = Vector2( 1676.66, 997.679 )
-script = ExtResource( 3 )
-__meta__ = {
-"_edit_group_": true
-}
+y_sort_enabled = true
+position = Vector2(1676.66, 997.679)
+script = ExtResource("3")
 zone_path = "res://demo/2d/zones/zone_04.tscn"
 
 [node name="LoadTrigger" type="Area2D" parent="ZoneLoader/Zone04"]
 collision_layer = 32768
 collision_mask = 32768
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneLoader/Zone04/LoadTrigger"]
-position = Vector2( -25.3984, -38.0976 )
-shape = SubResource( 4 )
+position = Vector2(-25.3984, -38.0976)
+shape = SubResource("4")

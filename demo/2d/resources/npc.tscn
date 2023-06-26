@@ -1,20 +1,23 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://bv82lun5glc6a"]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 12, 4 )
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(24, 8)
 
 [node name="NPC2D" type="StaticBody2D"]
+y_sort_enabled = true
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color( 0.105882, 0, 0.831373, 1 )
-offset = Vector2( -4, 0 )
-polygon = PackedVector2Array( 8, 0, 16, 0, 16, -32, -8, -32, -8, 0, 0, 0, 0, -8, 8, -8 )
+y_sort_enabled = true
+color = Color(0.105882, 0, 0.831373, 1)
+offset = Vector2(-4, 0)
+polygon = PackedVector2Array(8, 0, 16, 0, 16, -32, -8, -32, -8, 0, 0, 0, 0, -8, 8, -8)
 
 [node name="Polygon2D2" type="Polygon2D" parent="."]
-color = Color( 0.698039, 0.854902, 0.85098, 1 )
-offset = Vector2( 24, -4 )
-polygon = PackedVector2Array( -32, -24, -24, -24, -16, -24, -16, -16, -24, -16, -32, -16 )
+y_sort_enabled = true
+color = Color(0.698039, 0.854902, 0.85098, 1)
+offset = Vector2(24, -4)
+polygon = PackedVector2Array(-32, -24, -24, -24, -16, -24, -16, -16, -24, -16, -32, -16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -4 )
-shape = SubResource( 1 )
+position = Vector2(0, -4)
+shape = SubResource("1")

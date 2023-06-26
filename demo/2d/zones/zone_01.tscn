@@ -1,172 +1,57 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://b17crl6vi3hk8"]
 
-[ext_resource path="res://demo/2d/resources/player_spawn.tscn" type="PackedScene" id=1]
-[ext_resource path="res://demo/2d/resources/npc.tscn" type="PackedScene" id=2]
-[ext_resource path="res://demo/2d/resources/demo_tileset.png" type="Texture2D" id=3]
-
-[sub_resource type="ConvexPolygonShape2D" id=1]
-points = PackedVector2Array( 0, 32, 64, 32, 64, 64, 0, 64 )
-
-[sub_resource type="ConvexPolygonShape2D" id=2]
-points = PackedVector2Array( 32, 64, 0, 64, 0, 0, 32, 0 )
-
-[sub_resource type="ConvexPolygonShape2D" id=3]
-points = PackedVector2Array( 32, 32, 32, 0, 64, 0, 64, 64, 0, 64, 0, 32, 0, 32 )
-
-[sub_resource type="ConvexPolygonShape2D" id=4]
-points = PackedVector2Array( 64, 64, 0, 64, 0, 0, 32, 0, 32, 32, 64, 32, 64, 32 )
-
-[sub_resource type="ConvexPolygonShape2D" id=5]
-points = PackedVector2Array( 64, 64, 32, 64, 32, 0, 64, 0 )
-
-[sub_resource type="ConvexPolygonShape2D" id=6]
-points = PackedVector2Array( 64, 64, 0, 64, 0, 32, 64, 32 )
-
-[sub_resource type="ConvexPolygonShape2D" id=7]
-points = PackedVector2Array( 64, 64, 0, 64, 0, 32, 64, 32 )
-
-[sub_resource type="TileSet" id=8]
-0/name = "demo_tileset.png 0"
-0/texture = ExtResource( 3 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 0, 0, 256, 128 )
-0/tile_mode = 2
-0/autotile/icon_coordinate = Vector2( 0, 0 )
-0/autotile/tile_size = Vector2( 64, 64 )
-0/autotile/spacing = 0
-0/autotile/occluder_map = [  ]
-0/autotile/navpoly_map = [  ]
-0/autotile/priority_map = [  ]
-0/autotile/z_index_map = [  ]
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape = SubResource( 1 )
-0/shape_one_way = false
-0/shape_one_way_margin = 1.0
-0/shapes = [ {
-"autotile_coord": Vector2( 0, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 1 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 1, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 2 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 0, 1 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 3 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 1, 1 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 4 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 2, 0 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 5 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 2, 1 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 6 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-}, {
-"autotile_coord": Vector2( 3, 1 ),
-"one_way": false,
-"one_way_margin": 1.0,
-"shape": SubResource( 7 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
-} ]
-0/z_index = 0
-
-[sub_resource type="TileSet" id=9]
-0/name = "demo_tileset.png 0"
-0/texture = ExtResource( 3 )
-0/tex_offset = Vector2( 0, 0 )
-0/modulate = Color( 1, 1, 1, 1 )
-0/region = Rect2( 192, 0, 64, 64 )
-0/tile_mode = 0
-0/occluder_offset = Vector2( 0, 0 )
-0/navigation_offset = Vector2( 0, 0 )
-0/shape_offset = Vector2( 0, 0 )
-0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-0/shape_one_way = false
-0/shape_one_way_margin = 0.0
-0/shapes = [  ]
-0/z_index = 0
+[ext_resource type="PackedScene" path="res://demo/2d/resources/player_spawn.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://bv82lun5glc6a" path="res://demo/2d/resources/npc.tscn" id="2"]
 
 [node name="Zone01" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-scale = Vector2( 4, 4 )
 z_index = -2
-color = Color( 0.207843, 0.32549, 0.258824, 1 )
-polygon = PackedVector2Array( -157.678, -6.65819, -133.894, -45.902, -102.975, -60.1725, -49.4605, -66.1186, 5.24304, -58.9833, 36.1624, -44.7128, 70.6494, -35.1992, 98.0012, -41.1452, 111.083, -66.1186, 126.542, -87.5243, 180.057, -64.9294, 172.921, -24.4963, 165.786, 24.2612, 121.785, 58.7482, 75.4063, 81.3432, -16.1627, 70.6403, -122.002, 52.8022, -151.732, 31.3965 )
+scale = Vector2(4, 4)
+color = Color(0.207843, 0.32549, 0.258824, 1)
+polygon = PackedVector2Array(-157.678, -6.65819, -133.894, -45.902, -102.975, -60.1725, -49.4605, -66.1186, 5.24304, -58.9833, 36.1624, -44.7128, 70.6494, -35.1992, 98.0012, -41.1452, 111.083, -66.1186, 126.542, -87.5243, 180.057, -64.9294, 172.921, -24.4963, 165.786, 24.2612, 121.785, 58.7482, 75.4063, 81.3432, -16.1627, 70.6403, -122.002, 52.8022, -151.732, 31.3965)
 
-[node name="PlayerSpawn" parent="." instance=ExtResource( 1 )]
-position = Vector2( -92.8648, -1.18921 )
+[node name="PlayerSpawn" parent="." instance=ExtResource("1")]
+position = Vector2(-92.8648, -1.18921)
 
 [node name="Wall" type="StaticBody2D" parent="."]
-position = Vector2( -20.0226, 264.966 )
+position = Vector2(-20.0226, 264.966)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
-polygon = PackedVector2Array( -162.561, -1.4971, -458.426, -48.2857, -584.284, -132.191, -610.237, -292.744, -512.722, -450.908, -378.342, -509.179, -184.236, -527.744, 36.6914, -506.801, 161.558, -440.205, 313.203, -403.385, 403.101, -422.863, 467.528, -536.734, 530.457, -614.646, 180.43, -662.619, -576.792, -580.185, -665.192, -431.852, -749.097, -108.218, -227.687, 200.433, 314.439, 182.4, 330.426, 56.8831, 72.3676, 30.7206 )
+polygon = PackedVector2Array(-162.561, -1.4971, -458.426, -48.2857, -584.284, -132.191, -610.237, -292.744, -512.722, -450.908, -378.342, -509.179, -184.236, -527.744, 36.6914, -506.801, 161.558, -440.205, 313.203, -403.385, 403.101, -422.863, 467.528, -536.734, 530.457, -614.646, 180.43, -662.619, -576.792, -580.185, -665.192, -431.852, -749.097, -108.218, -227.687, 200.433, 314.439, 182.4, 330.426, 56.8831, 72.3676, 30.7206)
 
 [node name="Wall2" type="StaticBody2D" parent="."]
-position = Vector2( -20.0226, 264.966 )
+position = Vector2(-20.0226, 264.966)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall2"]
-polygon = PackedVector2Array( 686.757, -178.673, 836.428, -64.6376, 993.45, -436.26, 853.759, -507.693, 740.211, -526.123 )
+polygon = PackedVector2Array(686.757, -178.673, 836.428, -64.6376, 993.45, -436.26, 853.759, -507.693, 740.211, -526.123)
 
-[node name="NPC2D" parent="." instance=ExtResource( 2 )]
-position = Vector2( -328, -56 )
+[node name="NPC2D" parent="." instance=ExtResource("2")]
+y_sort_enabled = true
+position = Vector2(-328, -56)
 
-[node name="NPC2D2" parent="." instance=ExtResource( 2 )]
-position = Vector2( -304, 48 )
-
-[node name="Polygon2D" parent="NPC2D2" index="0"]
-color = Color( 0, 0.831373, 0.109804, 1 )
-
-[node name="NPC2D3" parent="." instance=ExtResource( 2 )]
-position = Vector2( -400, 16 )
-
-[node name="Polygon2D" parent="NPC2D3" index="0"]
-color = Color( 0.976471, 0.266667, 1, 1 )
-
-[node name="NPC2D4" parent="." instance=ExtResource( 2 )]
-position = Vector2( -296, 72 )
+[node name="NPC2D4" parent="." instance=ExtResource("2")]
+y_sort_enabled = true
+position = Vector2(-296, 72)
 
 [node name="Polygon2D" parent="NPC2D4" index="0"]
-color = Color( 1, 0.560784, 0, 1 )
+color = Color(1, 0.560784, 0, 1)
 
-[node name="TileMap_Ysort" type="TileMap" parent="."]
-tile_set = SubResource( 8 )
-cell_tile_origin = 2
-cell_y_sort = true
-format = 1
-tile_data = PackedInt32Array( -65544, 0, 65539, -65543, 0, 0, -65542, 0, 0, -65541, 0, 0, -65540, 0, 65538, -8, 0, 1, -4, 0, 2, 65528, 0, 1, 65532, 0, 2, 131064, 0, 65537, 131065, 0, 0, 131067, 0, 0, 131068, 0, 65536 )
+[node name="NPC2D2" parent="." instance=ExtResource("2")]
+y_sort_enabled = true
+position = Vector2(-304, 48)
 
-[node name="TileMap_Background" type="TileMap" parent="."]
-z_index = -1
-tile_set = SubResource( 9 )
-cell_tile_origin = 2
-format = 1
-tile_data = PackedInt32Array( -8, 0, 0, -7, 0, 0, -6, 0, 0, -5, 0, 0, -4, 0, 0, 65528, 0, 0, 65529, 0, 0, 65530, 0, 0, 65531, 0, 0, 65532, 0, 0, 131066, 0, 0 )
+[node name="Polygon2D" parent="NPC2D2" index="0"]
+color = Color(0, 0.831373, 0.109804, 1)
 
-[editable path="NPC2D2"]
+[node name="NPC2D3" parent="." instance=ExtResource("2")]
+y_sort_enabled = true
+position = Vector2(-400, 16)
 
-[editable path="NPC2D3"]
+[node name="Polygon2D" parent="NPC2D3" index="0"]
+color = Color(0.976471, 0.266667, 1, 1)
 
 [editable path="NPC2D4"]
+[editable path="NPC2D2"]
+[editable path="NPC2D3"]
