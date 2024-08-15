@@ -1,3 +1,5 @@
+Disclaimer: This was for Godot 3 and is not maintained anymore
+
 # Zone Loading System
 
 This template shows you how your game can automatically load/unload zones according to your player position. By implementing this template in your game you can have a seamless world as big as needed, without loading screens.
